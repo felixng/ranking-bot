@@ -8,7 +8,7 @@ var T = new Twit(require('./config.js'));
 var counter = new TweetCounter(T, redis);
 
 // setInterval(retweetLatest, 1000 * 60 * 12);1
-counter.gatherAll();
+// counter.gatherAll();
 
 var express = require('express');
 var app = express();

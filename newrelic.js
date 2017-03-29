@@ -10,11 +10,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Digital Usher'],
+  app_name: ['West End League'],
   /**
    * Your New Relic license key.
    */
-  license_key: 'dbc10b312e59b7a598363ab39187012b269fcd69',
+  license_key: process.env.NEW_RELIC_LICENSE_KEY,
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing

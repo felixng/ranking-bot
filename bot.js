@@ -20,5 +20,5 @@ app.get('/', function(req, res) {
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {
-    console.log('Digital Usher running on port ' + port + '.');
+    console.log('West End League running on port ' + port + '.');
 });

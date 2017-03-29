@@ -110,7 +110,7 @@ function TweetCounter(T, redis, offset = 5) {
         var handles = []
 
         getJSON(options, function(status, result) {
-            if (result.rows && result.rows.length > 0){
+            if (result && result.rows && result.rows.length > 0){
                 var productions = result.rows;
                 
                 for (var i = 0; i < productions.length; i++){

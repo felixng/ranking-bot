@@ -11,19 +11,12 @@ if (debug){
 else{
     var T = new Twit(require('./config.js'));
 }
-    
-//var counter = new TweetCounter(T, redis);
 
+var counter = new TweetCounter(T, redis);    
 
-var index = 6;
-
-initGather();
-setInterval(initGather, 1000 * 60 * 20);
+setInterval(initGather, 1000 * 60 * 60 * 24);
 
 function initGather(){
-    var counter = new TweetCounter(T, redis, index);
-    index = index - 1;
-    
     counter.gatherAll();
 }
 

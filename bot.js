@@ -7,7 +7,6 @@ var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:p6
 var T = new Twit(require('./config.js'));
 var counter = new TweetCounter(T, redis);
 
-// retweetLatest();
 // setInterval(retweetLatest, 1000 * 60 * 12);1
 counter.gatherAll();
 
@@ -15,7 +14,7 @@ var express = require('express');
 var app = express();
 
 app.get('/', function(req, res) {
-  res.status(200).send('I dream of being a website.. please follow us on https://twitter.com/dayseaters or DM us to join.');
+  res.status(200).send('West End League');
 });
 
 var port = process.env.PORT || 1337;

@@ -109,6 +109,8 @@ function TweetCounter(T, redis, offset = 5) {
 
         var handles = []
 
+        console.log(options.path);
+
         getJSON(options, function(status, result) {
             if (result && result.rows && result.rows.length > 0){
                 var productions = result.rows;

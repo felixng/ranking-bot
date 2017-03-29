@@ -1,8 +1,13 @@
 {
-  "errors": [
-    {
-      "message": "Rate limit exceeded",
-      "code": 88
-    }
-  ]
+  "statuses": [],
+  "search_metadata": {
+    "completed_in": 0.004,
+    "max_id": 847205050404044800,
+    "max_id_str": "847205050404044800",
+    "query": "%40MatildaMusical+since%3A2017-02-26+until%3A2017-02-27",
+    "refresh_url": "?since_id=847205050404044800&q=%40MatildaMusical%20since%3A2017-02-26%20until%3A2017-02-27&geocode=51.528308%2C-0.3817765%2C500mi&lang=en&result_type=recent",
+    "count": 99,
+    "since_id": 0,
+    "since_id_str": "0"
+  }
 }

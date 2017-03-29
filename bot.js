@@ -15,7 +15,7 @@ else{
 //var counter = new TweetCounter(T, redis);
 
 
-var index = 30;
+var index = 6;
 
 initGather();
 setInterval(initGather, 1000 * 60 * 20);

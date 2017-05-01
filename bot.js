@@ -1,6 +1,6 @@
 require('newrelic');
 var TweetCounter = require('./tweetCounter.js');
-var debug = process.env.DEBUG | false;
+var debug = process.env.DEBUG || true;
 
 var Twit = require('twit');
 var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:p681205353c4df3fcd2ac99172b553019835bd15ea1a943fb759dc3c5ac344aa9@ec2-34-251-82-220.eu-west-1.compute.amazonaws.com:16849");
@@ -14,7 +14,8 @@ else{
 
 var counter = new TweetCounter(T, redis);    
 
-setInterval(initGather, 1000 * 60 * 60 * 24);
+// setInterval(initGather, 1000 * 60 * 60 * 24);
+initGather();
 
 function initGather(){
     counter.gatherAll();

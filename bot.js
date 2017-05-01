@@ -1,6 +1,6 @@
 require('newrelic');
 var TweetCounter = require('./tweetCounter.js');
-var debug = process.env.DEBUG || true;
+var debug = process.env.DEBUG;
 
 var Twit = require('twit');
 var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:p681205353c4df3fcd2ac99172b553019835bd15ea1a943fb759dc3c5ac344aa9@ec2-34-251-82-220.eu-west-1.compute.amazonaws.com:16849");

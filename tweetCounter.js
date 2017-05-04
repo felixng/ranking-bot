@@ -140,12 +140,16 @@ function TweetCounter(T, redis, offset = 1) {
             nextSearch.max_id = max_id;
 
             T.get('search/tweets', nextSearch, function(error, data) {
-                logToFile(data);
-                calculateTweets(data);
-                resolve(data);
-
                 if (error){
-                    console.log(error);
+                console.log(error);
+                }
+                else if (data.errors){
+                    console.log(data.errors);
+                }
+                else {
+                    logToFile(data);
+                    calculateTweets(data);
+                    resolve(data);
                 }
             });
         })
@@ -179,17 +183,21 @@ function TweetCounter(T, redis, offset = 1) {
         T.get('search/tweets', query, function(error, data) {
             console.log("Query: " + handle);
             
-            logToFile(data);
-            if (data.statuses && data.statuses.length > 0){
-                calculateTweets(data);
-                getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
-            }
-            else{
-                logToRedis(handle);
-            }
-
             if (error){
                 console.log(error);
+            }
+            else if (data.errors){
+                console.log(data.errors);
+            }
+            else {
+                logToFile(data);
+                if (data.statuses && data.statuses.length > 0){
+                    calculateTweets(data);
+                    getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
+                }
+                else{
+                    logToRedis(handle);
+                }
             }
         });
     };

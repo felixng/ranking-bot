@@ -9,8 +9,8 @@ var T = new Twit(require('./config.js'));
 
 var counter = new TweetCounter(T, redis);    
 
-// setInterval(initGather, 1000 * 60 * 60 * 24);
-initGather();
+setInterval(initGather, 1000 * 60 * 60 * 24);
+// initGather();
 
 function initGather(){
     counter.gatherAll();

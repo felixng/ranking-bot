@@ -1,4 +1,4 @@
-function TweetCounter(T, redis, offset = 5) {
+function TweetCounter(T, redis, offset = 1) {
     var fs = require('fs');
     var http = require("http");
 

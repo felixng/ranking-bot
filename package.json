@@ -4,6 +4,7 @@
   "description": "Twitter Bot - NodeJS",
   "author": "Nishant Srivastava <nisrulz@gmail.com>",
   "dependencies": {
+    "cron": "^1.2.1",
     "express": "^4.14.0",
     "newrelic": "^1.29.0",
     "redis": "^2.7.1",

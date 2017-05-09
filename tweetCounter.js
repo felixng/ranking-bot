@@ -1,6 +1,7 @@
-function TweetCounter(T, redis, offset = 1) {
+function TweetCounter(T, redis, offset = 0) {
     var fs = require('fs');
     var http = require("http");
+    var sleep = require('sleep');
 
     var debug = process.env.DEBUG || true;
     var includeRetweet = process.env.INCLUDE_RETWEET || true;
@@ -31,7 +32,7 @@ function TweetCounter(T, redis, offset = 1) {
     }
     
     function logToRedis(handle){
-        
+        console.log(handle);        
         console.log('tweetTotal:', tweetTotal);
         console.log('retweetTotal:', retweetTotal);            
         console.log('score:', score);
@@ -50,6 +51,10 @@ function TweetCounter(T, redis, offset = 1) {
               console.log(reply);
             }
         );
+
+        tweetTotal = 0;
+        retweetTotal = 0;
+        score = 0;
     }
 
     function getJSON(options, onResult)
@@ -141,10 +146,12 @@ function TweetCounter(T, redis, offset = 1) {
 
             T.get('search/tweets', nextSearch, function(error, data) {
                 if (error){
-                console.log(error);
+                    console.log(error);
+                    sleep.sleep(900);
                 }
                 else if (data.errors){
                     console.log(data.errors);
+                    sleep.sleep(900);
                 }
                 else {
                     logToFile(data);
@@ -165,8 +172,6 @@ function TweetCounter(T, redis, offset = 1) {
                 else{
                     score = tweetTotal;
                 }
-
-                logToRedis();
             }
         });
     };
@@ -185,9 +190,11 @@ function TweetCounter(T, redis, offset = 1) {
             
             if (error){
                 console.log(error);
+                sleep.sleep(900);
             }
             else if (data.errors){
                 console.log(data.errors);
+                sleep.sleep(900);
             }
             else {
                 logToFile(data);
@@ -195,9 +202,8 @@ function TweetCounter(T, redis, offset = 1) {
                     calculateTweets(data);
                     getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
                 }
-                else{
-                    logToRedis(handle);
-                }
+                
+                logToRedis(handle);
             }
         });
     };

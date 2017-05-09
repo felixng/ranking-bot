@@ -37,7 +37,12 @@ function TweetCounter(T, redis, offset = 0) {
         console.log('retweetTotal:', retweetTotal);            
         console.log('score:', score);
 
-        var key = [ 'daily', yesterday, handle ]
+        var freq = 'daily';
+        if (offset == 7){
+            freq = 'weekly';
+        }
+
+        var key = [ freq, yesterday, handle ]
 
         redis.hmset( key.join(':'),
                     {

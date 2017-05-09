@@ -9,17 +9,15 @@ var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:p6
 var T = new Twit(require('./config.js'));
 
 var counter = new TweetCounter(T, redis);    
+var weeklyCounter = new TweetCounter(T, redis, 7);    
 
-setInterval(initGather, 1000 * 60 * 60 * 24);
-// initGather();
-
-new CronJob('00 00 01 * * *', function() {
-  initGather();
+new CronJob('00 00 01 * * 1', function() {
+  weeklyCounter.gatherAll();
 }, null, true, 'Europe/London');
 
-function initGather(){
-    counter.gatherAll();
-}
+new CronJob('00 00 01 * * *', function() {
+  counter.gatherAll();
+}, null, true, 'Europe/London');
 
 var express = require('express');
 var app = express();

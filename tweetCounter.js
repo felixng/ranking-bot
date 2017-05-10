@@ -171,11 +171,11 @@ function TweetCounter(T, redis, offset = 0) {
             } else {
 
                 if (includeRetweet){
-                    score = tweetTotal + (retweetTotal * retweetWeight);
+                    score += tweetTotal + (retweetTotal * retweetWeight);
                     score = Math.round(score);
                 }
                 else{
-                    score = tweetTotal;
+                    score += tweetTotal;
                 }
             }
         });

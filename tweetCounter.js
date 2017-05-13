@@ -10,7 +10,6 @@ function TweetCounter(T, redis, offset = 0) {
 
     var tweetTotal = 0;
     var retweetTotal = 0;
-    var score = 0;
 
     //Parsing Dates: Yesterday and the Day Before
     var date = new Date();
@@ -32,6 +31,8 @@ function TweetCounter(T, redis, offset = 0) {
     }
     
     function logToRedis(handle){
+        var score = Math.round(tweetTotal + (retweetTotal * retweetWeight));
+
         console.log(handle);        
         console.log('tweetTotal:', tweetTotal);
         console.log('retweetTotal:', retweetTotal);            
@@ -168,15 +169,6 @@ function TweetCounter(T, redis, offset = 0) {
         .then( data => {
             if ( data.statuses && data.statuses.length > 98) {
                 return getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
-            } else {
-
-                if (includeRetweet){
-                    score += tweetTotal + (retweetTotal * retweetWeight);
-                    score = Math.round(score);
-                }
-                else{
-                    score += tweetTotal;
-                }
             }
         });
     };

@@ -1,4 +1,4 @@
-function TweetCounter(T, redis, offset = 0) {
+function TweetCounter(T, redis) {
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
@@ -12,25 +12,30 @@ function TweetCounter(T, redis, offset = 0) {
     var retweetTotal = 0;
 
     //Parsing Dates: Yesterday and the Day Before
-    var date = new Date();
-    date.setDate(date.getDate() - offset);
-    var yesterday = date.toJSON().slice(0,10).replace(/-/g,'-');
-    console.log("Yesterday: " + yesterday);
 
-    date.setDate(date.getDate() - 1);
-    var theDayBefore = date.toJSON().slice(0,10).replace(/-/g,'-');
-    console.log("The Day Before Yesterday: " + theDayBefore);
+    function parseDateQuery(daysAgo = 1, duration = 1){
+        var date = new Date();
+        date.setDate(date.getDate() - daysAgo);
+        var untilDate = date.toJSON().slice(0,10).replace(/-/g,'-');
+        console.log("Until: " + untilDate);
 
-    // Parsing Query
-    // var query = process.env.RANKING_QUERY || "@HPPlayLDN";
-    var since = " since:" + theDayBefore;
-    var until = " until:" + yesterday;
+        date.setDate(date.getDate() - duration);
+        var sinceDate = date.toJSON().slice(0,10).replace(/-/g,'-');
+        console.log("Since: " + sinceDate);
+
+        // Parsing Query
+        // var query = process.env.RANKING_QUERY || "@HPPlayLDN";
+        var since = " since:" + sinceDate;
+        var until = " until:" + untilDate;
+
+        return since + until;
+    }
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
     
-    function logToRedis(handle){
+    function logToRedis(handle, daysAgo, duration){
         var score = Math.round(tweetTotal + (retweetTotal * retweetWeight));
 
         console.log(handle);        
@@ -39,7 +44,7 @@ function TweetCounter(T, redis, offset = 0) {
         console.log('score:', score);
 
         var freq = 'daily';
-        if (offset == 7){
+        if (duration == 7){
             freq = 'weekly';
         }
 
@@ -173,8 +178,10 @@ function TweetCounter(T, redis, offset = 0) {
         });
     };
 
-    function gather(handle, index){
-        var query = { q: handle + since + until,
+    function gather(handle, daysAgo, duration){
+        var dateQuery = parseDateQuery(daysAgo, duration);
+
+        var query = { q: handle + dateQuery,
                        geocode: "51.528308,-0.3817765,500mi", 
                        count: 99,
                        result_type: "recent", 
@@ -200,18 +207,26 @@ function TweetCounter(T, redis, offset = 0) {
                     getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
                 }
                 
-                logToRedis(handle);
+                logToRedis(handle, daysAgo, duration);
             }
         });
     };
 
-    this.gather = function(handle){
-        gather(handle);
+    this.gather = function(handle, daysAgo, duration){
+        gather(handle, daysAgo, duration);
     }
 
     this.gatherAll = function(){
         getHandles(function(handles){
             handles.forEach(gather);
+        });
+    }
+
+    this.gatherAllDuration = function(daysAgo, duration){
+        getHandles(function(handles){
+            handles.forEach(function(handle){
+                gather(handle, daysAgo, duration)
+            });
         });
     }
 }

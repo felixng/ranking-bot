@@ -50,8 +50,16 @@ function TweetCounter(name ,T, redis, googleQuery) {
         var today = new Date();
         var keyDate = new Date();
         keyDate.setDate(keyDate.getDate() - daysAgo);
+        var keyDateString = keyDate.toJSON().slice(0,10).replace(/-/g,'-');
 
-        var key = [ name, freq, keyDate, handle ]
+        var key = []
+        if (name != ''){
+            key = [ name, freq, keyDateString, handle ];
+        }
+        else {
+            key = [ freq, keyDateString, handle ]
+        }
+        
 
         redis.hmset( key.join(':'),
                     {

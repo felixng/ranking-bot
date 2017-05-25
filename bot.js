@@ -4,7 +4,7 @@ var CronJob = require('cron').CronJob;
 var debug = process.env.DEBUG;
 
 var Twit = require('twit');
-var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:p681205353c4df3fcd2ac99172b553019835bd15ea1a943fb759dc3c5ac344aa9@ec2-34-251-82-220.eu-west-1.compute.amazonaws.com:16849");
+var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:pc8d86cd65c7102d817057135e85213ccdb2e7196eda9a558c96f7b53cbb0ad18@ec2-34-249-251-118.eu-west-1.compute.amazonaws.com:13119");
 var westEndSheet = process.env.WESTEND_SHEET || 'id=1GsNXv7Na24WB5XzKCKlHl_72GLAxOrs9K_v2sYQ4eQ4&sheet=1';
 var trainSheet = process.env.TRAIN_SHEET || 'id=1GsNXv7Na24WB5XzKCKlHl_72GLAxOrs9K_v2sYQ4eQ4&sheet=2';
 var T = new Twit(require('./localconfig.js'));
@@ -21,8 +21,6 @@ new CronJob('00 00 01 * * *', function() {
   counter.gatherAll();
   trainCounter.gatherAll();
 }, null, true, 'Europe/London');
-
-
 
 var express = require('express');
 var app = express();

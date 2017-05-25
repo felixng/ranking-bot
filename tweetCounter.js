@@ -1,4 +1,4 @@
-function TweetCounter(T, redis, googleQuery) {
+function TweetCounter(name ,T, redis, googleQuery) {
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
@@ -51,7 +51,7 @@ function TweetCounter(T, redis, googleQuery) {
         var keyDate = new Date();
         keyDate.setDate(keyDate.getDate() - daysAgo);
 
-        var key = [ freq, keyDate, handle ]
+        var key = [ name, freq, keyDate, handle ]
 
         redis.hmset( key.join(':'),
                     {

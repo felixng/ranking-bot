@@ -12,13 +12,13 @@ function TweetCounter(T, redis, googleQuery) {
 
     //Parsing Dates: Yesterday and the Day Before
 
-    function parseDateQuery(daysAgo = 1, duration = 1){
+    function parseDateQuery(daysAgo = 1, length = 1){
         var date = new Date();
         date.setDate(date.getDate() - daysAgo);
         var untilDate = date.toJSON().slice(0,10).replace(/-/g,'-');
         console.log("Until: " + untilDate);
 
-        date.setDate(date.getDate() - duration);
+        date.setDate(date.getDate() - length);
         var sinceDate = date.toJSON().slice(0,10).replace(/-/g,'-');
         console.log("Since: " + sinceDate);
 
@@ -47,7 +47,11 @@ function TweetCounter(T, redis, googleQuery) {
             freq = 'weekly';
         }
 
-        var key = [ freq, yesterday, handle ]
+        var today = new Date();
+        var keyDate = new Date();
+        keyDate.setDate(keyDate.getDate() - daysAgo);
+
+        var key = [ freq, keyDate, handle ]
 
         redis.hmset( key.join(':'),
                     {
@@ -128,19 +132,19 @@ function TweetCounter(T, redis, googleQuery) {
 
         getJSON(options, function(status, result) {
             if (result && result.rows && result.rows.length > 0){
-                var productions = result.rows;
+                var rows = result.rows;
                 
-                for (var i = 0; i < productions.length; i++){
-                    if (productions[i].tocrawl &&
-                        productions[i].twitter && 
-                        productions[i].twitter != '' &&
-                        productions[i].twitter != '-') {
+                for (var i = 0; i < rows.length; i++){
+                    if (rows[i].tocrawl &&
+                        rows[i].twitter && 
+                        rows[i].twitter != '' &&
+                        rows[i].twitter != '-') {
                         
-                        if (!productions[i].twitter.startsWith('#')){
-                            productions[i].twitter = '@' + productions[i].twitter;
+                        if (!rows[i].twitter.startsWith('#')){
+                            rows[i].twitter = '@' + rows[i].twitter;
                         }
 
-                        handles.push(productions[i].twitter);
+                        handles.push(rows[i].twitter);
                     }
                 }
             }
@@ -216,9 +220,10 @@ function TweetCounter(T, redis, googleQuery) {
     }
 
     this.gatherAll = function(){
-        getHandles(function(handles){
-            handles.forEach(gather);
-        });
+        // getHandles(function(handles){
+        //     handles.forEach(gather);
+        // });
+        this.gatherAllDuration(1, 1);
     }
 
     this.gatherAllDuration = function(daysAgo, duration){

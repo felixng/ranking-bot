@@ -5,10 +5,10 @@ var debug = process.env.DEBUG;
 
 var Twit = require('twit');
 var redis = require('redis').createClient(process.env.REDIS_URL || "redis://h:p681205353c4df3fcd2ac99172b553019835bd15ea1a943fb759dc3c5ac344aa9@ec2-34-251-82-220.eu-west-1.compute.amazonaws.com:16849");
-var googleQuery = process.env.GOOGLESHEET_QUERY || 'id=1GsNXv7Na24WB5XzKCKlHl_72GLAxOrs9K_v2sYQ4eQ4&sheet=1';
+var westEndSheet = process.env.GOOGLESHEET_QUERY || 'id=1GsNXv7Na24WB5XzKCKlHl_72GLAxOrs9K_v2sYQ4eQ4&sheet=1';
 var T = new Twit(require('./localconfig.js'));
 
-var counter = new TweetCounter(T, redis, googleQuery);    
+var counter = new TweetCounter(T, redis, westEndSheet);    
 
 new CronJob('00 00 01 * * 1', function() {
   counter.gatherAllDuration(1, 7);

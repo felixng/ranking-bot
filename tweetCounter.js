@@ -1,4 +1,4 @@
-function TweetCounter(T, redis) {
+function TweetCounter(T, redis, googleQuery) {
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
@@ -6,7 +6,6 @@ function TweetCounter(T, redis) {
     var debug = process.env.DEBUG || true;
     var includeRetweet = process.env.INCLUDE_RETWEET || true;
     var retweetWeight = process.env.RETWEET_WEIGHT || 0.3;
-    var googleQuery = process.env.GOOGLESHEET_QUERY || 'id=1GsNXv7Na24WB5XzKCKlHl_72GLAxOrs9K_v2sYQ4eQ4&sheet=1';
 
     var tweetTotal = 0;
     var retweetTotal = 0;

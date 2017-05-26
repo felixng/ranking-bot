@@ -10,6 +10,12 @@ function TweetCounter(name ,T, redis, googleQuery) {
     var tweetTotal = 0;
     var retweetTotal = 0;
 
+    if (debug){
+        fs.unlink("tweet.json", function(){
+            console.log("Cleaning up disk tweet file.")
+        });
+    };
+
     //Parsing Dates: Yesterday and the Day Before
 
     function parseDateQuery(daysAgo = 1, length = 1){
@@ -111,7 +117,9 @@ function TweetCounter(name ,T, redis, googleQuery) {
         if (debug){
             var json = JSON.stringify(data,null,2);
             //fs.appendFile("tweet.json", json, function(){});    
-            fs.writeFile("tweet.json", json, function(){});    
+            fs.appendFile("tweet.json", json, function(){
+                console.log("Twitter reply wrote to disk.")
+            });
         }
     }
 

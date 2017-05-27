@@ -3,11 +3,11 @@ function TweetCounter(name ,T, redis, googleQuery) {
     var http = require("http");
     var sleep = require('sleep');
 
-    var debug = process.env.DEBUG || true;
+    var debug = process.env.DEBUG;
     var includeRetweet = process.env.INCLUDE_RETWEET || true;
     var retweetWeight = process.env.RETWEET_WEIGHT || 0.3;
 
-    if (debug){
+    if (debug == null){
         fs.unlink("tweet.json", function(){
             console.log("Cleaning up disk tweet file.")
         });
@@ -124,7 +124,7 @@ function TweetCounter(name ,T, redis, googleQuery) {
     };
 
     function logToFile(data){
-        if (debug){
+        if (debug == null){
             var json = JSON.stringify(data,null,2);
             //fs.appendFile("tweet.json", json, function(){});    
             fs.appendFile("tweet.json", json, function(){

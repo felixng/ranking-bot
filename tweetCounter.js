@@ -192,12 +192,18 @@ function TweetCounter(name ,T, redis, googleQuery) {
         })
         .then( data => {
             if ( data.statuses && data.statuses.length > 98) {
-                return getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
+                getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
             }
+            else {
+                return true;
+                logToRedis(handle, daysAgo, duration);
+            }
+
+            return false;
         });
     };
 
-    function gather(handle, daysAgo, duration){
+    function run(handle, daysAgo, duration){
         var dateQuery = parseDateQuery(daysAgo, duration);
 
         var query = { q: handle + dateQuery,
@@ -223,17 +229,24 @@ function TweetCounter(name ,T, redis, googleQuery) {
                 logToFile(data);
                 if (data.statuses && data.statuses.length > 0){
                     calculateTweets(data);
-                    getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
+                    return getTweetChunk(query, data.statuses[data.statuses.length - 1].id);
                 }
-                
-                logToRedis(handle, daysAgo, duration);
             }
         });
+
+        
     };
 
-    this.gather = function(handle, daysAgo, duration){
-        gather(handle, daysAgo, duration);
-    }
+    // this.gather = function(handle, daysAgo, duration){
+    //     return new Promise( (resolve, reject) => {
+    //         run(handle, daysAgo, duration);
+    //         resolve(handle);
+    //     })
+    //     .then( handle => {
+    //         console.log('gather then');
+    //         logToRedis(handle, daysAgo, duration);
+    //     });
+    // }
 
     this.gatherAll = function(){
         // getHandles(function(handles){
@@ -245,7 +258,7 @@ function TweetCounter(name ,T, redis, googleQuery) {
     this.gatherAllDuration = function(daysAgo, duration){
         getHandles(function(handles){
             handles.forEach(function(handle){
-                gather(handle, daysAgo, duration)
+                run(handle, daysAgo, duration);
             });
         });
     }

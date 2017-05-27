@@ -35,8 +35,9 @@ app.get('/', function(req, res) {
   res.status(200).send('West End League');
 });
 
-app.get('/crawl', function(req, res) {
-  // res.status(200).send('West End League');
+app.post('/crawl/:daysAgo/:length', function(req, res) {
+  trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length)
+  res.status(200).send();
 });
 
 var port = process.env.PORT || 1337;

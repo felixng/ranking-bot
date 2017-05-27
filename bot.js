@@ -80,7 +80,7 @@ app.post('/crawl/:daysAgo/:length', function(req, res) {
 });
 
 app.get('/felix', passport.authenticate('basic', { session: false }), function(req, res) {
-	res.status(200).send('Hello Felix! :) ' + req.headers['authorization']);
+	res.status(200).send('Hello Felix! :)');
 });
 
 var port = process.env.PORT || 1337;

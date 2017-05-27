@@ -204,10 +204,6 @@ function TweetCounter(name ,T, redis, googleQuery) {
             if ( data.statuses && data.statuses.length > 98) {
                 return getTweetChunk(logConfig, tally, query, data.statuses[data.statuses.length - 1].id);
             }
-            else{
-                // logToRedis(logConfig);
-                // resetCounts();
-            }
         });
     };
 
@@ -265,7 +261,6 @@ function TweetCounter(name ,T, redis, googleQuery) {
         })
         .then(function(){
             logToRedis(logConfig, tally);
-            console.log(handle + " completed.")
             resetCounts();
         })
     };

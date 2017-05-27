@@ -60,7 +60,7 @@ app.post(':site/crawl/:daysAgo/:length', function(req, res) {
 	res.status(200).send();
 });
 
-app.post('/:site/crawl/:daysAgo/:length', function(req, res) {
+app.post('/:site/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
 	if (req.params.site == 'train'){
 		trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
 	}
@@ -72,7 +72,7 @@ app.post('/:site/crawl/:daysAgo/:length', function(req, res) {
 	res.status(200).send();
 });
 
-app.post('/crawl/:daysAgo/:length', function(req, res) {
+app.post('/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
 	trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
 	counter.gatherAllDuration(req.params.daysAgo, req.params.length);
 	

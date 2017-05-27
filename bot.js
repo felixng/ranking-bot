@@ -15,8 +15,8 @@ if (debug == null || !debug){
 
 var T = new Twit(require(configPath));
 
-var counter = new TweetCounter('', T, redis, westEndSheet);
-var trainCounter = new TweetCounter('Train', T, redis, trainSheet);
+var counter = new TweetCounter('theatre', T, redis, westEndSheet);
+var trainCounter = new TweetCounter('train', T, redis, trainSheet);
 
 new CronJob('00 00 01 * * 1', function() {
   counter.gatherAllDuration(1, 7);

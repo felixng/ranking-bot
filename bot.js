@@ -47,6 +47,25 @@ app.post(':site/crawl/:daysAgo/:length', function(req, res) {
 	res.status(200).send();
 });
 
+app.post('/:site/crawl/:daysAgo/:length', function(req, res) {
+	if (req.params.site == 'train'){
+		trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	}
+
+	if (req.params.site == 'westend'){
+		counter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	}
+	
+	res.status(200).send();
+});
+
+app.post('/crawl/:daysAgo/:length', function(req, res) {
+	trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	counter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	
+	res.status(200).send();
+});
+
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {

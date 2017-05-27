@@ -7,6 +7,8 @@
     "cron": "^1.2.1",
     "express": "^4.14.0",
     "newrelic": "^1.29.0",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
     "redis": "^2.7.1",
     "sleep": "^5.1.1",
     "twit": "*"

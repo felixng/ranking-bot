@@ -55,7 +55,7 @@ app.post('/:site/crawl/:daysAgo/:length', passport.authenticate('basic', { sessi
 
 app.post('/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
   counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
-  // counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+  counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
   
   res.status(200).send();
 });
@@ -96,3 +96,16 @@ app.listen(port, host, (err) => {
     logger.appStarted(port, prettyHost);
   }
 });
+
+//Bots
+var CronJob = require('cron').CronJob;
+
+new CronJob('00 00 01 * * 1', function() {
+  counters.theatreCounter.gatherAllDuration(1, 7);
+  counters.trainCounter.gatherAllDuration(1, 7);
+}, null, true, 'Europe/London');
+
+new CronJob('00 00 01 * * *', function() {
+  counters.theatreCounter.gatherAll();
+  counters.trainCounter.gatherAll();
+}, null, true, 'Europe/London');

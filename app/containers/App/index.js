@@ -14,28 +14,37 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import withProgressBar from 'components/ProgressBar';
 
-const AppWrapper = styled.div`
+const AppContainer = styled.div`
   max-width: calc(768px + 16px * 2);
   margin: 0 auto;
   display: flex;
-  min-height: 100%;
-  padding: 0 16px;
   flex-direction: column;
+  min-height: 100%;
+`;
+
+const AppWrapper = styled.div`
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
+  color: #e1e1e1;
+  font-family: 'Open Sans', sans-serif;  
 `;
 
 export function App(props) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - West End League - What's Trending in West End?"
+        defaultTitle="West End League - What's Trending in West End?"
         meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
+          { name: 'description', content: 'West End League - Top 10 Popular West End Shows base on Tweets.' },
         ]}
       />
-      <Header />
-      {React.Children.toArray(props.children)}
-      <Footer />
+      <AppContainer>
+        <Header />
+        {React.Children.toArray(props.children)}
+        <Footer />
+      </AppContainer>
     </AppWrapper>
   );
 }

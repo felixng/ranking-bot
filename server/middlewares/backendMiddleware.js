@@ -12,7 +12,7 @@ const addBackendMiddlewares = (app) => {
 	      return cb(null, user);
 	    });
 	  }));
-	console.log('api');
+
 	const counters = require('../bots/counters');
 
 	app.post(':site/crawl/:daysAgo/:length', function(req, res) {

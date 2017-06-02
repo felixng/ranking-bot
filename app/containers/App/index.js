@@ -19,12 +19,12 @@ const AppContainer = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
 `;
 
 const AppWrapper = styled.div`
   margin: 0;
-  min-height: 100%;
+  height: 100vh;
   background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
   color: #e1e1e1;
   font-family: 'Open Sans', sans-serif;  

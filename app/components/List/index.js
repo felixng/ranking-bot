@@ -19,9 +19,9 @@ function List(props) {
 
   return (
     <Wrapper>
-      <Ul>
+      <Ol>
         {content}
-      </Ul>
+      </Ol>
     </Wrapper>
   );
 }

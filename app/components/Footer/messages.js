@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'boilerplate.components.Footer.license.message',
     defaultMessage: 'This project is licensed under the MIT license.',
   },
+  triggerMessage: {
+    id: 'boilerplate.components.Footer.trigger.message',
+    defaultMessage: 'Shows so good that people have to tweet about it!',
+  },
   authorMessage: {
     id: 'boilerplate.components.Footer.author.message',
     defaultMessage: `

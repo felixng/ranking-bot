@@ -34,8 +34,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     // }
   }
 
+  updateDate(){
+    const currentDate = this.props.date;
+    this.props.onChangeDate(currentDate);
+  }
+
   render() {
-    const { loading, error, repos } = this.props;
+    const { loading, error, repos, date } = this.props;
     const reposListProps = {
       loading,
       error,
@@ -58,7 +63,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </CenteredSection>
           <Section>
             <Button 
-              onClick={this.props.onChangeDate}> Click Me! </Button>
+              onClick={this.updateDate.bind(this)}> Click Me! </Button>
             <ReposList {...reposListProps} />
           </Section>
         </div>
@@ -83,10 +88,10 @@ HomePage.propTypes = {
   onChangeDate: React.PropTypes.func,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onChangeDate: () => {
-      var date = new Date();
+    onChangeDate: (currentDate) => {
+      var date = currentDate;
       var result = new Date(date);
       result.setDate(result.getDate() - 1);
 

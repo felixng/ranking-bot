@@ -50,6 +50,10 @@ const addBackendMiddlewares = (app) => {
 	app.get('/felix', passport.authenticate('basic', { session: false }), function(req, res) {
 	  res.send('Hello felix!');
 	});
+
+	app.get('/top10', function(req, res) {
+	  res.send('Top10');
+	});
 }
 
 module.exports = (app) => {

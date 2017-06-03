@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Ul from './Ul';
+import Ol from './Ol';
 import Wrapper from './Wrapper';
 
 function List(props) {

@@ -14,13 +14,12 @@ import { makeSelectRepos, makeSelectLoading, makeSelectError } from 'containers/
 import H3 from 'components/H3';
 import ReposList from 'components/ReposList';
 import Button from 'components/Button';
-import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
+import { loadRepos, loadShows } from '../App/actions';
 import { changeUsername, changeDate } from './actions';
 import { makeSelectUsername, makeSelectDate } from './selectors';
 
@@ -32,6 +31,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     // if (this.props.username && this.props.username.trim().length > 0) {
     //   this.props.onSubmitForm();
     // }
+    this.props.onLoad();
   }
 
   updateDate(){
@@ -102,6 +102,9 @@ export function mapDispatchToProps(dispatch, ownProps) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadRepos());
     },
+    onLoad: () => {
+      dispatch(loadShows());
+    }
   };
 }
 

@@ -19,6 +19,9 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
+  LOAD_SHOWS,
+  LOAD_SHOWS_SUCCESS,
+  LOAD_SHOWS_ERROR,
 } from './constants';
 
 /**
@@ -58,6 +61,27 @@ export function reposLoaded(repos, username) {
 export function repoLoadingError(error) {
   return {
     type: LOAD_REPOS_ERROR,
+    error,
+  };
+}
+
+export function loadShows() {
+  return {
+    type: LOAD_SHOWS,
+  };
+}
+
+export function showsLoaded(repos, username) {
+  return {
+    type: LOAD_SHOWS_SUCCESS,
+    repos,
+    username,
+  };
+}
+
+export function showsLoadingError(error) {
+  return {
+    type: LOAD_SHOWS_ERROR,
     error,
   };
 }

@@ -13,8 +13,11 @@ function TweetCounter(name ,T, redis, googleQuery) {
         });
     };
 
-    //Parsing Dates: Yesterday and the Day Before
+    function toDateKey(date){
+        return date.toJSON().slice(0,10).replace(/-/g,'-');
+    }
 
+    //Parsing Dates: Yesterday and the Day Before
     function parseDateQuery(daysAgo = 1, length = 1){
         var date = new Date();
         date.setDate(date.getDate() - daysAgo);
@@ -89,10 +92,6 @@ function TweetCounter(name ,T, redis, googleQuery) {
               console.log(reply);
             }
         );
-
-        // tweetTotal = 0;
-        // retweetTotal = 0;
-        // score = 0;
     }
 
     function getJSON(options, onResult)
@@ -117,7 +116,7 @@ function TweetCounter(name ,T, redis, googleQuery) {
         });
 
         req.on('error', function(err) {
-            //res.send('error: ' + err.message);
+            res.send('error: ' + err.message);
         });
 
         req.end();
@@ -126,7 +125,7 @@ function TweetCounter(name ,T, redis, googleQuery) {
     function logToFile(data){
         if (isDev){
             var json = JSON.stringify(data,null,2);
-            //fs.appendFile("tweet.json", json, function(){});    
+            
             fs.appendFile("tweet.json", json, function(){
                 console.log("Twitter reply wrote to disk.")
             });
@@ -207,6 +206,39 @@ function TweetCounter(name ,T, redis, googleQuery) {
         });
     };
 
+    function scanAndSort(date = '*', freq = 'daily') {
+        if (date != '*'){
+            date = toDateKey(date);
+        }
+
+        var searchKey = [ name, freq, date, '*' ]
+
+        return new Promise((resolve, reject) => {
+            redis.keys( searchKey.join(':'), function (err, all_keys) {
+                var items = [];
+
+                if (all_keys.length == 0){
+                    resolve([]);
+                }
+
+                all_keys.forEach(function (key, pos) { // use second arg of forEach to get pos
+                    redis.hgetall(key, function (err, item) {
+                        item.key = key;
+                        items.push(item);
+
+                        if (pos == all_keys.length - 1){
+                            resolve(items);
+                        }
+                    });
+                })
+            })
+        })
+        .then( items => {
+            items.sort(statCompareDesc);
+            return items.slice(0, 10);
+        })
+    }
+
     function run(handle, daysAgo, duration){
         var dateQuery = parseDateQuery(daysAgo, duration);
         var tweetTotal = 0;
@@ -269,12 +301,24 @@ function TweetCounter(name ,T, redis, googleQuery) {
         this.gatherAllDuration(1, 1);
     }
 
+
+
+    this.getTop10 = function(date){
+        var scanPromise = scanAndSort(date);
+
+        return scanPromise;
+    }
+
     this.gatherAllDuration = function(daysAgo, duration){
         getHandles(function(handles){
             handles.forEach(function(handle){
                 run(handle, daysAgo, duration);
             });
         });
+    }
+
+    function statCompareDesc(a,b) {
+      return b.score - a.score
     }
 }
 

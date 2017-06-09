@@ -48,11 +48,28 @@ const addBackendMiddlewares = (app) => {
 	});
 
 	app.get('/felix', passport.authenticate('basic', { session: false }), function(req, res) {
-	  res.send('Hello felix!');
+
+		var date = new Date();
+		var randomDays = Math.floor((Math.random() * 30) + 1);
+		date.setDate(date.getDate() - randomDays);
+
+	  	var promise = counters.theatreCounter.getTop10(date);
+
+		promise.then( items => {
+			res.status(200).send(items);
+		})
 	});
 
-	app.get('/top10', function(req, res) {
-	  res.send('Top10');
+	app.get('/:site/top10', function(req, res) {
+	  if (req.params.site == 'train'){
+	    counters.trainCounter.getTop10(req.params.date);
+	  }
+
+	  if (req.params.site == 'westend'){
+	    counters.theatreCounter.getTop10(req.params.date);
+	  }
+
+	  res.status(200).send();
 	});
 }
 

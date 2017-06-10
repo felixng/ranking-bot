@@ -10,18 +10,18 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { makeSelectRepos, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
+import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 import H3 from 'components/H3';
-import ReposList from 'components/ReposList';
+import ShowsList from 'components/ShowsList';
 import Button from 'components/Button';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';
-import { loadRepos, loadShows } from '../App/actions';
-import { changeUsername, changeDate } from './actions';
-import { makeSelectUsername, makeSelectDate } from './selectors';
+import { loadShows } from '../App/actions';
+import { changeDate } from './actions';
+import { makeSelectDate } from './selectors';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -40,11 +40,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render() {
-    const { loading, error, repos, date } = this.props;
-    const reposListProps = {
+    const { loading, error, shows, date } = this.props;
+    const showsListProps = {
       loading,
       error,
-      repos,
+      shows,
     };
 
     return (
@@ -64,7 +64,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <Section>
             <Button 
               onClick={this.updateDate.bind(this)}> Click Me! </Button>
-            <ReposList {...reposListProps} />
+            <ShowsList {...showsListProps} />
           </Section>
         </div>
       </article>
@@ -78,13 +78,11 @@ HomePage.propTypes = {
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  repos: React.PropTypes.oneOfType([
+  shows: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  username: React.PropTypes.string,
   date: React.PropTypes.instanceOf(Date),
-  onChangeUsername: React.PropTypes.func,
   onChangeDate: React.PropTypes.func,
 };
 
@@ -98,10 +96,6 @@ export function mapDispatchToProps(dispatch, ownProps) {
       dispatch(changeDate(result));
       dispatch(loadShows());
     },
-    onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-    },
     onLoad: () => {
       dispatch(loadShows());
     }
@@ -109,9 +103,8 @@ export function mapDispatchToProps(dispatch, ownProps) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
+  shows: makeSelectShows(),
   date: makeSelectDate(),
-  username: makeSelectUsername(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });

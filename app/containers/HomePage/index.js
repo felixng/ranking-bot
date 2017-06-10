@@ -93,11 +93,11 @@ export function mapDispatchToProps(dispatch, ownProps) {
     onChangeDate: (currentDate) => {
       var date = currentDate;
       var result = new Date(date);
-      result.setDate(result.getDate() - 1);
+      result.setDate(result.getDate() - 4);
 
       dispatch(changeDate(result));
+      dispatch(loadShows());
     },
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadRepos());

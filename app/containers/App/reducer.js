@@ -51,17 +51,17 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
-    case LOAD_REPOS:
+    case LOAD_SHOWS:
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['userData', 'repositories'], false);
-    case LOAD_REPOS_SUCCESS:
+        .setIn(['trendingData', 'shows'], false);
+    case LOAD_SHOWS_SUCCESS:
       return state
-        .setIn(['userData', 'repositories'], action.repos)
+        .setIn(['trendingData', 'shows'], action.shows)
         .set('loading', false)
-        .set('currentUser', action.username);
-    case LOAD_REPOS_ERROR:
+        .set('currentDate', action.date);
+    case LOAD_SHOWS_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false);

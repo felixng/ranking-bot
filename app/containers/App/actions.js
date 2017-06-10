@@ -71,11 +71,11 @@ export function loadShows() {
   };
 }
 
-export function showsLoaded(repos, username) {
+export function showsLoaded(shows, date) {
   return {
     type: LOAD_SHOWS_SUCCESS,
-    repos,
-    username,
+    shows,
+    date,
   };
 }
 

@@ -8,6 +8,7 @@ import { LOAD_SHOWS } from 'containers/App/constants';
 import { reposLoaded, repoLoadingError, showsLoaded, showsLoadingError } from 'containers/App/actions';
 
 import request from 'utils/request';
+import toKey from 'utils/date';
 import { makeSelectUsername, makeSelectDate } from 'containers/HomePage/selectors';
 
 /**
@@ -30,12 +31,15 @@ export function* getRepos() {
 export function* getShows() {
   // Select username from store
   const date = yield select(makeSelectDate());
-  const requestURL = window.location.protocol + '//' + window.location.host + '/top10';
+  const dateKey = toKey(date);
+  const requestURL = `${window.location.protocol}\/\/${window.location.host}/westend/top10/${dateKey}`;
 
   try {
     // Call our request helper (see 'utils/request')
     const shows = yield call(request, requestURL);
-    yield put(showsLoaded(shows, date));
+    yield put(showsLoaded(shows, dateKey));
+    console.debug(shows);
+    console.debug(dateKey);
   } catch (err) {
     yield put(showsLoadingError(err));
   }
@@ -49,7 +53,7 @@ export function* githubData() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   const watcher = yield takeLatest(LOAD_REPOS, getRepos);
-
+  
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);

@@ -47,29 +47,35 @@ const addBackendMiddlewares = (app) => {
 	  next();
 	});
 
-	app.get('/felix', passport.authenticate('basic', { session: false }), function(req, res) {
+	app.get('/felix/:date', passport.authenticate('basic', { session: false }), function(req, res) {
 
 		var date = new Date();
 		var randomDays = Math.floor((Math.random() * 30) + 1);
 		date.setDate(date.getDate() - randomDays);
 
-	  	var promise = counters.theatreCounter.getTop10(date);
+	  	var promise = counters.theatreCounter.getTop10(req.params.date);
 
 		promise.then( items => {
 			res.status(200).send(items);
 		})
 	});
 
-	app.get('/:site/top10', function(req, res) {
+	app.get('/:site/top10/:date', function(req, res) {
 	  if (req.params.site == 'train'){
-	    counters.trainCounter.getTop10(req.params.date);
+	    var promise = counters.trainCounter.getTop10(req.params.date);
+
+		promise.then( items => {
+			res.status(200).send(items);
+		})
 	  }
 
 	  if (req.params.site == 'westend'){
-	    counters.theatreCounter.getTop10(req.params.date);
-	  }
+	    var promise = counters.theatreCounter.getTop10(req.params.date);
 
-	  res.status(200).send();
+		promise.then( items => {
+			res.status(200).send(items);
+		})
+	  }
 	});
 }
 

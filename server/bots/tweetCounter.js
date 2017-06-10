@@ -207,10 +207,6 @@ function TweetCounter(name ,T, redis, googleQuery) {
     };
 
     function scanAndSort(date = '*', freq = 'daily') {
-        if (date != '*'){
-            date = toDateKey(date);
-        }
-
         var searchKey = [ name, freq, date, '*' ]
 
         return new Promise((resolve, reject) => {

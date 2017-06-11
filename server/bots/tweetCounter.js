@@ -220,6 +220,8 @@ function TweetCounter(name ,T, redis, googleQuery) {
                 all_keys.forEach(function (key, pos) { // use second arg of forEach to get pos
                     redis.hgetall(key, function (err, item) {
                         item.key = key;
+                        var parts = key.split(':');
+                        item.handle = parts[parts.length - 1];
                         items.push(item);
 
                         if (pos == all_keys.length - 1){

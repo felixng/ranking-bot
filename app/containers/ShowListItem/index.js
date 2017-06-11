@@ -23,7 +23,7 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
     // Put together the content of the repository
     const content = (
       <Wrapper>
-        {item.key}
+        {item.handle}
       </Wrapper>
     );
 

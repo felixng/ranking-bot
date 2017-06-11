@@ -41,10 +41,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render() {
     const { loading, error, shows, date } = this.props;
+    const title = 'Most Tweeted WestEnd Shows';
     const showsListProps = {
       loading,
       error,
       shows,
+      title
     };
 
     return (

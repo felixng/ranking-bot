@@ -2,6 +2,12 @@ import styled from 'styled-components';
 
 const Ol = styled.ol`
   counter-reset: leaderboard;
+  margin: 0;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
 `;
 
 export default Ol;

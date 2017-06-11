@@ -18,14 +18,21 @@ injectGlobal`
 
   #app {
     background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
-    color: #e1e1e1;
-    min-height: 100vh;
+    color: #fff;
+    min-height: 100%;
     min-width: 100%;
+    position: relative;
   }
 
   p,
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 `;

@@ -5,7 +5,7 @@ import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ShowListItem from 'containers/ShowListItem';
 
-function ShowsList({ loading, error, shows }) {
+function ShowsList({ loading, error, shows, title }) {
   if (loading) {
     return <List component={LoadingIndicator} />;
   }
@@ -18,7 +18,7 @@ function ShowsList({ loading, error, shows }) {
   }
 
   if (shows !== false && shows.length != 0) {
-    return <List items={shows} component={ShowListItem} />;
+    return <List items={shows} component={ShowListItem} header={title} />;
   }
 
   return null;

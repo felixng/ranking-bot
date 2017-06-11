@@ -2,10 +2,12 @@ import React from 'react';
 
 import Ol from './Ol';
 import Wrapper from './Wrapper';
+import Title from './Title';
 
 function List(props) {
   const ComponentToRender = props.component;
   let content = (<div></div>);
+  let header = (<div></div>);
 
   // If we have items, render them
   if (props.items) {
@@ -17,8 +19,19 @@ function List(props) {
     content = (<ComponentToRender />);
   }
 
+  if (props.header) {
+    header = (
+      <Title>
+        <svg className="ico-cup">
+        </svg>
+          {props.header}
+      </Title>)
+
+  }
+
   return (
     <Wrapper>
+      {header}
       <Ol>
         {content}
       </Ol>

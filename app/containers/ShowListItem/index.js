@@ -29,7 +29,7 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
 
     // Render the content into a list item
     return (
-      <ListItem key={`repo-list-item-${item.key}`} item={content} />
+      <ListItem key={`show-list-item-${item.key}`} item={content} />
     );
   }
 }

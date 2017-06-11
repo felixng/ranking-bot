@@ -17,9 +17,10 @@ injectGlobal`
   }
 
   #app {
-    background-color: #fafafa;
-    min-height: 100%;
-    min-width: 100%;
+    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
+    color: #e1e1e1;
+    min-height: 100vh;
+    min-width: 100vw;
   }
 
   p,

@@ -14,6 +14,7 @@ import ListItem from 'components/ListItem';
 // import IssueIcon from './IssueIcon';
 // import IssueLink from './IssueLink';
 // import RepoLink from './RepoLink';
+import ShowItem from './ShowItem';
 import Wrapper from './Wrapper';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -23,7 +24,7 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
     // Put together the content of the repository
     const content = (
       <Wrapper>
-        {item.handle}
+        <ShowItem>{item.handle}</ShowItem>
       </Wrapper>
     );
 

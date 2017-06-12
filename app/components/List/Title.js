@@ -6,14 +6,16 @@ const Title = styled.h2`
     font-weight: 300;
     padding: 12px 13px 18px;
     margin: 0px;
+    vertical-align: baseline;
 
-    & svg {
-      width: 25px;
-      height: 26px;
+    i {
+      font-size: 1em;
+      width: 20px;
+      font-weight: bold;
       position: relative;
-      top: 3px;
-      margin-right: 6px;
+      margin: 0 10px 0 6px;
       vertical-align: baseline;
+      color: #c24448;
     }  
 `;
 

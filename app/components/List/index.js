@@ -22,9 +22,8 @@ function List(props) {
   if (props.header) {
     header = (
       <Title>
-        <svg className="ico-cup">
-        </svg>
-          {props.header}
+        <i className="fa fa-heart-o" aria-hidden="true"></i>
+        {props.header}
       </Title>)
 
   }

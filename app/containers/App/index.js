@@ -19,7 +19,6 @@ const AppContainer = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  height: 100%;
 `;
 
 const AppWrapper = styled.div`
@@ -37,11 +36,9 @@ export function App(props) {
           { name: 'description', content: 'West End League - Top 10 Popular West End Shows base on Tweets.' },
         ]}
       />
-      <AppContainer>
-        <Header />
-        {React.Children.toArray(props.children)}
-        <Footer />
-      </AppContainer>
+      <Header />
+      {React.Children.toArray(props.children)}
+      <Footer />
     </AppWrapper>
   );
 }

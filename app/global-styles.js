@@ -3,15 +3,16 @@ import { injectGlobal } from 'styled-components';
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
-  body, 
-  [data-reactroot] {
-    position: absolute;
-    height: 100vmax;
-    width: 100vmax;
+  body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
   }
 
   body {
+    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    overflow: auto;
   }
 
   body.fontLoaded {
@@ -19,11 +20,7 @@ injectGlobal`
   }
 
   #app {
-    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     color: #fff;
-    min-height: 100%;
-    height: 100%;
-    width: 100%;
     position: relative;
   }
 

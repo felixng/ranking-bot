@@ -3,9 +3,11 @@ import { injectGlobal } from 'styled-components';
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html,
-  body {
-    height: 100%;
-    width: 100%;
+  body, 
+  [data-reactroot] {
+    position: absolute;
+    height: 100vmax;
+    width: 100vmax;
   }
 
   body {
@@ -20,7 +22,8 @@ injectGlobal`
     background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     color: #fff;
     min-height: 100%;
-    min-width: 100%;
+    height: 100%;
+    width: 100%;
     position: relative;
   }
 

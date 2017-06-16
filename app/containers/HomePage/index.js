@@ -28,15 +28,17 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    // if (this.props.username && this.props.username.trim().length > 0) {
-    //   this.props.onSubmitForm();
-    // }
     this.props.onLoad();
   }
 
-  updateDate(){
+  previousDay(){
     const currentDate = this.props.date;
-    this.props.onChangeDate(currentDate);
+    this.props.onPreviousDate(currentDate);
+  }
+
+  nextDay(){
+    const currentDate = this.props.date;
+    this.props.onNextDate(currentDate);
   }
 
   render() {
@@ -65,7 +67,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </CenteredSection>
           <Section>
             <Button 
-              onClick={this.updateDate.bind(this)}> Click Me! </Button>
+              onClick={this.previousDay.bind(this)}> Previous Day </Button>
+            <Button 
+              onClick={this.nextDay.bind(this)}> Next Day </Button>
             <ShowsList {...showsListProps} />
           </Section>
         </div>
@@ -90,10 +94,18 @@ HomePage.propTypes = {
 
 export function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onChangeDate: (currentDate) => {
+    onPreviousDate: (currentDate) => {
       var date = currentDate;
       var result = new Date(date);
-      result.setDate(result.getDate() - 4);
+      result.setDate(result.getDate() - 1);
+
+      dispatch(changeDate(result));
+      dispatch(loadShows());
+    },
+    onNextDate: (currentDate) => {
+      var date = currentDate;
+      var result = new Date(date);
+      result.setDate(result.getDate() - 1);
 
       dispatch(changeDate(result));
       dispatch(loadShows());

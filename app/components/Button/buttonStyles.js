@@ -15,7 +15,7 @@ const buttonStyles = css`
   font-weight: bold;
   font-size: 16px;
   border: 2px solid #e5e5e5;
-  color: #e5e5e5;
+  color: #e9e9e9;
 
   &:active {
     background: #41addd;

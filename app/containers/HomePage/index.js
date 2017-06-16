@@ -64,12 +64,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <H3>
               <FormattedMessage {...messages.startProjectMessage} />
             </H3>
-          </CenteredSection>
-          <Section>
             <Button 
               onClick={this.previousDay.bind(this)}> Previous Day </Button>
             <Button 
               onClick={this.nextDay.bind(this)}> Next Day </Button>
+          </CenteredSection>
+          <Section>
             <ShowsList {...showsListProps} />
           </Section>
         </div>

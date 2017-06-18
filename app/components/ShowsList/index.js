@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
+import ErrorMessage from 'components/ErrorMessage';
 import ShowListItem from 'containers/ShowListItem';
 
 function ShowsList({ loading, error, shows, title }) {
@@ -19,6 +20,9 @@ function ShowsList({ loading, error, shows, title }) {
 
   if (shows !== false && shows.length != 0) {
     return <List items={shows} component={ShowListItem} header={title} />;
+  } 
+  else {
+    return (<ErrorMessage>Sorry! There were no data for this date!</ErrorMessage>)
   }
 
   return null;

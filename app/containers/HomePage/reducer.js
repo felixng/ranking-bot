@@ -12,7 +12,6 @@
 import { fromJS } from 'immutable';
 
 import {
-  CHANGE_USERNAME,
   CHANGE_DATE,
 } from './constants';
 
@@ -23,18 +22,12 @@ var yesterdayDate = new Date(diff);
 
 // The initial state of the App
 const initialState = fromJS({
-  username: '',
   date: yesterdayDate,
 });
 
 function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_USERNAME:
-      // Delete prefixed '@' from the github username
-      return state
-        .set('username', action.name.replace(/@/gi, ''));
     case CHANGE_DATE:
-      // Delete prefixed '@' from the github username
       return state
         .set('date', action.date);
     default:

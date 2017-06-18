@@ -37,7 +37,7 @@ export function* getShows() {
   try {
     // Call our request helper (see 'utils/request')
     const shows = yield call(request, requestURL);
-    yield put(showsLoaded(shows, dateKey));
+    yield put(showsLoaded(shows.splice(0, 5), dateKey));
     console.debug(shows);
     console.debug(dateKey);
   } catch (err) {

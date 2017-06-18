@@ -99,7 +99,6 @@ const Wrapper = styled.li`
 
   &:nth-child(5) {
     background: #c24448;
-    border-radius: 0 0 10px 10px;
     &::after {
       background: #c24448;
       box-shadow: 0 -2.5px 0 rgba(0, 0, 0, .12);

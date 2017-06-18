@@ -68,10 +68,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               onClick={this.previousDay.bind(this)}> Previous Day </Button>
             <Button 
               onClick={this.nextDay.bind(this)}> Next Day </Button>
-          </CenteredSection>
-          <Section>
             <ShowsList {...showsListProps} />
-          </Section>
+          </CenteredSection>
         </div>
       </article>
     );
@@ -105,12 +103,13 @@ export function mapDispatchToProps(dispatch, ownProps) {
     onNextDate: (currentDate) => {
       var date = currentDate;
       var result = new Date(date);
-      result.setDate(result.getDate() - 1);
+      result.setDate(result.getDate() + 1);
 
       dispatch(changeDate(result));
       dispatch(loadShows());
     },
     onLoad: () => {
+
       dispatch(loadShows());
     }
   };

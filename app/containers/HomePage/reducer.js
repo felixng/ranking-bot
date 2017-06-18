@@ -16,10 +16,15 @@ import {
   CHANGE_DATE,
 } from './constants';
 
+var todayTimeStamp = new Date(); 
+var oneDayTimeStamp = 1000 * 60 * 60 * 24; // Milliseconds in a day
+var diff = todayTimeStamp - oneDayTimeStamp;
+var yesterdayDate = new Date(diff);
+
 // The initial state of the App
 const initialState = fromJS({
   username: '',
-  date: new Date(),
+  date: yesterdayDate,
 });
 
 function homeReducer(state = initialState, action) {

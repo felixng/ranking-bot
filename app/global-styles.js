@@ -6,11 +6,9 @@ injectGlobal`
   body {
     height: 100%;
     width: 100%;
-    overflow: hidden;
   }
 
   body {
-    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
@@ -19,7 +17,11 @@ injectGlobal`
   }
 
   #app {
+    position: absolute;
+    height: 100%;
+    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     color: #fff;
+    padding: 1px 0;
     position: relative;
   }
 

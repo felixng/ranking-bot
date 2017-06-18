@@ -79,8 +79,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               onClick={this.previousDay.bind(this)}> Previous Day </Button>
             {nextButton}
             <ShowsList {...showsListProps} />
-            <ShowsList {...showsListProps} />
-            <ShowsList {...showsListProps} />
+            {/*<ShowsList {...showsListProps} />
+            <ShowsList {...showsListProps} />*/}
           </CenteredSection>
         </div>
       </article>

@@ -22,7 +22,7 @@ function List(props) {
   if (props.header) {
     header = (
       <Title>
-        <i className="fa fa-heart-o" aria-hidden="true"></i>
+        {/*<i className="fa fa-heart-o" aria-hidden="true"></i>*/}
         {props.header}
       </Title>)
 

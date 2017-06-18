@@ -12,7 +12,6 @@ injectGlobal`
   body {
     background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    overflow: auto;
   }
 
   body.fontLoaded {

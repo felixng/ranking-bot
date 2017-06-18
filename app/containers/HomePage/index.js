@@ -57,7 +57,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     var diff = todayTimeStamp - oneDayTimeStamp;
     var yesterdayDate = new Date(diff);
     
-    if (date.toDateString() == yesterdayDate.toDateString()){
+    console.log(date.toDateString());
+    console.log(yesterdayDate.toDateString());
+
+    if (date.toDateString() != yesterdayDate.toDateString()){
       nextButton = (<Button 
                       onClick={this.nextDay.bind(this)}> Next Day </Button>)
     }

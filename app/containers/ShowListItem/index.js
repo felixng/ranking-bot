@@ -12,6 +12,7 @@ import { FormattedNumber } from 'react-intl';
 import { makeSelectCurrentUser } from 'containers/App/selectors';
 import ListItem from 'components/ListItem';
 import Wrapper from './Wrapper';
+import Number from './Number';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -21,6 +22,7 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
     const content = (
       <Wrapper>
         <div>{item.handle}</div>
+        <Number>{item.score}</Number>
       </Wrapper>
     );
 

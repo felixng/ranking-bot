@@ -115,6 +115,45 @@ const Wrapper = styled.li`
     }
   }
 
+  &:nth-child(6) {
+    background: #fa6855;
+    &::after {
+      background: #fa6855;
+    }
+  }
+
+  &:nth-child(7) {
+    background: #fa6855;
+    &::after {
+      background: #fa6855;
+    }
+  }
+
+  &:nth-child(8) {
+    background: #fa6855;
+    &::after {
+      background: #fa6855;
+    }
+  }
+
+  &:nth-child(9) {
+    background: #fa6855;
+    &::after {
+      background: #fa6855;
+    }
+  }
+
+  &:nth-child(10) {
+    background: #fa6855;
+    &::after {
+      background: #fa6855;
+    }
+  }
+
+  &:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+
 }
 `;
 

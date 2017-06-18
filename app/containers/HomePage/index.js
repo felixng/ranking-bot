@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
-import H3 from 'components/H3';
+import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
 import Button from 'components/Button';
 import CenteredSection from './CenteredSection';
@@ -56,9 +56,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     var oneDayTimeStamp = 1000 * 60 * 60 * 24; // Milliseconds in a day
     var diff = todayTimeStamp - oneDayTimeStamp;
     var yesterdayDate = new Date(diff);
-    
-    console.log(date.toDateString());
-    console.log(yesterdayDate.toDateString());
 
     if (date.toDateString() != yesterdayDate.toDateString()){
       nextButton = (<Button 
@@ -75,9 +72,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         />
         <div>
           <CenteredSection>
-            <H3>
+            <SubTitle>
               <FormattedMessage {...messages.startProjectMessage} />
-            </H3>
+            </SubTitle>
             <Button 
               onClick={this.previousDay.bind(this)}> Previous Day </Button>
             {nextButton}

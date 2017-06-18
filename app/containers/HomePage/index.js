@@ -42,14 +42,25 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render() {
+    let nextButton = (<div></div>)
     const { loading, error, shows, date } = this.props;
-    const title = 'Most Tweeted Shows';
+    const title = date.toDateString();
     const showsListProps = {
       loading,
       error,
       shows,
       title
     };
+
+    var todayTimeStamp = new Date(); 
+    var oneDayTimeStamp = 1000 * 60 * 60 * 24; // Milliseconds in a day
+    var diff = todayTimeStamp - oneDayTimeStamp;
+    var yesterdayDate = new Date(diff);
+    
+    if (date.toDateString() == yesterdayDate.toDateString()){
+      nextButton = (<Button 
+                      onClick={this.nextDay.bind(this)}> Next Day </Button>)
+    }
 
     return (
       <article>
@@ -66,8 +77,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             </H3>
             <Button 
               onClick={this.previousDay.bind(this)}> Previous Day </Button>
-            <Button 
-              onClick={this.nextDay.bind(this)}> Next Day </Button>
+            {nextButton}
             <ShowsList {...showsListProps} />
           </CenteredSection>
         </div>

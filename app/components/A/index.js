@@ -5,10 +5,10 @@
 import styled from 'styled-components';
 
 const A = styled.a`
-  color: #41addd;
+  color: #e1e1e1;
 
   &:hover {
-    color: #6cc0e5;
+    color: #e9e9e9;
   }
 `;
 

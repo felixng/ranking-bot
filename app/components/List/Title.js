@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const Title = styled.h2`
-    font-size: 18px;
+const Title = styled.h4`
+    font-size: 14px;
     color: #e1e1e1;
     font-weight: 400;
-    padding: 15px 13px;
+    padding: 0.5em;
     margin: 0px;
     vertical-align: baseline;
+    opacity: 0.7;
 
     i {
       font-size: 1em;

@@ -1,8 +1,10 @@
 import React from 'react';
 
 import Ol from './Ol';
+import H2 from 'components/H2';
 import Wrapper from './Wrapper';
 import Title from './Title';
+import TitleWrapper from './TitleWrapper';
 
 function List(props) {
   const ComponentToRender = props.component;
@@ -21,10 +23,13 @@ function List(props) {
 
   if (props.header) {
     header = (
-      <Title>
+      <TitleWrapper>
+        <H2>What's Trending?</H2>
         {/*<i className="fa fa-heart-o" aria-hidden="true"></i>*/}
-        {props.header}
-      </Title>)
+        <Title>
+          {props.header}
+        </Title>
+      </TitleWrapper>)
 
   }
 

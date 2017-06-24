@@ -41,10 +41,9 @@ const addBackendMiddlewares = (app) => {
 
 	app.post('/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
 	  counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
-	  // counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	  counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
 	  
 	  res.status(200).send();
-	  next();
 	});
 
 	app.get('/felix/:date', passport.authenticate('basic', { session: false }), function(req, res) {

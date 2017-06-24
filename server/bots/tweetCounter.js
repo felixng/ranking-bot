@@ -2,6 +2,9 @@ function TweetCounter(name ,T, redis, googleQuery) {
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
+    const pg = require('pg');
+    const connectionString = process.env.DATABASE_URL;
+    const client = new pg.Client(connectionString);
 
     const isDev = process.env.NODE_ENV !== 'production';
     var includeRetweet = process.env.INCLUDE_RETWEET || true;
@@ -142,6 +145,31 @@ function TweetCounter(name ,T, redis, googleQuery) {
             });
         }
     };
+
+    function getHandlesFromDB(callback){
+        const results = [];
+          
+          pg.connect(connectionString, (err, client, done) => {
+            
+            if (err) {
+              console.log(err);
+              return;
+            }
+            
+            const query = client.query('SELECT "Twitter" FROM "Productions" WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
+            
+            query.on('row', (row) => {
+                if (!row.Twitter.startsWith('#')){
+                    row.Twitter = '@' + row.Twitter;    
+                }
+                results.push(row.Twitter);
+            });
+            
+            query.on('end', () => {
+              callback(results);
+            });
+          });
+    }
 
     function getHandles(callback){
         var options = {
@@ -308,12 +336,28 @@ function TweetCounter(name ,T, redis, googleQuery) {
     }
 
     this.gatherAllDuration = function(daysAgo, duration){
-        getHandles(function(handles){
+        getHandlesFromDB(function(handles){
             handles.forEach(function(handle){
                 run(handle, daysAgo, duration);
             });
         });
     }
+
+    // this.test = function(daysAgo, duration){
+    //     getHandlesFromDB(function(handles){
+    //         console.log(handles);
+    //         // handles.forEach(function(handle){
+    //         //     console.log(handle)
+    //         // });
+    //     });
+
+    //     getHandles(function(handles){
+    //         console.log(handles);
+    //         // handles.forEach(function(handle){
+    //         //     console.log(handle)
+    //         // });
+    //     });
+    // }
 
     function statCompareDesc(a,b) {
       return b.score - a.score

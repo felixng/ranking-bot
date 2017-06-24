@@ -1,9 +1,9 @@
-function TweetCounter(name ,T, redis, googleQuery) {
+function TweetCounter(name ,T, redis, tableName) {
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
     const pg = require('pg');
-    const connectionString = process.env.DATABASE_URL;
+    var connectionString = process.env.DATABASE_URL;
     const client = new pg.Client(connectionString);
 
     const isDev = process.env.NODE_ENV !== 'production';
@@ -156,7 +156,7 @@ function TweetCounter(name ,T, redis, googleQuery) {
               return;
             }
             
-            const query = client.query('SELECT "Twitter" FROM "Productions" WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
+            const query = client.query('SELECT "Twitter" FROM ' + tableName + ' WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
             
             query.on('row', (row) => {
                 if (!row.Twitter.startsWith('#')){
@@ -171,40 +171,40 @@ function TweetCounter(name ,T, redis, googleQuery) {
           });
     }
 
-    function getHandles(callback){
-        var options = {
-          hostname: 'gsx2json.com',
-          path: '/api?' + googleQuery,
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        };
+    // function getHandles(callback){
+    //     var options = {
+    //       hostname: 'gsx2json.com',
+    //       path: '/api?' + googleQuery,
+    //       method: 'GET',
+    //       headers: { 'Content-Type': 'application/json' }
+    //     };
 
-        var handles = []
+    //     var handles = []
 
-        console.log(options.path);
+    //     console.log(options.path);
 
-        getJSON(options, function(status, result) {
-            if (result && result.rows && result.rows.length > 0){
-                var rows = result.rows;
+    //     getJSON(options, function(status, result) {
+    //         if (result && result.rows && result.rows.length > 0){
+    //             var rows = result.rows;
                 
-                for (var i = 0; i < rows.length; i++){
-                    if (rows[i].tocrawl &&
-                        rows[i].twitter && 
-                        rows[i].twitter != '' &&
-                        rows[i].twitter != '-') {
+    //             for (var i = 0; i < rows.length; i++){
+    //                 if (rows[i].tocrawl &&
+    //                     rows[i].twitter && 
+    //                     rows[i].twitter != '' &&
+    //                     rows[i].twitter != '-') {
                         
-                        if (!rows[i].twitter.startsWith('#')){
-                            rows[i].twitter = '@' + rows[i].twitter;
-                        }
+    //                     if (!rows[i].twitter.startsWith('#')){
+    //                         rows[i].twitter = '@' + rows[i].twitter;
+    //                     }
 
-                        handles.push(rows[i].twitter);
-                    }
-                }
-            }
+    //                     handles.push(rows[i].twitter);
+    //                 }
+    //             }
+    //         }
 
-            callback(handles);
-        });
-    }
+    //         callback(handles);
+    //     });
+    // }
 
     function getTweetChunk(logConfig, tally, query, max_id) {
         return new Promise( (resolve, reject) => {
@@ -336,28 +336,18 @@ function TweetCounter(name ,T, redis, googleQuery) {
     }
 
     this.gatherAllDuration = function(daysAgo, duration){
-        getHandlesFromDB(function(handles){
+        getHandles(function(handles){
             handles.forEach(function(handle){
                 run(handle, daysAgo, duration);
             });
         });
     }
 
-    // this.test = function(daysAgo, duration){
-    //     getHandlesFromDB(function(handles){
-    //         console.log(handles);
-    //         // handles.forEach(function(handle){
-    //         //     console.log(handle)
-    //         // });
-    //     });
-
-    //     getHandles(function(handles){
-    //         console.log(handles);
-    //         // handles.forEach(function(handle){
-    //         //     console.log(handle)
-    //         // });
-    //     });
-    // }
+    this.testDB = function(){
+        getHandlesFromDB(function(handles){
+            console.log(handles);
+        });
+    }
 
     function statCompareDesc(a,b) {
       return b.score - a.score

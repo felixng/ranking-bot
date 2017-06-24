@@ -3,7 +3,7 @@ function TweetCounter(name ,T, redis, tableName) {
     var http = require("http");
     var sleep = require('sleep');
     const pg = require('pg');
-    var connectionString = process.env.DATABASE_URL;
+    var connectionString = process.env.DATABASE_URL || 'postgres://tester:testing123@leagueconfig.c2brtd72dz8q.eu-west-2.rds.amazonaws.com:5432/TestConfig';
     const client = new pg.Client(connectionString);
 
     const isDev = process.env.NODE_ENV !== 'production';

@@ -150,7 +150,8 @@ function TweetCounter(name ,T, redis, tableName) {
         const results = [];
           
           pg.connect(connectionString, (err, client, done) => {
-            
+            console.log('Connecting to PG');
+
             if (err) {
               console.log(err);
               return;

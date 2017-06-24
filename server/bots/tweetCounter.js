@@ -336,7 +336,7 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     this.gatherAllDuration = function(daysAgo, duration){
-        getHandles(function(handles){
+        getHandlesFromDB(function(handles){
             handles.forEach(function(handle){
                 run(handle, daysAgo, duration);
             });

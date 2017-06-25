@@ -4,6 +4,7 @@ function TweetCounter(name ,T, redis, tableName) {
     var sleep = require('sleep');
     const pg = require('pg');
     var connectionString = process.env.DATABASE_URL || 'postgres://tester:testing123@leagueconfig.c2brtd72dz8q.eu-west-2.rds.amazonaws.com:5432/TestConfig';
+    console.log(connectionString);
     const client = new pg.Client(connectionString);
 
     const isDev = process.env.NODE_ENV !== 'production';
@@ -158,7 +159,7 @@ function TweetCounter(name ,T, redis, tableName) {
             }
             
             const query = client.query('SELECT "Twitter" FROM "' + tableName + '" WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
-            
+            console.log(query);
             query.on('row', (row) => {
                 if (!row.Twitter.startsWith('#')){
                     row.Twitter = '@' + row.Twitter;    

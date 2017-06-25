@@ -157,7 +157,7 @@ function TweetCounter(name ,T, redis, tableName) {
               return;
             }
             
-            const query = client.query('SELECT "Twitter" FROM ' + tableName + ' WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
+            const query = client.query('SELECT "Twitter" FROM "' + tableName + '" WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
             
             query.on('row', (row) => {
                 if (!row.Twitter.startsWith('#')){

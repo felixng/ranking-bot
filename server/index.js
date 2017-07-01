@@ -11,6 +11,9 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngr
 const resolve = require('path').resolve;
 const app = express();
 const counters = require('./bots/counters');
+// const Spidy = require('./bots/uktwSpidy');
+const Spidy = require('./bots/londonTheatreSpidy');
+const spider = new Spidy();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
@@ -49,6 +52,7 @@ app.listen(port, host, (err) => {
   }
 });
 
+spider.getShows();
 
 //Bots
 var CronJob = require('cron').CronJob;

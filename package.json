@@ -243,6 +243,7 @@
     "reselect": "2.5.4",
     "sanitize.css": "4.1.0",
     "sleep": "^5.1.1",
+    "spooky": "^0.2.5",
     "styled-components": "1.1.2",
     "twit": "*",
     "warning": "3.0.0",

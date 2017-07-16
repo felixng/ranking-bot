@@ -32,7 +32,7 @@ export function* getShows() {
   // Select username from store
   const date = yield select(makeSelectDate());
   const dateKey = toKey(date);
-  const requestURL = `${window.location.protocol}\/\/${window.location.host}/westend/top10/${dateKey}`;
+  const requestURL = `${window.location.protocol}\/\/${window.location.host}/top/10/${dateKey}`;
 
   try {
     // Call our request helper (see 'utils/request')

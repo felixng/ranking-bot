@@ -32,8 +32,6 @@ function TweetCounter(name ,T, redis, tableName) {
         var sinceDate = date.toJSON().slice(0,10).replace(/-/g,'-');
         console.log("Since: " + sinceDate);
 
-        // Parsing Query
-        // var query = process.env.RANKING_QUERY || "@HPPlayLDN";
         var since = " since:" + sinceDate;
         var until = " until:" + untilDate;
 
@@ -71,6 +69,7 @@ function TweetCounter(name ,T, redis, tableName) {
             tweetTotal: tweetTotal,
             retweetTotal: retweetTotal,
             score: score,
+            tweets: tally.tweetIds,
             createdAt: new Date(), 
         }
 
@@ -126,6 +125,7 @@ function TweetCounter(name ,T, redis, tableName) {
 
             tweets.statuses.forEach( (tweet) => {
                 tally.retweetTotal += tweet.retweet_count;
+                tally.tweetIds.push(tweet.id_str);
             });
         }
     };
@@ -200,6 +200,7 @@ function TweetCounter(name ,T, redis, tableName) {
             query: query,
             tweetTotal: tweetTotal,
             retweetTotal: retweetTotal,
+            tweetIds: [],
         }
 
         return new Promise( (resolve, reject) => {
@@ -224,7 +225,7 @@ function TweetCounter(name ,T, redis, tableName) {
     this.gatherAllDuration = function(daysAgo, duration){
         parseDateQuery(daysAgo, duration, function(date){
             getProductionsFromAPI(function(productions){
-                // console.log(productions);
+                console.log(productions);
                 productions = productions.slice(7, 18);
                 
                 productions.forEach(function(production){

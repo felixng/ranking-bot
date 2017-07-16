@@ -404,9 +404,9 @@ function TweetCounter(name ,T, redis, tableName) {
     this.gatherAllDuration = function(daysAgo, duration){
         getProductionsFromAPI(function(productions){
             // console.log(productions);
-            productions = productions.slice(0, 5);
+            // productions = productions.slice(0, 5);
             productions.forEach(function(production){
-                newRun(production, daysAgo, duration);
+                run(production, daysAgo, duration);
             });
         });
     }

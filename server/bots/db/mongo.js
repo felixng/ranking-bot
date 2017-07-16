@@ -20,18 +20,24 @@ var insert = function(result){
 	});
 }
 
-// var findAllDocuments = function(collectionName, db, callback) {
-//   var collection = db.collection(collectionName);
-//   // Find some documents
-//   collection.find('twitter'::{$exists:true}).toArray(function(err, docs) {
-//   	console.log("============Found the following handles=============");
-  	
-//     console.dir(docs);
-//     //callback(docs);
-//   });
-// }
+var list = function(date, numberOfItems, callback){
+	MongoClient.connect(url, function(err, db) {
+	  console.log("Connected correctly to server");
+	  var collection = db.collection(collectionName);
 
+	  collection.find({ date: date })
+  				.sort( { score: -1 } )
+  				.limit(numberOfItems)
+  				.toArray(function(err, result) {
+	  	if (err) console.log(err)
+	  	else{
+	  		callback(result);
+	  	}	
+	  });
+	});
+}
 
 module.exports = {
 	insert: insert,
+	list: list,
 };

@@ -1,6 +1,7 @@
 var passport = require('passport');
 var Strategy = require('passport-http').BasicStrategy;
 var db = require('../db');
+var mongo = require('../bots/db/mongo');
 
 const addBackendMiddlewares = (app) => {
 	passport.use(new Strategy(
@@ -74,6 +75,13 @@ const addBackendMiddlewares = (app) => {
 		promise.then( items => {
 			res.status(200).send(items);
 		})
+	  }
+
+	  if (req.params.site == 'theatre'){
+	  	mongo.list(req.params.date, 10, function(list){
+	  		res.json(list);	
+	  	})
+	    
 	  }
 	});
 

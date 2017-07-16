@@ -120,7 +120,6 @@ function TweetCounter(name ,T, redis, tableName) {
         }
     }
 
-
     function calculateTweets(tweets, tally) {
         if (tweets.statuses){
             tally.tweetTotal += tweets.statuses.length;
@@ -180,37 +179,6 @@ function TweetCounter(name ,T, redis, tableName) {
         });
     };
 
-    function scanAndSort(date = '*', freq = 'daily') {
-        var searchKey = [ name, freq, date, '*' ]
-
-        return new Promise((resolve, reject) => {
-            redis.keys( searchKey.join(':'), function (err, all_keys) {
-                var items = [];
-
-                if (all_keys.length == 0){
-                    resolve([]);
-                }
-
-                all_keys.forEach(function (key, pos) { // use second arg of forEach to get pos
-                    redis.hgetall(key, function (err, item) {
-                        item.key = key;
-                        var parts = key.split(':');
-                        item.handle = parts[parts.length - 1];
-                        items.push(item);
-
-                        if (pos == all_keys.length - 1){
-                            resolve(items);
-                        }
-                    });
-                })
-            })
-        })
-        .then( items => {
-            items.sort(statCompareDesc);
-            return items.slice(0, 10);
-        })
-    }
-
     function run(production, date){
         var handle = production.handle;
         var tweetTotal = 0;
@@ -253,16 +221,6 @@ function TweetCounter(name ,T, redis, tableName) {
         this.gatherAllDuration(1, 1);
     }
 
-    this.getTop10 = function(date){
-        var scanPromise = scanAndSort(date);
-
-        return scanPromise;
-    }
-
-    this.Top10 = function(date){
-        return mongo.get(date, 10);
-    }
-
     this.gatherAllDuration = function(daysAgo, duration){
         parseDateQuery(daysAgo, duration, function(date){
             getProductionsFromAPI(function(productions){
@@ -274,10 +232,6 @@ function TweetCounter(name ,T, redis, tableName) {
                 });
             });    
         });
-    }
-
-    function statCompareDesc(a,b) {
-      return b.score - a.score
     }
 }
 

@@ -69,13 +69,13 @@ const addBackendMiddlewares = (app) => {
 		// })
 	 //  }
 
-	  if (req.params.site == 'westend'){
-	    var promise = counters.theatreCounter.getTop10(req.params.date);
+	 //  if (req.params.site == 'westend'){
+	 //    var promise = counters.theatreCounter.getTop10(req.params.date);
 
-		promise.then( items => {
-			res.status(200).send(items);
-		})
-	  }
+		// promise.then( items => {
+		// 	res.status(200).send(items);
+		// })
+	 //  }
 
 	  if (req.params.site == 'theatre'){
 	  	mongo.list(req.params.date, 10, function(list){

@@ -2,12 +2,10 @@ function TweetCounter(name ,T, redis, tableName) {
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
-    const pg = require('pg');
-    var connectionString = process.env.DATABASE_URL || 'postgres://tester:testing123@leagueconfig.c2brtd72dz8q.eu-west-2.rds.amazonaws.com:5432/TestConfig';
-    console.log(connectionString);
-    const client = new pg.Client(connectionString);
 
     const isDev = process.env.NODE_ENV !== 'production';
+    const url = process.env.API_URL || 'uat-cms-ensemblr.herokuapp.com';
+
     var includeRetweet = process.env.INCLUDE_RETWEET || true;
     var retweetWeight = process.env.RETWEET_WEIGHT || 0.3;
 
@@ -82,7 +80,6 @@ function TweetCounter(name ,T, redis, tableName) {
         else {
             key = [ freq, keyDateString, handle ]
         }
-        
 
         redis.hmset( key.join(':'),
                     {
@@ -102,8 +99,8 @@ function TweetCounter(name ,T, redis, tableName) {
     {
         console.log("rest::getJSON");
 
-        var prot = options.port == 443 ? https : http;
-        var req = prot.request(options, function(res)
+        var port = options.port == 443 ? https : http;
+        var req = port.request(options, function(res)
         {
             var output = '';
             //console.log(options.host + ':' + res.statusCode);
@@ -120,7 +117,7 @@ function TweetCounter(name ,T, redis, tableName) {
         });
 
         req.on('error', function(err) {
-            res.send('error: ' + err.message);
+            console.log(err);
         });
 
         req.end();
@@ -147,66 +144,20 @@ function TweetCounter(name ,T, redis, tableName) {
         }
     };
 
-    function getHandlesFromDB(callback){
-        const results = [];
-          
-          pg.connect(connectionString, (err, client, done) => {
-            console.log('Connecting to PG');
+    function getHandlesFromAPI(callback){
+        var options = {
+          hostname: url,
+          path: '/api/productions/twitters',
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        };
 
-            if (err) {
-              console.log(err);
-              return;
-            }
-            
-            const query = client.query('SELECT "Twitter" FROM "' + tableName + '" WHERE "Twitter" != \'\' and "Twitter" != \'-\';');
-            console.log(query);
-            query.on('row', (row) => {
-                if (!row.Twitter.startsWith('#')){
-                    row.Twitter = '@' + row.Twitter;    
-                }
-                results.push(row.Twitter);
-            });
-            
-            query.on('end', () => {
-              callback(results);
-            });
-          });
+        var handles = []
+
+        getJSON(options, function(status, result) {
+            callback(result);
+        });
     }
-
-    // function getHandles(callback){
-    //     var options = {
-    //       hostname: 'gsx2json.com',
-    //       path: '/api?' + googleQuery,
-    //       method: 'GET',
-    //       headers: { 'Content-Type': 'application/json' }
-    //     };
-
-    //     var handles = []
-
-    //     console.log(options.path);
-
-    //     getJSON(options, function(status, result) {
-    //         if (result && result.rows && result.rows.length > 0){
-    //             var rows = result.rows;
-                
-    //             for (var i = 0; i < rows.length; i++){
-    //                 if (rows[i].tocrawl &&
-    //                     rows[i].twitter && 
-    //                     rows[i].twitter != '' &&
-    //                     rows[i].twitter != '-') {
-                        
-    //                     if (!rows[i].twitter.startsWith('#')){
-    //                         rows[i].twitter = '@' + rows[i].twitter;
-    //                     }
-
-    //                     handles.push(rows[i].twitter);
-    //                 }
-    //             }
-    //         }
-
-    //         callback(handles);
-    //     });
-    // }
 
     function getTweetChunk(logConfig, tally, query, max_id) {
         return new Promise( (resolve, reject) => {
@@ -338,7 +289,7 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     this.gatherAllDuration = function(daysAgo, duration){
-        getHandlesFromDB(function(handles){
+        getHandlesFromAPI(function(handles){
             console.log(handles);
             handles.forEach(function(handle){
                 run(handle, daysAgo, duration);

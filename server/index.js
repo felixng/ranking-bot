@@ -55,10 +55,8 @@ var CronJob = require('cron').CronJob;
 // counters.theatreCounter.testDB();
 new CronJob('00 00 01 * * 1', function() {
   counters.theatreCounter.gatherAllDuration(1, 7);
-  counters.trainCounter.gatherAllDuration(1, 7);
 }, null, true, 'Europe/London');
 
 new CronJob('00 00 01 * * *', function() {
   counters.theatreCounter.gatherAll();
-  counters.trainCounter.gatherAll();
 }, null, true, 'Europe/London');

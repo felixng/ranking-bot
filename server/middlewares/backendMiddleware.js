@@ -15,32 +15,32 @@ const addBackendMiddlewares = (app) => {
 
 	const counters = require('../bots/counters');
 
-	app.post(':site/crawl/:daysAgo/:length', function(req, res) {
-	  if (req.params.site == 'train'){
-	    counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
-	  }
+	// app.post(':site/crawl/:daysAgo/:length', function(req, res) {
+	//   // if (req.params.site == 'train'){
+	//   //   counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	//   // }
 
-	  if (req.params.site == 'westend'){
-	    counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
-	  }
+	//   if (req.params.site == 'westend'){
+	//     counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	//   }
 	  
-	  res.status(200).send();
-	});
+	//   res.status(200).send();
+	// });
 
-	app.post('/:site/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
-	  if (req.params.site == 'train'){
-	    counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
-	  }
+	// app.post('/:site/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
+	//   if (req.params.site == 'train'){
+	//     counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	//   }
 
-	  if (req.params.site == 'westend'){
-	    counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
-	  }
+	//   if (req.params.site == 'westend'){
+	//     counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	//   }
 	  
-	  res.status(200).send();
-	});
+	//   res.status(200).send();
+	// });
 
 	app.post('/crawl/:daysAgo/:length', passport.authenticate('basic', { session: false }), function(req, res) {
-	  counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
+	  // counters.trainCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
 	  counters.theatreCounter.gatherAllDuration(req.params.daysAgo, req.params.length);
 	  
 	  res.status(200).send();
@@ -60,13 +60,13 @@ const addBackendMiddlewares = (app) => {
 	});
 
 	app.get('/:site/top10/:date', function(req, res) {
-	  if (req.params.site == 'train'){
-	    var promise = counters.trainCounter.getTop10(req.params.date);
+	 //  if (req.params.site == 'train'){
+	 //    var promise = counters.trainCounter.getTop10(req.params.date);
 
-		promise.then( items => {
-			res.status(200).send(items);
-		})
-	  }
+		// promise.then( items => {
+		// 	res.status(200).send(items);
+		// })
+	 //  }
 
 	  if (req.params.site == 'westend'){
 	    var promise = counters.theatreCounter.getTop10(req.params.date);
@@ -76,6 +76,8 @@ const addBackendMiddlewares = (app) => {
 		})
 	  }
 	});
+
+	
 }
 
 module.exports = (app) => {

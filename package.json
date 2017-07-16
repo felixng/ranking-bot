@@ -222,6 +222,7 @@
     "ip": "1.1.4",
     "lodash": "4.17.2",
     "minimist": "1.2.0",
+    "mongodb": "^2.2.30",
     "newrelic": "^1.29.0",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",

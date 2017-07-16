@@ -33,6 +33,10 @@ const initialState = fromJS({
   trendingData: {
     shows: false,
   },
+  tweetsCloud: {
+    show: '',
+    tweets: []
+  }
 });
 
 function appReducer(state = initialState, action) {

@@ -1,7 +1,9 @@
 function TweetCounter(name ,T, redis, tableName) {
+    const ignore = ['E_N_O', 'enballet', 'The_Globe', 'sadlers_wells', 'MenChocFactory', 'OpenAirTheatre'];
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
+    var mongo = require('./db/mongo');
 
     const isDev = process.env.NODE_ENV !== 'production';
     const url = process.env.API_URL || 'uat-cms-ensemblr.herokuapp.com';
@@ -49,51 +51,83 @@ function TweetCounter(name ,T, redis, tableName) {
         score = 0;
     }
 
-    function logToRedis(logConfig, tally){
+    function parseResult(logConfig, tally, callback){
         var handle = logConfig.handle;
         var daysAgo = logConfig.daysAgo;
         var duration = logConfig.duration;
         var tweetTotal = tally.tweetTotal;
         var retweetTotal = tally.retweetTotal;
-
         var score = Math.round(tweetTotal + (retweetTotal * retweetWeight));
 
-        console.log(handle);        
-        console.log('tweetTotal:', tweetTotal);
-        console.log('retweetTotal:', retweetTotal);            
-        console.log('score:', score);
-
-        var freq = 'daily';
-        if (duration == 7){
-            freq = 'weekly';
-        }
-
-        var today = new Date();
         var keyDate = new Date();
         keyDate.setDate(keyDate.getDate() - daysAgo);
         var keyDateString = keyDate.toJSON().slice(0,10).replace(/-/g,'-');
 
-        var key = []
-        if (name != ''){
-            key = [ name, freq, keyDateString, handle ];
-        }
-        else {
-            key = [ freq, keyDateString, handle ]
+        var result = {
+            id: logConfig.id,
+            date: keyDateString,
+            handle: logConfig.handle,
+            tweetTotal: tweetTotal,
+            retweetTotal: retweetTotal,
+            score: score,
+            createdAt: new Date(), 
         }
 
-        redis.hmset( key.join(':'),
-                    {
-                        'tweetTotal': tweetTotal, 
-                        'retweetTotal': retweetTotal, 
-                        'retweetWeight': retweetWeight, 
-                        'createdAt': new Date(), 
-                        'score': score, 
-                    },
-            function(err, reply) {
-              console.log(reply);
-            }
-        );
+        callback(result);
     }
+
+    function logToMongo(result){
+        console.log("Logging to Mongo");
+        mongo.insert(result);
+    }
+
+    // function logToRedis(logConfig, tally){
+    //     console.log("Logging to Redis");
+    //     var handle = logConfig.handle;
+    //     var daysAgo = logConfig.daysAgo;
+    //     var duration = logConfig.duration;
+    //     var tweetTotal = tally.tweetTotal;
+    //     var retweetTotal = tally.retweetTotal;
+
+    //     var score = Math.round(tweetTotal + (retweetTotal * retweetWeight));
+
+    //     console.log(handle);        
+    //     console.log('tweetTotal:', tweetTotal);
+    //     console.log('retweetTotal:', retweetTotal);            
+    //     console.log('score:', score);
+
+    //     var freq = 'daily';
+    //     if (duration == 7){
+    //         freq = 'weekly';
+    //     }
+
+        // var today = new Date();
+        // var keyDate = new Date();
+        // keyDate.setDate(keyDate.getDate() - daysAgo);
+        // var keyDateString = keyDate.toJSON().slice(0,10).replace(/-/g,'-');
+
+    //     var key = []
+    //     if (name != ''){
+    //         key = [ name, freq, keyDateString, handle ];
+    //     }
+    //     else {
+    //         key = [ freq, keyDateString, handle ]
+    //     }
+
+    //     redis.hmset( key.join(':'),
+    //                 {
+    //                     'id': id,
+    //                     'tweetTotal': tweetTotal, 
+    //                     'retweetTotal': retweetTotal, 
+    //                     'retweetWeight': retweetWeight, 
+    //                     'createdAt': new Date(), 
+    //                     'score': score, 
+    //                 },
+    //         function(err, reply) {
+    //           console.log(reply);
+    //         }
+    //     );
+    // }
 
     function getJSON(options, onResult)
     {
@@ -144,15 +178,13 @@ function TweetCounter(name ,T, redis, tableName) {
         }
     };
 
-    function getHandlesFromAPI(callback){
+    function getProductionsFromAPI(callback){
         var options = {
           hostname: url,
           path: '/api/productions/twitters',
           method: 'GET',
           headers: { 'Content-Type': 'application/json' }
         };
-
-        var handles = []
 
         getJSON(options, function(status, result) {
             callback(result);
@@ -166,11 +198,17 @@ function TweetCounter(name ,T, redis, tableName) {
 
             T.get('search/tweets', nextSearch, function(error, data) {
                 if (error){
-                    console.log(error);
+                    // console.log(error);
+                    if (error.twitterReply){
+                        console.log(error.twitterReply.errors);    
+                    }
                     sleep.sleep(900);
                 }
                 else if (data.errors){
-                    console.log(data.errors);
+                    // console.log(data.errors);
+                    if (data.errors.twitterReply){
+                        console.log(data.errors.twitterReply.errors);    
+                    }
                     sleep.sleep(900);
                 }
                 else {
@@ -218,7 +256,8 @@ function TweetCounter(name ,T, redis, tableName) {
         })
     }
 
-    function run(handle, daysAgo, duration){
+    function run(production, daysAgo, duration){
+        var handle = production.handle;
         var dateQuery = parseDateQuery(daysAgo, duration);
         var tweetTotal = 0;
         var retweetTotal = 0;
@@ -232,6 +271,7 @@ function TweetCounter(name ,T, redis, tableName) {
                        result_type: 'recent' };
         
         var logConfig = {
+            id: production.id,
             handle: handle, 
             daysAgo: daysAgo,
             duration: duration,
@@ -247,11 +287,15 @@ function TweetCounter(name ,T, redis, tableName) {
                 console.log("Query: " + handle);
                 
                 if (error){
-                    console.log(error);
+                    if (error.twitterReply){
+                        console.log(error.twitterReply.errors);    
+                    }
                     sleep.sleep(900);
                 }
                 else if (data.errors){
-                    console.log(data.errors);
+                    if (data.errors.twitterReply){
+                        console.log(data.errors.twitterReply.errors);    
+                    }
                     sleep.sleep(900);
                 }
                 else {
@@ -271,7 +315,78 @@ function TweetCounter(name ,T, redis, tableName) {
             })
         })
         .then(function(){
-            logToRedis(logConfig, tally);
+            parseResult(logConfig, tally, function(result){
+                logToMongo(result);
+            });
+            resetCounts();
+        })
+    };
+
+    function newRun(production, daysAgo, duration){
+        var handle = production.handle;
+        var dateQuery = parseDateQuery(daysAgo, duration);
+        var tweetTotal = 0;
+        var retweetTotal = 0;
+
+        var query = { q: handle + dateQuery,
+                       geocode: "51.528308,-0.3817765,500mi", 
+                       count: 99,
+                       result_type: "recent", 
+                       lang: 'en', 
+                       include_entities: false,
+                       result_type: 'recent' };
+        
+        var logConfig = {
+            id: production.id,
+            handle: handle, 
+            daysAgo: daysAgo,
+            duration: duration,
+        }
+
+        var tally = {
+            tweetTotal: tweetTotal,
+            retweetTotal: retweetTotal,
+        }
+
+
+        T.get('search/tweets', query, function(error, data) {
+                console.log("Query: " + handle);
+                
+                if (error){
+                    if (error.twitterReply){
+                        console.log(error.twitterReply.errors);    
+                    }
+                    sleep.sleep(900);
+                }
+                else if (data.errors){
+                    if (data.errors.twitterReply){
+                        console.log(data.errors.twitterReply.errors);    
+                    }
+                    sleep.sleep(900);
+                }
+                else {
+                    logToFile(data);
+                    if (data.statuses && data.statuses.length > 0){
+                        calculateTweets(data, tally);
+                        var promise = getTweetChunk(logConfig, tally, query, data.statuses[data.statuses.length - 1].id);
+
+                        Promise.all([promise]).then(values => { 
+                          resolve();
+                        });
+                    }
+                }
+        }).catch(function (err) {
+            console.log('caught error', err.stack)
+        })
+
+
+        return new Promise( (resolve, reject) => {
+            
+        })
+        .then(function(){
+            parseResult(logConfig, tally, function(result){
+                logToMongo(result);
+            });
             resetCounts();
         })
     };
@@ -280,8 +395,6 @@ function TweetCounter(name ,T, redis, tableName) {
         this.gatherAllDuration(1, 1);
     }
 
-
-
     this.getTop10 = function(date){
         var scanPromise = scanAndSort(date);
 
@@ -289,17 +402,12 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     this.gatherAllDuration = function(daysAgo, duration){
-        getHandlesFromAPI(function(handles){
-            console.log(handles);
-            handles.forEach(function(handle){
-                run(handle, daysAgo, duration);
+        getProductionsFromAPI(function(productions){
+            // console.log(productions);
+            productions = productions.slice(0, 5);
+            productions.forEach(function(production){
+                newRun(production, daysAgo, duration);
             });
-        });
-    }
-
-    this.testDB = function(){
-        getHandlesFromDB(function(handles){
-            console.log(handles);
         });
     }
 

@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
+import { Tweet, Timeline } from 'react-twitter-widgets';
 import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
@@ -78,16 +78,23 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <Button 
               onClick={this.previousDay.bind(this)}> Previous Day </Button>
             {nextButton}
-            
             <ShowsList {...showsListProps} />
-            {/*<ShowsList {...showsListProps} />
-            <ShowsList {...showsListProps} />*/}
           </CenteredSection>
         </div>
       </article>
     );
   }
 }
+// <Tweet tweetId="885802764483342337" 
+//                    options={{ cards: 'hidden', 
+//                               align: 'centre', 
+//                               linkColor: '#f39264',
+//                               width:200 }}/>
+//             <Tweet tweetId="885802764483342337" 
+//                    options={{ cards: 'hidden', 
+//                               align: 'centre', 
+//                               linkColor: '#f39264',
+//                               width:200 }}/>
 
 HomePage.propTypes = {
   loading: React.PropTypes.bool,

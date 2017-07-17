@@ -37,7 +37,24 @@ var list = function(date, numberOfItems, callback){
 	});
 }
 
+var tweets = function(date, handle, callback){
+	MongoClient.connect(url, function(err, db) {
+	  console.log("Connected correctly to server");
+	  var collection = db.collection(collectionName);
+
+	  collection.find({ date: date, handle: handle })
+  				.limit(1)
+  				.toArray(function(err, result) {
+	  	if (err) console.log(err)
+	  	else{
+	  		callback(result[0].tweets);
+	  	}	
+	  });
+	});
+}
+
 module.exports = {
 	insert: insert,
 	list: list,
+	tweets: tweets,
 };

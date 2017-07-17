@@ -23,7 +23,12 @@ var yesterdayDate = new Date(diff);
 // The initial state of the App
 const initialState = fromJS({
   date: yesterdayDate,
+  tweetsCloud: {
+    show: '',
+    tweets: []
+  }
 });
+
 
 function homeReducer(state = initialState, action) {
   switch (action.type) {

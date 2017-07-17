@@ -32,10 +32,6 @@ const initialState = fromJS({
   },
   trendingData: {
     shows: false,
-  },
-  tweetsCloud: {
-    show: '',
-    tweets: []
   }
 });
 

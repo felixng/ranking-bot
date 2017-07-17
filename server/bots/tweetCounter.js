@@ -1,5 +1,5 @@
 function TweetCounter(name ,T, redis, tableName) {
-    const ignore = ['E_N_O', 'enballet', 'The_Globe', 'sadlers_wells', 'MenChocFactory', 'OpenAirTheatre', 'youngvictheatre', ''];
+    const ignore = ['E_N_O', 'enballet', 'The_Globe', 'sadlers_wells', 'MenChocFactory', 'OpenAirTheatre', 'youngvictheatre', 'LyricHammer', 'NationalTheatre', ''];
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');

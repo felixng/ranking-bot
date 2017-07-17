@@ -15,7 +15,7 @@ var insert = function(result){
 	  	else{
 	  		console.log("Inserted into the document collection");	
 	  	}	
-	    // callback(result);
+
 	  });
 	});
 }

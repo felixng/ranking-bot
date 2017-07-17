@@ -35,7 +35,13 @@ function TweetCounter(name ,T, redis, tableName) {
         var since = " since:" + sinceDate;
         var until = " until:" + untilDate;
 
-        callback(since + until);
+        var dateOptions = {
+            daysAgo: daysAgo,
+            length: length,
+            query: since + until
+        }
+
+        callback(dateOptions);
     }
 
     function sleep(ms) {
@@ -59,7 +65,7 @@ function TweetCounter(name ,T, redis, tableName) {
 
         var keyDate = new Date();
         // keyDate.setDate(keyDate.getDate() - daysAgo);
-        keyDate.setDate(keyDate.getDate() - 1);
+        keyDate.setDate(keyDate.getDate() - tally.daysAgo);
         var keyDateString = keyDate.toJSON().slice(0,10).replace(/-/g,'-');
 
         var result = {
@@ -178,7 +184,8 @@ function TweetCounter(name ,T, redis, tableName) {
         });
     };
 
-    function run(production, date){
+    function run(production, dateOptions){
+        var date = dateOptions.query;
         var handle = production.handle;
         var tweetTotal = 0;
         var retweetTotal = 0;
@@ -199,6 +206,8 @@ function TweetCounter(name ,T, redis, tableName) {
             query: query,
             tweetTotal: tweetTotal,
             retweetTotal: retweetTotal,
+            daysAgo: dateOptions.daysAgo,
+            length: dateOptions.length,
             tweetIds: [],
         }
 
@@ -222,12 +231,12 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     this.gatherAllDuration = function(daysAgo, duration){
-        parseDateQuery(daysAgo, duration, function(date){
+        parseDateQuery(daysAgo, duration, function(dateOptions){
             getProductionsFromAPI(function(productions){
                 // productions = productions.slice(7, 18);                
                 productions.forEach(function(production){
                     if (!ignore.includes(production.handle)){
-                        run(production, date);
+                        run(production, dateOptions);
                     }
                     else{
                         console.log("Ignoring ", production.handle);

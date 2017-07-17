@@ -225,8 +225,7 @@ function TweetCounter(name ,T, redis, tableName) {
     this.gatherAllDuration = function(daysAgo, duration){
         parseDateQuery(daysAgo, duration, function(date){
             getProductionsFromAPI(function(productions){
-                productions = productions.slice(7, 18);
-                
+                // productions = productions.slice(7, 18);                
                 productions.forEach(function(production){
                     if (!ignore.includes(production)){
                         run(production, date);

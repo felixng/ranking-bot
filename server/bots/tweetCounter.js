@@ -77,7 +77,7 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     function logToMongo(result){
-        console.log("Logging to Mongo");
+        console.log("Logging to Mongo: ", result);
         mongo.insert(result);
     }
 

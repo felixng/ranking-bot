@@ -23,7 +23,7 @@ const addBackendMiddlewares = (app) => {
 	});
 
 	app.get('/top/:number/:date', function(req, res) {
-	  	mongo.list(req.params.date, req.params.number, function(list){
+	  	mongo.list(req.params.date, parseInt(req.params.number), function(list){
 	  		res.json(list);	
 	  	})
 	});

@@ -77,7 +77,6 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     function logToMongo(result){
-        console.log("Logging to Mongo: ", result);
         mongo.insert(result);
     }
 
@@ -227,8 +226,11 @@ function TweetCounter(name ,T, redis, tableName) {
             getProductionsFromAPI(function(productions){
                 // productions = productions.slice(7, 18);                
                 productions.forEach(function(production){
-                    if (!ignore.includes(production)){
+                    if (!ignore.includes(production.handle)){
                         run(production, date);
+                    }
+                    else{
+                        console.log("Ignoring ", production.handle);
                     }
                 });
             });    

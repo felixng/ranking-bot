@@ -7,6 +7,7 @@ const Icon = styled.div`
   flex: 1 0 20px;
   font-size: 200;
   opacity: 1;
+  padding-right: 0.2em;
 `;
 
 export default Icon;

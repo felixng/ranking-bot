@@ -27,7 +27,7 @@ const initialState = fromJS({
   date: yesterdayDate,
   snapshot: {
     handle: '',
-    tweets: [],
+    tweets: false,
     tweetCount: -1,
     retweetCount: -1,
     loading: false,

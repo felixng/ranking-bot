@@ -9,10 +9,11 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Tweet, Timeline } from 'react-twitter-widgets';
 import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
+import { makeSelectTweets, makeSelectTweetsLoading, makeSelectTweetsError } from 'containers/HomePage/selectors';
 import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
+import TweetsList from 'components/TweetsList';
 import Button from 'components/Button';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
@@ -29,7 +30,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   previousDay(){
-    console.log('previous');
     const currentDate = this.props.date;
     this.props.onPreviousDate(currentDate);
   }
@@ -41,13 +41,19 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render() {
     let nextButton = (<div></div>)
-    const { loading, error, shows, date } = this.props;
+    const { loading, error, shows, date, tweets, tweetsError, tweetsLoading } = this.props;
     const title = date.toDateString();
     const showsListProps = {
       loading,
       error,
       shows,
       title
+    };
+
+    const tweetsListProps = {
+      tweetsLoading,
+      tweetsError,
+      tweets
     };
 
     var todayTimeStamp = new Date(); 
@@ -78,21 +84,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             {nextButton}
             <ShowsList {...showsListProps} />
           </CenteredSection>
+          <CenteredSection>
+            <TweetsList {...tweetsListProps} />
+          </CenteredSection>
+
         </div>
       </article>
     );
   }
 }
-// <Tweet tweetId="885802764483342337" 
-//                    options={{ cards: 'hidden', 
-//                               align: 'centre', 
-//                               linkColor: '#f39264',
-//                               width:200 }}/>
-//             <Tweet tweetId="885802764483342337" 
-//                    options={{ cards: 'hidden', 
-//                               align: 'centre', 
-//                               linkColor: '#f39264',
-//                               width:200 }}/>
 
 HomePage.propTypes = {
   loading: React.PropTypes.bool,
@@ -138,6 +138,9 @@ const mapStateToProps = createStructuredSelector({
   date: makeSelectDate(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  tweets: makeSelectTweets(),
+  tweetsError: makeSelectTweetsLoading(),
+  tweetsLoading: makeSelectTweetsError(),
 });
 
 // Wrap the component to inject dispatch and state into it

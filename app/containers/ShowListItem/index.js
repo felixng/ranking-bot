@@ -14,10 +14,6 @@ import Wrapper from './Wrapper';
 import Number from './Number';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
-    
-  }
-
   handleClick(){
     const handle = this.props.item.handle;
     this.props.onItemClick(handle);

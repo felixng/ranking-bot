@@ -5,7 +5,6 @@ import { Tweet } from 'react-twitter-widgets';
 function TweetItem(props) {
   return (
     <Wrapper>
-      {props.item}
     	<Tweet tweetId={props.item} 
 	           options={{ cards: 'hidden', 
 	                      align: 'centre', 

@@ -11,8 +11,14 @@ const makeSelectDate = () => createSelector(
   (homeState) => homeState.get('date')
 );
 
+const makeSelectHandle = () => createSelector(
+  selectHome,
+  (homeState) => homeState.getIn(['tweetsCloud', 'handle'])
+);
+
 export {
   selectHome,
   makeSelectUsername,
   makeSelectDate,
+  makeSelectHandle,
 };

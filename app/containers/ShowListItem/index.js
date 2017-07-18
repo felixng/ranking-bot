@@ -8,17 +8,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedNumber } from 'react-intl';
-
-import { makeSelectCurrentUser } from 'containers/App/selectors';
 import ListItem from 'components/ListItem';
+import { loadTweets } from '../HomePage/actions';
 import Wrapper from './Wrapper';
 import Number from './Number';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    
+  }
+
+  handleClick(){
+    const handle = this.props.item.handle;
+    this.props.onItemClick(handle);
+  }
+
   render() {
     const item = this.props.item;
 
-    // Put together the content of the repository
     const content = (
       <Wrapper>
         <div>{item.handle}</div>
@@ -26,9 +33,10 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
       </Wrapper>
     );
 
-    // Render the content into a list item
     return (
-      <ListItem key={`show-list-item-${item.key}`} item={content} />
+      <ListItem onClick={this.handleClick.bind(this)} 
+                key={`show-list-item-${item.key}`} 
+                item={content}/>
     );
   }
 }
@@ -37,5 +45,16 @@ ShowListItem.propTypes = {
   item: React.PropTypes.object,
 };
 
-export default connect(createStructuredSelector({
-}))(ShowListItem);
+export function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    onItemClick: (handle) => {
+      dispatch(loadTweets(handle));
+    },
+  };
+}
+
+const mapStateToProps = createStructuredSelector({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShowListItem)

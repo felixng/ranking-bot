@@ -18,6 +18,9 @@
 import {
   CHANGE_USERNAME,
   CHANGE_DATE,
+  LOAD_TWEETS,
+  LOAD_TWEETS_SUCCESS,
+  LOAD_TWEETS_FAILED,
 } from './constants';
 
 /**
@@ -38,5 +41,25 @@ export function changeDate(date) {
   return {
     type: CHANGE_DATE,
     date,
+  };
+}
+
+export function loadTweets(handle) {
+  return {
+    type: LOAD_TWEETS,
+    handle
+  };
+}
+
+export function tweetsLoaded(tweets) {
+  return {
+    type: LOAD_TWEETS_SUCCESS,
+    tweets
+  };
+}
+
+export function tweetsLoadingError(err) {
+  return {
+    type: LOAD_TWEETS_FAILED,
   };
 }

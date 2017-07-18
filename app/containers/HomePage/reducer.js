@@ -13,6 +13,8 @@ import { fromJS } from 'immutable';
 
 import {
   CHANGE_DATE,
+  LOAD_TWEETS,
+  LOAD_TWEETS_SUCCESS
 } from './constants';
 
 var todayTimeStamp = new Date(); 
@@ -24,8 +26,10 @@ var yesterdayDate = new Date(diff);
 const initialState = fromJS({
   date: yesterdayDate,
   tweetsCloud: {
-    show: '',
-    tweets: []
+    handle: '',
+    tweets: [],
+    loading: false,
+    error: false
   }
 });
 
@@ -35,6 +39,16 @@ function homeReducer(state = initialState, action) {
     case CHANGE_DATE:
       return state
         .set('date', action.date);
+    case LOAD_TWEETS:
+      return state
+        .setIn(['tweetsCloud', 'handle'], action.handle)
+        .setIn(['tweetsCloud', 'loading'], true)
+        .setIn(['tweetsCloud', 'error'], false);
+    case LOAD_TWEETS_SUCCESS:
+      return state
+        .setIn(['tweetsCloud', 'tweets'], action.tweets)
+        .setIn(['tweetsCloud', 'error'], false)
+        .setIn(['tweetsCloud', 'loading'], false);
     default:
       return state;
   }

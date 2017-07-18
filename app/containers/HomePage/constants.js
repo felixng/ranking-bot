@@ -11,3 +11,6 @@
 
 export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME';
 export const CHANGE_DATE = 'boilerplate/Home/CHANGE_DATE';
+export const LOAD_TWEETS = 'boilerplate/Home/LOAD_TWEETS';
+export const LOAD_TWEETS_SUCCESS = 'boilerplate/Home/LOAD_TWEETS_SUCCESS';
+export const LOAD_TWEETS_FAILED = 'boilerplate/Home/LOAD_TWEETS_FAILED';

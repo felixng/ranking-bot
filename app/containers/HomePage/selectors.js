@@ -13,7 +13,7 @@ const makeSelectDate = () => createSelector(
 
 const makeSelectHandle = () => createSelector(
   selectHome,
-  (homeState) => homeState.getIn(['tweetsCloud', 'handle'])
+  (homeState) => homeState.getIn(['snapshot', 'handle'])
 );
 
 export {

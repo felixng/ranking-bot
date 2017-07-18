@@ -18,12 +18,12 @@ export function* getTweets() {
   const date = yield select(makeSelectDate());
   const dateKey = toKey(date);
   const handle = yield select(makeSelectHandle());
-  const requestURL = `${window.location.protocol}\/\/${window.location.host}/tweets/${handle}/${dateKey}`;
+  const requestURL = `${window.location.protocol}\/\/${window.location.host}/snapshot/${handle}/${dateKey}`;
   console.log(requestURL);
 
   try {
-    const tweets = yield call(request, requestURL);
-    yield put(tweetsLoaded(tweets));
+    const snapshot = yield call(request, requestURL);
+    yield put(tweetsLoaded(snapshot));
   } catch (err) {
     yield put(tweetsLoadingError(err));
   }

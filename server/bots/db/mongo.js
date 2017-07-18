@@ -37,7 +37,7 @@ var list = function(date, numberOfItems, callback){
 	});
 }
 
-var tweets = function(date, handle, callback){
+var snapshot = function(date, handle, callback){
 	MongoClient.connect(url, function(err, db) {
 	  console.log("Connected correctly to server");
 	  var collection = db.collection(collectionName);
@@ -47,7 +47,7 @@ var tweets = function(date, handle, callback){
   				.toArray(function(err, result) {
 	  	if (err) console.log(err)
 	  	else{
-	  		callback(result[0].tweets);
+	  		callback(result[0]);
 	  	}	
 	  });
 	});
@@ -56,5 +56,5 @@ var tweets = function(date, handle, callback){
 module.exports = {
 	insert: insert,
 	list: list,
-	tweets: tweets,
+	snapshot: snapshot,
 };

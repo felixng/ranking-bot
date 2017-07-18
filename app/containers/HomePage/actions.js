@@ -51,10 +51,12 @@ export function loadTweets(handle) {
   };
 }
 
-export function tweetsLoaded(tweets) {
+export function tweetsLoaded(snapshot) {
   return {
     type: LOAD_TWEETS_SUCCESS,
-    tweets
+    tweets: snapshot.tweets,
+    retweetTotal: snapshot.retweetTotal,
+    tweetTotal: snapshot.tweetTotal,
   };
 }
 

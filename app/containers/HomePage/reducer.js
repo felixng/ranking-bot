@@ -25,9 +25,11 @@ var yesterdayDate = new Date(diff);
 // The initial state of the App
 const initialState = fromJS({
   date: yesterdayDate,
-  tweetsCloud: {
+  snapshot: {
     handle: '',
     tweets: [],
+    tweetCount: -1,
+    retweetCount: -1,
     loading: false,
     error: false
   }
@@ -41,14 +43,16 @@ function homeReducer(state = initialState, action) {
         .set('date', action.date);
     case LOAD_TWEETS:
       return state
-        .setIn(['tweetsCloud', 'handle'], action.handle)
-        .setIn(['tweetsCloud', 'loading'], true)
-        .setIn(['tweetsCloud', 'error'], false);
+        .setIn(['snapshot', 'handle'], action.handle)
+        .setIn(['snapshot', 'loading'], true)
+        .setIn(['snapshot', 'error'], false);
     case LOAD_TWEETS_SUCCESS:
       return state
-        .setIn(['tweetsCloud', 'tweets'], action.tweets)
-        .setIn(['tweetsCloud', 'error'], false)
-        .setIn(['tweetsCloud', 'loading'], false);
+        .setIn(['snapshot', 'tweets'], action.tweets)
+        .setIn(['snapshot', 'tweetsCount'], action.tweetTotal)
+        .setIn(['snapshot', 'retweetCount'], action.retweetTotal)
+        .setIn(['snapshot', 'error'], false)
+        .setIn(['snapshot', 'loading'], false);
     default:
       return state;
   }

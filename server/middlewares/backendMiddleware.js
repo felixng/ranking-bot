@@ -28,9 +28,9 @@ const addBackendMiddlewares = (app) => {
 	  	})
 	});
 
-	app.get('/tweets/:handle/:date', function(req, res) {
-	  	mongo.tweets(req.params.date, req.params.handle, function(tweets){
-	  		res.json(tweets);	
+	app.get('/snapshot/:handle/:date', function(req, res) {
+	  	mongo.snapshot(req.params.date, req.params.handle, function(snapshot){
+	  		res.json(snapshot);	
 	  	})
 	});
 

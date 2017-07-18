@@ -130,6 +130,7 @@ function TweetCounter(name ,T, redis, tableName) {
 
             tweets.statuses.forEach( (tweet) => {
                 tally.retweetTotal += tweet.retweet_count;
+                tally.favTotal += tweet.favorite_count;
                 tally.tweetIds.push(tweet.id_str);
             });
         }
@@ -235,7 +236,7 @@ function TweetCounter(name ,T, redis, tableName) {
             getProductionsFromAPI(function(productions){
                 // productions = productions.slice(7, 18);                
                 productions.forEach(function(production){
-                    if (!ignore.includes(production.handle)){
+                    if (!ignore.includes(production.handle) && production.handle != null){
                         run(production, dateOptions);
                     }
                     else{

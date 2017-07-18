@@ -12,6 +12,8 @@ import ListItem from 'components/ListItem';
 import { loadTweets } from '../HomePage/actions';
 import Wrapper from './Wrapper';
 import Number from './Number';
+import Icon from './Icon';
+import Title from './Title';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   handleClick(){
@@ -24,7 +26,12 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
 
     const content = (
       <Wrapper>
-        <div>{item.handle}</div>
+        <Title>{item.handle}</Title>
+        <Icon><i className="fa fa-twitter" aria-hidden="true"></i></Icon>
+        <Number>{item.tweetTotal}</Number>
+        <Icon><i className="fa fa-retweet" aria-hidden="true"></i></Icon>
+        <Number>{item.retweetTotal}</Number>
+        <Icon><i className="fa fa-heart-o" aria-hidden="true"></i></Icon>
         <Number>{item.score}</Number>
       </Wrapper>
     );

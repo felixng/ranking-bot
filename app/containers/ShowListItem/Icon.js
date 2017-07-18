@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-const Number = styled.div`
+const Icon = styled.div`
   position: relative;
   display: block;
   text-align: right;
-  flex: 0 1 25px;
+  flex: 1 0 20px;
   font-size: 200;
-  opacity: 0.7;
+  opacity: 1;
 `;
 
-export default Number;
+export default Icon;

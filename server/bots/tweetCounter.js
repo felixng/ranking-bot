@@ -152,7 +152,7 @@ function TweetCounter(name ,T, redis, tableName) {
         return new Promise( (resolve, reject) => {
             var nextSearch = tally.query;
             if (max_id){
-                nextSearch.max_id = max_id;    
+                nextSearch.max_id = max_id;
             }
 
             T.get('search/tweets', nextSearch, function(error, data) {
@@ -189,7 +189,7 @@ function TweetCounter(name ,T, redis, tableName) {
         var handle = production.handle;
         var tweetTotal = 0;
         var retweetTotal = 0;
-        var query = { q: handle + date,
+        var query = { q: handle + date + ' -filter:retweets',
                        geocode: "51.528308,-0.3817765,500mi", 
                        count: 99,
                        result_type: "recent", 

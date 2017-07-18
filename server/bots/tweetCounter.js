@@ -61,6 +61,7 @@ function TweetCounter(name ,T, redis, tableName) {
         // var duration = logConfig.duration;
         var tweetTotal = tally.tweetTotal;
         var retweetTotal = tally.retweetTotal;
+        var favTotal = tally.favTotal;
         var score = Math.round(tweetTotal + (retweetTotal * retweetWeight));
 
         var keyDate = new Date();
@@ -74,6 +75,7 @@ function TweetCounter(name ,T, redis, tableName) {
             handle: logConfig.handle,
             tweetTotal: tweetTotal,
             retweetTotal: retweetTotal,
+            favouriteTotal: favTotal,
             score: score,
             tweets: tally.tweetIds,
             createdAt: new Date(), 
@@ -189,6 +191,7 @@ function TweetCounter(name ,T, redis, tableName) {
         var date = dateOptions.query;
         var handle = production.handle;
         var tweetTotal = 0;
+        var favTotal = 0;
         var retweetTotal = 0;
         var query = { q: handle + date + ' -filter:retweets',
                        geocode: "51.528308,-0.3817765,500mi", 
@@ -207,6 +210,7 @@ function TweetCounter(name ,T, redis, tableName) {
             query: query,
             tweetTotal: tweetTotal,
             retweetTotal: retweetTotal,
+            favTotal: favTotal,
             daysAgo: dateOptions.daysAgo,
             length: dateOptions.length,
             tweetIds: [],

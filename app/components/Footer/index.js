@@ -16,7 +16,7 @@ function Footer() {
         <FormattedMessage
           {...messages.authorMessage}
           values={{
-            author: <A href="https://twitter.com/felixtheng">Felix Ng</A>,
+            author: <A href="https://twitter.com/hellofelixng">Felix Ng</A>,
           }}
         />
       </section>

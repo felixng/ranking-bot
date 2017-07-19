@@ -10,6 +10,7 @@ function TweetCounter(name ,T, redis, tableName) {
 
     var includeRetweet = process.env.INCLUDE_RETWEET || true;
     var retweetWeight = process.env.RETWEET_WEIGHT || 0.3;
+    var favWeight = process.env.FAV_WEIGHT || 0.1;
 
     if (isDev){
         fs.unlink("tweet.json", function(){
@@ -62,7 +63,7 @@ function TweetCounter(name ,T, redis, tableName) {
         var tweetTotal = tally.tweetTotal;
         var retweetTotal = tally.retweetTotal;
         var favTotal = tally.favTotal;
-        var score = Math.round(tweetTotal + (retweetTotal * retweetWeight));
+        var score = Math.round(tweetTotal + (retweetTotal * retweetWeight) + (favTotal * favWeight));
 
         var keyDate = new Date();
         // keyDate.setDate(keyDate.getDate() - daysAgo);

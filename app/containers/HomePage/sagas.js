@@ -19,7 +19,6 @@ export function* getTweets() {
   const dateKey = toKey(date);
   const handle = yield select(makeSelectHandle());
   const requestURL = `${window.location.protocol}\/\/${window.location.host}/snapshot/${handle}/${dateKey}`;
-  console.log(requestURL);
 
   try {
     const snapshot = yield call(request, requestURL);
@@ -37,8 +36,6 @@ export function* getShows() {
   try {
     const shows = yield call(request, requestURL);
     yield put(showsLoaded(shows.splice(0, 5), dateKey));
-    console.debug(shows);
-    console.debug(dateKey);
   } catch (err) {
     yield put(showsLoadingError(err));
   }

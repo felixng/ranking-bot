@@ -14,7 +14,8 @@ import { fromJS } from 'immutable';
 import {
   CHANGE_DATE,
   LOAD_TWEETS,
-  LOAD_TWEETS_SUCCESS
+  LOAD_TWEETS_SUCCESS,
+  ALL_TWEETS_LOADED
 } from './constants';
 
 var todayTimeStamp = new Date(); 
@@ -54,6 +55,8 @@ function homeReducer(state = initialState, action) {
         .setIn(['snapshot', 'retweetCount'], action.retweetTotal)
         .setIn(['snapshot', 'favouriteCount'], action.favouriteTotal)
         .setIn(['snapshot', 'error'], false)
+    case ALL_TWEETS_LOADED:
+      return state
         .setIn(['snapshot', 'loading'], false);
     default:
       return state;

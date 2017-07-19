@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import Cloud from 'components/Cloud';
+import Cloud from 'containers/Cloud';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ErrorMessage from 'components/ErrorMessage';
 import TweetItem from 'components/TweetItem';
@@ -15,7 +15,7 @@ function TweetsList({ loading, error, tweets }) {
   }
 
   if (tweets !== false && tweets.length != 0) {
-    return <Cloud items={tweets} component={TweetItem} />;
+    return <Cloud items={tweets} component={TweetItem} n/>;
   } 
 
   return null;

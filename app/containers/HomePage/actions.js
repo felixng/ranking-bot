@@ -20,6 +20,7 @@ import {
   CHANGE_DATE,
   LOAD_TWEETS,
   LOAD_TWEETS_SUCCESS,
+  ALL_TWEETS_LOADED,
   LOAD_TWEETS_FAILED,
 } from './constants';
 
@@ -48,6 +49,12 @@ export function loadTweets(handle) {
   return {
     type: LOAD_TWEETS,
     handle
+  };
+}
+
+export function allTweetsLoaded() {
+  return {
+    type: ALL_TWEETS_LOADED,
   };
 }
 

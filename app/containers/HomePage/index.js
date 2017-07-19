@@ -15,6 +15,7 @@ import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
 import TweetsList from 'components/TweetsList';
 import Button from 'components/Button';
+import LoadingIndicator from 'components/LoadingIndicator';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
@@ -41,6 +42,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render() {
     let nextButton = (<div></div>)
+    let loadingOverlay = (<div></div>)
     const { loading, error, shows, date, tweets, tweetsError, tweetsLoading } = this.props;
     const title = date.toDateString();
     const showsListProps = {
@@ -66,6 +68,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                       onClick={this.nextDay.bind(this)}> Next Day </Button>)
     }
 
+    if (tweetsLoading) {
+      loadingOverlay = (<CenteredSection>
+                          <LoadingIndicator />
+                        </CenteredSection>)
+    }
+
     return (
       <article>
         <Helmet
@@ -75,6 +83,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <div>
+          {loadingOverlay}
           <CenteredSection>
             <SubTitle>
               <FormattedMessage {...messages.startProjectMessage} />
@@ -127,7 +136,6 @@ export function mapDispatchToProps(dispatch, ownProps) {
       dispatch(loadShows());
     },
     onLoad: () => {
-
       dispatch(loadShows());
     }
   };
@@ -139,8 +147,8 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   tweets: makeSelectTweets(),
-  tweetsError: makeSelectTweetsLoading(),
-  tweetsLoading: makeSelectTweetsError(),
+  tweetsError: makeSelectTweetsError(),
+  tweetsLoading: makeSelectTweetsLoading(),
 });
 
 // Wrap the component to inject dispatch and state into it

@@ -15,6 +15,7 @@ import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
 import TweetsList from 'components/TweetsList';
 import Button from 'components/Button';
+import OverlayLoading from 'components/OverlayLoading';
 import LoadingIndicator from 'components/LoadingIndicator';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
@@ -70,7 +71,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (tweetsLoading) {
       loadingOverlay = (<CenteredSection>
-                          <LoadingIndicator />
+                          <OverlayLoading />
                         </CenteredSection>)
     }
 

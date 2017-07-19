@@ -32,7 +32,7 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
         <Icon><i className="fa fa-retweet" aria-hidden="true"></i></Icon>
         <Number>{item.retweetTotal}</Number>
         <Icon><i className="fa fa-heart-o" aria-hidden="true"></i></Icon>
-        <Number>{item.score}</Number>
+        <Number>{item.favouriteTotal}</Number>
       </Wrapper>
     );
 

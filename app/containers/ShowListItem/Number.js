@@ -7,6 +7,7 @@ const Number = styled.div`
   flex: 0 1 20px;
   font-size: 200;
   opacity: 0.7;
+  padding-left: 0.25em;
 `;
 
 export default Number;

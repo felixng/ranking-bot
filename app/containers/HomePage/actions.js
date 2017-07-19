@@ -57,6 +57,7 @@ export function tweetsLoaded(snapshot) {
     tweets: snapshot.tweets,
     retweetTotal: snapshot.retweetTotal,
     tweetTotal: snapshot.tweetTotal,
+    favouriteTotal: snapshot.favouriteTotal,
   };
 }
 

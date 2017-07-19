@@ -30,6 +30,7 @@ const initialState = fromJS({
     tweets: false,
     tweetCount: -1,
     retweetCount: -1,
+    favouriteCount: -1,
     loading: false,
     error: false
   }
@@ -51,6 +52,7 @@ function homeReducer(state = initialState, action) {
         .setIn(['snapshot', 'tweets'], action.tweets)
         .setIn(['snapshot', 'tweetsCount'], action.tweetTotal)
         .setIn(['snapshot', 'retweetCount'], action.retweetTotal)
+        .setIn(['snapshot', 'favouriteCount'], action.favouriteTotal)
         .setIn(['snapshot', 'error'], false)
         .setIn(['snapshot', 'loading'], false);
     default:

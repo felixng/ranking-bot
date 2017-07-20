@@ -6,6 +6,11 @@ injectGlobal`
   body {
     height: 100%;
     width: 100%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   body {
@@ -29,6 +34,11 @@ injectGlobal`
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
+  }
+
+  article{
+    height: 100%;
+    width: 100%;
   }
 
   *,

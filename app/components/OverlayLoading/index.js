@@ -1,10 +1,12 @@
 import React from 'react';
 
 import Circle from './Circle';
+import LoadingBar from './LoadingBar';
 import Wrapper from './Wrapper';
 
-const OverlayLoading = () => (
+const OverlayLoading = (props) => (
   <Wrapper>
+    {/*<LoadingBar loaded={props.loaded}/>*/}
     <Circle />
     <Circle rotate={30} delay={-1.1} />
     <Circle rotate={60} delay={-1} />

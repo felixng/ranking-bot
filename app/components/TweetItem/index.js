@@ -10,7 +10,7 @@ function TweetItem(props) {
 	                      align: 'centre', 
 	                      linkColor: '#f39264',
 	                      width:300 }}
-            onLoad={props.onLoaded}/>
+             onLoad={props.onLoaded}/>
     </Wrapper>
   );
 }

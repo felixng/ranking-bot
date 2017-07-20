@@ -15,12 +15,15 @@ const circleFadeDelay = keyframes`
 
 const Circle = (props) => {
   const CirclePrimitive = styled.div`
-    width: 10%;
-    height: 10%;
-    margin: 0 auto;
+    width: 20%;
+    height: 20%;
     position: absolute;
-    // left: 0;
-    // top: 0;
+    top:0%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
     ${props.rotate && `
       -webkit-transform: rotate(${props.rotate}deg);
       -ms-transform: rotate(${props.rotate}deg);
@@ -31,8 +34,8 @@ const Circle = (props) => {
       content: '';
       display: block;
       margin: 0 auto;
-      width: 15%;
-      height: 15%;
+      width: 1.25em;
+      height: 1.25em;
       background-color: #e5e5e5;
       border-radius: 100%;
       animation: ${circleFadeDelay} 1.2s infinite ease-in-out both;

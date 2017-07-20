@@ -66,17 +66,19 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (date.toDateString() != yesterdayDate.toDateString()){
       nextButton = (<Button 
-                      onClick={this.nextDay.bind(this)}> Next Day </Button>)
+                      onClick={this.nextDay.bind(this)}> Next Day 
+                    </Button>)
     }
 
     if (tweetsLoading) {
       loadingOverlay = (<CenteredSection>
-                          <OverlayLoading />
+                          <OverlayLoading loaded={tweetsLoading}/>
                         </CenteredSection>)
     }
 
     return (
       <article>
+        {loadingOverlay}
         <Helmet
           title="Home Page"
           meta={[
@@ -84,7 +86,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <div>
-          {loadingOverlay}
           <CenteredSection>
             <SubTitle>
               <FormattedMessage {...messages.startProjectMessage} />

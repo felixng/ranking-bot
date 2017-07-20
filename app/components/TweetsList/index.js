@@ -5,7 +5,8 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import ErrorMessage from 'components/ErrorMessage';
 import TweetItem from 'components/TweetItem';
 
-function TweetsList({ loading, error, tweets }) {
+function TweetsList({ title, loading, error, tweets }) {
+  console.log(title, loading, error, tweets);
   if (loading) {
     return <Cloud component={LoadingIndicator} />;
   }
@@ -15,7 +16,7 @@ function TweetsList({ loading, error, tweets }) {
   }
 
   if (tweets !== false && tweets.length != 0) {
-    return <Cloud items={tweets} component={TweetItem} n/>;
+    return <Cloud title={title} items={tweets} component={TweetItem} n/>;
   } 
 
   return null;
@@ -24,6 +25,7 @@ function TweetsList({ loading, error, tweets }) {
 TweetsList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
+  title: PropTypes.string,
   tweets: PropTypes.any,
 };
 

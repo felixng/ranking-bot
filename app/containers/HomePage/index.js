@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
-import { makeSelectTweets, makeSelectTweetsLoading, makeSelectTweetsError } from 'containers/HomePage/selectors';
+import { makeSelectHandle, makeSelectTweets, makeSelectTweetsLoading, makeSelectTweetsError } from 'containers/HomePage/selectors';
 import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
 import TweetsList from 'components/TweetsList';
@@ -53,12 +53,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       title
     };
 
+
+    const cloudTitle = `What are people saying about ${this.props.handle}`;
     const tweetsListProps = {
       tweetsLoading,
       tweetsError,
       tweets
     };
-
+    
     var todayTimeStamp = new Date(); 
     var oneDayTimeStamp = 1000 * 60 * 60 * 24; // Milliseconds in a day
     var diff = todayTimeStamp - oneDayTimeStamp;
@@ -96,7 +98,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <ShowsList {...showsListProps} />
           </CenteredSection>
           <CenteredSection>
-            <TweetsList {...tweetsListProps} />
+            <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
 
         </div>
@@ -151,6 +153,7 @@ const mapStateToProps = createStructuredSelector({
   tweets: makeSelectTweets(),
   tweetsError: makeSelectTweetsError(),
   tweetsLoading: makeSelectTweetsLoading(),
+  handle: makeSelectHandle()
 });
 
 // Wrap the component to inject dispatch and state into it

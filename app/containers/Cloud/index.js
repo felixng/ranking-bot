@@ -1,5 +1,6 @@
 import React from 'react';
 import Wrapper from './Wrapper';
+import Title from './Title';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { allTweetsLoaded } from '../HomePage/actions';
@@ -20,7 +21,8 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     }
 
     return (
-      <Wrapper>
+      <Wrapper name='tweetCloud'>
+          <Title> {this.props.title} </Title>
           {content}
       </Wrapper>
     );

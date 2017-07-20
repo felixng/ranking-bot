@@ -6,7 +6,6 @@ import ErrorMessage from 'components/ErrorMessage';
 import TweetItem from 'components/TweetItem';
 
 function TweetsList({ title, loading, error, tweets }) {
-  console.log(title, loading, error, tweets);
   if (loading) {
     return <Cloud component={LoadingIndicator} />;
   }

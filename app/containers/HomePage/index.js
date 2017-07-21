@@ -8,6 +8,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import toKey from 'utils/date';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 import { makeSelectHandle, makeSelectTweets, makeSelectTweetsLoading, makeSelectTweetsError } from 'containers/HomePage/selectors';
@@ -25,9 +26,25 @@ import messages from './messages';
 import { loadShows } from '../App/actions';
 import { changeDate } from './actions';
 import { makeSelectDate } from './selectors';
+import { push } from 'react-router-redux';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
+  componentDidMount(){
+    this.onPageLoad(this.props.params.date);
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.params.date != this.props.params.date){
+      this.onPageLoad(nextProps.params.date);
+    }
+  }
+
+  onPageLoad(propsDate) {
+    if (propsDate){
+      var date = new Date(propsDate);
+      this.props.setDate(date);
+    }
+    
     this.props.onLoad();
   }
 
@@ -128,8 +145,12 @@ export function mapDispatchToProps(dispatch, ownProps) {
       var result = new Date(date);
       result.setDate(result.getDate() - 1);
 
+      var dateRoute = toKey(result);
+
       dispatch(changeDate(result));
       dispatch(loadShows());
+      dispatch(push(`/${dateRoute}`));
+
     },
     onNextDate: (currentDate) => {
       var date = currentDate;
@@ -138,6 +159,9 @@ export function mapDispatchToProps(dispatch, ownProps) {
 
       dispatch(changeDate(result));
       dispatch(loadShows());
+    },
+    setDate: (date) =>{
+      dispatch(changeDate(date));
     },
     onLoad: () => {
       dispatch(loadShows());

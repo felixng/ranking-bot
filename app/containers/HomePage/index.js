@@ -80,7 +80,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       title
     };
 
-    const cloudTitle = `What are people saying about ${this.props.handle}`;
+    const cloudTitle = `What are people saying about @${this.props.handle}`;
     const tweetsListProps = {
       tweetsLoading,
       tweetsError,
@@ -106,7 +106,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     return (
       <article>
-        <Scrollchor animate={{offset: 20, duration: 6000}} ref={ref => (this.scroll = ref)} to="tweetsCloud" />
+        <Scrollchor animate={{offset: 20, duration: 6000 }} 
+                    ref={ref => (this.scroll = ref)} to="tweetsCloud" />
         {loadingOverlay}
         <Helmet
           title="Home Page"

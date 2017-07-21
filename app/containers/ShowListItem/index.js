@@ -14,11 +14,15 @@ import Wrapper from './Wrapper';
 import Number from './Number';
 import Icon from './Icon';
 import Title from './Title';
+import { push } from 'react-router-redux';
+import { makeSelectDate } from 'containers/HomePage/selectors'
+import toKey from 'utils/date';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   handleClick(){
     const handle = this.props.item.handle;
-    this.props.onItemClick(handle);
+    const date = toKey(this.props.date);
+    this.props.onItemClick(date, handle);
   }
 
   render() {
@@ -50,14 +54,16 @@ ShowListItem.propTypes = {
 
 export function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onItemClick: (handle) => {
+    onItemClick: (date, handle) => {
       dispatch(loadTweets(handle));
+      console.log(`/${date}/${handle}`);
+      dispatch(push(`/${date}/${handle}`));
     },
   };
 }
 
 const mapStateToProps = createStructuredSelector({
-
+  date: makeSelectDate(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowListItem)

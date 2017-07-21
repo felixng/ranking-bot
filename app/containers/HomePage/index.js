@@ -24,28 +24,30 @@ import Input from './Input';
 import Section from './Section';
 import messages from './messages';
 import { loadShows } from '../App/actions';
+import { loadTweets } from '../HomePage/actions';
 import { changeDate } from './actions';
 import { makeSelectDate } from './selectors';
 import { push } from 'react-router-redux';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentWillMount(){
-    this.onPageLoad(this.props.params.date);
+    this.onPageLoad(this.props.params.date, this.props.params.handle);
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.params.date != this.props.params.date){
-      this.onPageLoad(nextProps.params.date);
+    if (nextProps.params.date != this.props.params.date ||
+        nextProps.params.handle != this.props.params.handle){
+      this.onPageLoad(nextProps.params.date, nextProps.params.handle);
     }
   }
 
-  onPageLoad(propsDate) {
+  onPageLoad(propsDate, propsHandle) {
     if (propsDate){
       var date = new Date(propsDate);
       this.props.setDate(date);
     }
     
-    this.props.onLoad();
+    this.props.onLoad(propsHandle);
   }
 
   previousDay(){
@@ -165,8 +167,11 @@ export function mapDispatchToProps(dispatch, ownProps) {
     setDate: (date) =>{
       dispatch(changeDate(date));
     },
-    onLoad: () => {
+    onLoad: (handle) => {
       dispatch(loadShows());
+      if (handle) {
+        dispatch(loadTweets(handle))
+      }
     }
   };
 }

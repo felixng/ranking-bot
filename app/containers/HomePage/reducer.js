@@ -42,7 +42,13 @@ function homeReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_DATE:
       return state
-        .set('date', action.date);
+        .set('date', action.date)
+        .setIn(['snapshot', 'tweets'], false)
+        .setIn(['snapshot', 'tweetsCount'], -1)
+        .setIn(['snapshot', 'retweetCount'], -1)
+        .setIn(['snapshot', 'favouriteCount'], -1)
+        .setIn(['snapshot', 'error'], false)
+        .setIn(['snapshot', 'loading'], false);
     case LOAD_TWEETS:
       return state
         .setIn(['snapshot', 'handle'], action.handle)

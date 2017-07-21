@@ -19,8 +19,6 @@ import Button from 'components/Button';
 import OverlayLoading from 'components/OverlayLoading';
 import LoadingIndicator from 'components/LoadingIndicator';
 import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
 import Section from './Section';
 import messages from './messages';
 import { loadShows } from '../App/actions';
@@ -31,12 +29,14 @@ import { push } from 'react-router-redux';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentWillMount(){
+    console.log('componentWillMount');
     this.onPageLoad(this.props.params.date, this.props.params.handle);
   }
 
   componentWillReceiveProps(nextProps){
     if (nextProps.params.date != this.props.params.date ||
         nextProps.params.handle != this.props.params.handle){
+      console.log('componentWillReceiveProps');
       this.onPageLoad(nextProps.params.date, nextProps.params.handle);
     }
   }

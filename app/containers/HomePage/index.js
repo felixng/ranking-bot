@@ -80,7 +80,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       title
     };
 
-
     const cloudTitle = `What are people saying about ${this.props.handle}`;
     const tweetsListProps = {
       tweetsLoading,

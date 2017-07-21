@@ -29,7 +29,7 @@ import { makeSelectDate } from './selectors';
 import { push } from 'react-router-redux';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  componentDidMount(){
+  componentWillMount(){
     this.onPageLoad(this.props.params.date);
   }
 
@@ -156,9 +156,11 @@ export function mapDispatchToProps(dispatch, ownProps) {
       var date = currentDate;
       var result = new Date(date);
       result.setDate(result.getDate() + 1);
+      var dateRoute = toKey(result);
 
       dispatch(changeDate(result));
       dispatch(loadShows());
+      dispatch(push(`/${dateRoute}`));
     },
     setDate: (date) =>{
       dispatch(changeDate(date));

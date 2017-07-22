@@ -9,16 +9,16 @@ import MasonryInfiniteScroller from 'react-masonry-infinite';
 import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
 
-var masonryOptions = {
+const pageSize = 10;
+const masonryOptions = {
     transitionDuration: 10,
     fitWidth: true,
 };
 
-const pageSize = 10;
-
 export class Cloud extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
+    this.handleScroll = this.handleScroll.bind(this);
 
     this.state = {
       hasMore: true,
@@ -27,7 +27,31 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     };
   }
 
-  getCards = (pageToLoad) => { return this.props.items.slice(pageToLoad * pageSize, (pageToLoad + 1) * pageSize);}
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    
+    return array;
+  }
+
+  handleScroll(e) {
+    console.log('scroll event');
+    // console.log(e);
+  }
+  
+  getCards = (pageToLoad) => { return this.shuffle(this.props.items).slice(pageToLoad * pageSize, (pageToLoad + 1) * pageSize);}
 
   loadMore = (pageToLoad) =>  { 
     console.log('loading more');

@@ -18,7 +18,7 @@ const masonryOptions = {
 export class Cloud extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.handleScroll = this.handleScroll.bind(this);
+    // this.handleScroll = this.handleScroll.bind(this);
 
     this.state = {
       hasMore: true,
@@ -30,14 +30,11 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
   shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
 
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
@@ -47,8 +44,7 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
   }
 
   handleScroll(e) {
-    console.log('scroll event');
-    // console.log(e);
+    // console.log('scroll event');
   }
   
   getCards = (pageToLoad) => { return this.shuffle(this.props.items).slice(pageToLoad * pageSize, (pageToLoad + 1) * pageSize);}

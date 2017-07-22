@@ -18,7 +18,7 @@ const buttonStyles = css`
   color: #e9e9e9;
 
   &:active {
-    background: #41addd;
+    background: #f39264;
     color: #fff;
   }
 `;

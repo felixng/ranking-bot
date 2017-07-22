@@ -20,6 +20,7 @@ import OverlayLoading from 'components/OverlayLoading';
 import LoadingIndicator from 'components/LoadingIndicator';
 import CenteredSection from './CenteredSection';
 import Section from './Section';
+import Icon from './Icon';
 import messages from './messages';
 import { loadShows } from '../App/actions';
 import { loadTweets } from '../HomePage/actions';
@@ -93,8 +94,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     var yesterdayDate = new Date(diff);
 
     if (date.toDateString() != yesterdayDate.toDateString()){
-      nextButton = (<Button 
-                      onClick={this.nextDay.bind(this)}> Next Day 
+      nextButton = (<Button onClick={this.nextDay.bind(this)}> 
+                      Next Day
+                      <Icon className="fa fa-angle-right" aria-hidden="true" left></Icon>
                     </Button>)
     }
 
@@ -105,7 +107,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     return (
-      <article>
+      <article id="top">
         <Scrollchor animate={{offset: 20, duration: 6000 }} 
                     ref={ref => (this.scroll = ref)} to="tweetsCloud" />
         {loadingOverlay}
@@ -121,14 +123,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               <FormattedMessage {...messages.startProjectMessage} />
             </SubTitle>
             <Button 
-              onClick={this.previousDay.bind(this)}> Previous Day </Button>
+              onClick={this.previousDay.bind(this)}>
+              <Icon className="fa fa-angle-left" aria-hidden="true" right></Icon>
+              Previous Day
+            </Button>
             {nextButton}
             <ShowsList {...showsListProps} />
           </CenteredSection>
           <CenteredSection id="tweetsCloud">
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
-
         </div>
       </article>
     );

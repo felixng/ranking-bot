@@ -23,7 +23,7 @@ function TweetCounter(name ,T, redis, tableName) {
     }
 
     //Parsing Dates: Yesterday and the Day Before
-    function parseDateQuery(daysAgo = 1, length = 1, callback){
+    function parseDateQuery(daysAgo = 0, length = 1, callback){
         var date = new Date();
         date.setDate(date.getDate() - daysAgo);
         var untilDate = date.toJSON().slice(0,10).replace(/-/g,'-');
@@ -66,8 +66,7 @@ function TweetCounter(name ,T, redis, tableName) {
         var score = Math.round(tweetTotal + (retweetTotal * retweetWeight) + (favTotal * favWeight));
 
         var keyDate = new Date();
-        // keyDate.setDate(keyDate.getDate() - daysAgo);
-        keyDate.setDate(keyDate.getDate() - tally.daysAgo);
+        keyDate.setDate(keyDate.getDate() - tally.daysAgo - 1);
         var keyDateString = keyDate.toJSON().slice(0,10).replace(/-/g,'-');
 
         var result = {
@@ -233,7 +232,7 @@ function TweetCounter(name ,T, redis, tableName) {
     };
 
     this.gatherAll = function(){
-        this.gatherAllDuration(1, 1);
+        this.gatherAllDuration(0, 1);
     }
 
     this.gatherAllDuration = function(daysAgo, duration){

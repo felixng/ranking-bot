@@ -41,6 +41,10 @@ injectGlobal`
     width: 100%;
   }
 
+  .tweets {
+    margin: 0 auto;
+  }
+
   *,
   *::before,
   *::after {

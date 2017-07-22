@@ -18,13 +18,44 @@ const masonryOptions = {
 export class Cloud extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    // this.handleScroll = this.handleScroll.bind(this);
+    this.scrollFunction = this.scrollListener.bind(this);
 
     this.state = {
       hasMore: true,
       elements: this.getCards(0),
       page: 0
     };
+  }
+
+  attachScrollListener () {
+    let el = window;
+    el.addEventListener('scroll', this.scrollFunction, true);
+    
+    // this.scrollListener();
+  }
+
+  scrollListener() {
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight) {
+        this.loadMore(this.state.page + 1);
+    }
+  }
+
+  componentWillUnmount () {
+    this.detachScrollListener();
+  }
+
+  detachScrollListener () {
+    let el = window;
+    el.removeEventListener('scroll', this.scrollFunction, true);
+  }
+
+  componentDidMount () {
+    this.attachScrollListener();
   }
 
   shuffle(array) {
@@ -42,15 +73,10 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     
     return array;
   }
-
-  handleScroll(e) {
-    // console.log('scroll event');
-  }
   
   getCards = (pageToLoad) => { return this.shuffle(this.props.items).slice(pageToLoad * pageSize, (pageToLoad + 1) * pageSize);}
 
   loadMore = (pageToLoad) =>  { 
-    console.log('loading more');
     this.setState(state => ({
       hasMore: ((pageToLoad + 1) * pageSize < this.props.items.length),
       page: pageToLoad + 1,
@@ -69,8 +95,8 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     let content = (<div></div>)
 
     // If we have items, render them
-    if (this.props.items) {
-      content = this.props.items.slice(0, 30).map((item, index) => (
+    if (this.state.elements) {
+      content = this.state.elements.map((item, index) => (
         <ComponentToRender key={`item-${index}`} item={item} onLoaded={this.props.onMounted}/>
       ));
     } else {

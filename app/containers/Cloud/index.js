@@ -10,7 +10,7 @@ import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
 
 var masonryOptions = {
-    transitionDuration: 0,
+    transitionDuration: 10,
     fitWidth: true,
 };
 
@@ -38,11 +38,11 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     })); 
   }
 
-  componentWillReceiveProps(nextProps){
-    if (this.props.tweetsLoading && nextProps.tweetsLoading == false) {
-      this.masonry.forcePack();
-    }
-  }
+  // componentWillReceiveProps(nextProps){
+  //   if (this.props.tweetsLoading && nextProps.tweetsLoading == false) {
+  //     this.masonry.forcePack();
+  //   }
+  // }
 
   render() {
     const ComponentToRender = this.props.component;
@@ -50,7 +50,7 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
 
     // If we have items, render them
     if (this.props.items) {
-      content = this.state.elements.map((item, index) => (
+      content = this.props.items.slice(0, 30).map((item, index) => (
         <ComponentToRender key={`item-${index}`} item={item} onLoaded={this.props.onMounted}/>
       ));
     } else {
@@ -61,7 +61,7 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     return (
         <Wrapper>
           <Title>{this.props.title}</Title>
-          <MasonryInfiniteScroller hasMore={this.state.hasMore} 
+          {/*<MasonryInfiniteScroller hasMore={this.state.hasMore} 
                                    loadMore={this.loadMore}
                                    className='tweets'
                                    ref={ref => (this.masonry = ref)}
@@ -73,7 +73,12 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
                     <ComponentToRender key={`item-${index}`} item={item} onLoaded={this.props.onMounted}/>
                   ))
               }
-          </MasonryInfiniteScroller>
+          </MasonryInfiniteScroller>*/}
+          <Masonry elementType={'div'} 
+                   className={'tweets'}
+                   options={masonryOptions}>
+              {content}
+          </Masonry>
         </Wrapper>
     );
   }

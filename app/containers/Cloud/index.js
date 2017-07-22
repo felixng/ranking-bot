@@ -7,7 +7,8 @@ import { allTweetsLoaded } from '../HomePage/actions';
 import Masonry from 'react-masonry-component';
 
 var masonryOptions = {
-    transitionDuration: 0
+    transitionDuration: 0,
+    fitWidth: true,
 };
 
 export class Cloud extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -26,12 +27,11 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     }
 
     return (
-        <Wrapper>
-          <Masonry elementType={'div'} 
-                   options={masonryOptions}>
-              {content}
-          </Masonry>
-        </Wrapper>
+        <Masonry className='tweets'
+                 elementType={'div'} 
+                 options={masonryOptions}>
+            {content}
+        </Masonry>
     );
   }
 }

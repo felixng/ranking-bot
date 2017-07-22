@@ -4,6 +4,11 @@ import Title from './Title';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { allTweetsLoaded } from '../HomePage/actions';
+import Masonry from 'react-masonry-component';
+
+var masonryOptions = {
+    transitionDuration: 0
+};
 
 export class Cloud extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -21,10 +26,12 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     }
 
     return (
-      <Wrapper name='tweetCloud'>
-          <Title> {this.props.title} </Title>
-          {content}
-      </Wrapper>
+        <Wrapper>
+          <Masonry elementType={'div'} 
+                   options={masonryOptions}>
+              {content}
+          </Masonry>
+        </Wrapper>
     );
   }
 }

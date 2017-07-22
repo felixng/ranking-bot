@@ -7,6 +7,7 @@ import { allTweetsLoaded } from '../HomePage/actions';
 import Masonry from 'react-masonry-component';
 import MasonryInfiniteScroller from 'react-masonry-infinite';
 import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 var masonryOptions = {
     transitionDuration: 0,
@@ -28,11 +29,14 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
 
   getCards = (pageToLoad) => { return this.props.items.slice(pageToLoad * pageSize, (pageToLoad + 1) * pageSize);}
 
-  loadMore = (pageToLoad) =>  { this.setState(state => ({
-    hasMore: ((pageToLoad + 1) * pageSize < this.props.items.length),
-    page: pageToLoad + 1,
-    elements: state.elements.concat(this.getCards(pageToLoad)),
-  })); }
+  loadMore = (pageToLoad) =>  { 
+    console.log('loading more');
+    this.setState(state => ({
+      hasMore: ((pageToLoad + 1) * pageSize < this.props.items.length),
+      page: pageToLoad + 1,
+      elements: state.elements.concat(this.getCards(pageToLoad)),
+    })); 
+  }
 
   componentWillReceiveProps(nextProps){
     if (this.props.tweetsLoading && nextProps.tweetsLoading == false) {
@@ -56,12 +60,14 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
 
     return (
         <Wrapper>
+          <Title>{this.props.title}</Title>
           <MasonryInfiniteScroller hasMore={this.state.hasMore} 
                                    loadMore={this.loadMore}
                                    className='tweets'
                                    ref={ref => (this.masonry = ref)}
-                                   useWindow={false}
-                                   threshold={0}>
+                                   useWindow={true}
+                                   loader={<LoadingIndicator />}
+                                   threshold={100}>
               {
                   this.state.elements.map((item, index) => (
                     <ComponentToRender key={`item-${index}`} item={item} onLoaded={this.props.onMounted}/>

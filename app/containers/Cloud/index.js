@@ -10,8 +10,9 @@ import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
 
 const pageSize = 10;
+const scrollOffset = 400;
 const masonryOptions = {
-    transitionDuration: 10,
+    transitionDuration: 0,
     fitWidth: true,
 };
 
@@ -40,7 +41,7 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight) {
+    if (windowBottom >= docHeight - scrollOffset) {
         this.loadMore(this.state.page + 1);
     }
   }

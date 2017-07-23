@@ -9,7 +9,7 @@ import MasonryInfiniteScroller from 'react-masonry-infinite';
 import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
 
-const pageSize = 10;
+const pageSize = 20;
 const scrollOffset = 400;
 const masonryOptions = {
     transitionDuration: 0,

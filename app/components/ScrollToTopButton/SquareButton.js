@@ -32,7 +32,7 @@ const SquareButton = styled.button`
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
-    animation: ${FadeIn} 1.2s ease-in-out both;
+    animation: ${FadeIn} 0.6s ease-in-out both;
 
 	&:hover {
 		opacity: 0.6;
@@ -49,7 +49,7 @@ const SquareButton = styled.button`
 
 	${props => props.hide && css`
 		opacity: 0;
-		animation: ${FadeOut} 1.2s ease-in-out both;
+		animation: ${FadeOut} 0.6s ease-in-out both;
 	`}
 
 

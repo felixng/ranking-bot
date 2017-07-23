@@ -4,13 +4,7 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html,
   body {
-    height: 100%;
-    width: 100%;
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    -o-transform: translateZ(0);
-    transform: translateZ(0);
+    overflow-x: auto;
   }
 
   body {
@@ -23,11 +17,10 @@ injectGlobal`
 
   #app {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
+    min-height: 100vw;
+    min-width: 100%;
     color: #fff;
-    overflow: auto;
+    background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
   }
 
   p,

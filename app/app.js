@@ -86,7 +86,18 @@ const render = (messages) => {
           render={
             // Scroll to top when going to a new page, imitating default browser
             // behaviour
-            applyRouterMiddleware(useScroll())
+            applyRouterMiddleware(useScroll((prevRouterProps, { routes }) => {
+                                    if (routes.some(route => route.ignoreScrollBehavior)) {
+                                      return false;
+                                    }
+
+                                    // if (routes.some(route => route.name == 'tweets')) {
+                                    //   return 'tweetsCloud';
+                                    // }
+
+
+                                    return true;
+                                  }))
           }
         />
       </LanguageProvider>

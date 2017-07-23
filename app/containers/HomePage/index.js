@@ -27,8 +27,7 @@ import { loadTweets } from '../HomePage/actions';
 import { changeDate } from './actions';
 import { makeSelectDate } from './selectors';
 import { push } from 'react-router-redux';
-import Scrollchor from 'react-scrollchor';
-
+import scrollToComponent from 'react-scroll-to-component';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentWillMount(){
@@ -46,7 +45,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     if (this.props.tweetsLoading && nextProps.tweetsLoading == false) {
-      this.scrollToTweets();
+      scrollToComponent(this.tweetsCloud, { offset: 0, align: 'top', duration: 800 });
     }
   }
 
@@ -108,8 +107,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     return (
       <article id="top">
-        <Scrollchor animate={{offset: 20, duration: 6000 }} 
-                    ref={ref => (this.scroll = ref)} to="tweetsCloud" />
+        {/*<Scrollchor animate={{offset: 20, duration: 6000 }} 
+                    ref={ref => (this.scroll = ref)} to="tweetsCloud" />*/}
         {loadingOverlay}
         <Helmet
           title="Home Page"
@@ -130,7 +129,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             {nextButton}
             <ShowsList {...showsListProps} />
           </CenteredSection>
-          <CenteredSection id="tweetsCloud">
+          <CenteredSection id="tweetsCloud" ref={(section) => { this.tweetsCloud = section; }}>
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
         </div>

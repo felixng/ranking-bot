@@ -17,7 +17,7 @@ injectGlobal`
 
   #app {
     position: absolute;
-    min-height: 100vw;
+    min-height: 100%;
     max-width: 100%;
     width: 100%;
     color: #fff;

@@ -23,6 +23,7 @@ function Footer() {
                     </A>
           }}
         />
+        <A target="_blank" href="http://convertalinktest.awin.com"> test </A>
       </section>
     </Wrapper>
   );

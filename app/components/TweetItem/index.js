@@ -9,7 +9,7 @@ function TweetItem(props) {
 	           options={{ cards: 'hidden', 
 	                      align: 'centre', 
 	                      linkColor: '#f39264',
-	                      width:400 }}
+	                      width:320 }}
              onLoad={props.onLoaded}/>
     </Wrapper>
   );

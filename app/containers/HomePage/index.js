@@ -18,6 +18,7 @@ import TweetsList from 'components/TweetsList';
 import Button from 'components/Button';
 import OverlayLoading from 'components/OverlayLoading';
 import LoadingIndicator from 'components/LoadingIndicator';
+import ScrollToTopButton from 'components/ScrollToTopButton';
 import CenteredSection from './CenteredSection';
 import Section from './Section';
 import Icon from './Icon';
@@ -30,12 +31,39 @@ import { push } from 'react-router-redux';
 import scrollToComponent from 'react-scroll-to-component';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(props){
+    super(props);
+    this.state = {
+      scrollHidden: true
+    };
+    this.hideScroll = this.hideScroll.bind(this);
+  }
+
   componentWillMount(){
     this.onPageLoad(this.props.params.date, this.props.params.handle);
   }
 
-  scrollToTweets(){
-    this.scroll.simulateClick();
+  componentDidMount(){
+    window.addEventListener('scroll', this.hideScroll);
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.hideScroll);
+  }
+
+  scrollToTop(){
+    scrollToComponent(this.top, { offset: -200, align: 'top', duration: 800 });
+  }
+
+  hideScroll(){
+    console.log()
+    // let { scrollHidden } = this.state;
+    if (window.scrollY > 800){
+      this.setState({ scrollHidden:false })
+    }
+    else {
+      this.setState({ scrollHidden:true }) 
+    }
   }
 
   componentWillReceiveProps(nextProps){
@@ -106,9 +134,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     return (
-      <article id="top">
-        {/*<Scrollchor animate={{offset: 20, duration: 6000 }} 
-                    ref={ref => (this.scroll = ref)} to="tweetsCloud" />*/}
+      <article ref={(section) => { this.top = section; }}>
         {loadingOverlay}
         <Helmet
           title="Home Page"
@@ -132,6 +158,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <CenteredSection id="tweetsCloud" ref={(section) => { this.tweetsCloud = section; }}>
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
+          <ScrollToTopButton onClick={this.scrollToTop.bind(this)} hidden={this.state.scrollHidden}/>
         </div>
       </article>
     );
@@ -196,7 +223,7 @@ const mapStateToProps = createStructuredSelector({
   tweets: makeSelectTweets(),
   tweetsError: makeSelectTweetsError(),
   tweetsLoading: makeSelectTweetsLoading(),
-  handle: makeSelectHandle()
+  handle: makeSelectHandle(),
 });
 
 // Wrap the component to inject dispatch and state into it

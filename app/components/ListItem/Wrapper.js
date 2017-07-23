@@ -15,7 +15,7 @@ const Wrapper = styled.li`
   &::before {
     content: counter(leaderboard);
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     top: 15px;
     left: 15px;
     width: 20px;
@@ -31,7 +31,7 @@ const Wrapper = styled.li`
   &::after {
     content: '';
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     width: 100%;
@@ -153,6 +153,22 @@ const Wrapper = styled.li`
   &:last-child {
     border-radius: 0 0 10px 10px;
   }
+
+  &:hover {
+    z-index: 2;
+    overflow: visible;
+
+    &::after {
+      opacity: 1;
+      transform: scaleX(1.06) scaleY(1.03);
+    }
+
+    & mark {
+      &::before, &::after {
+        opacity: 1;
+        transition: all .2s ease-in-out;
+      }
+    }
 
 }
 `;

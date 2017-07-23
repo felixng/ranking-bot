@@ -5,6 +5,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: space-between;
+  z-index: 3;
 `;
 
 export default Wrapper;

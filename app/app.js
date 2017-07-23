@@ -17,6 +17,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
 import 'sanitize.css/sanitize.css';
+import ReactGA from 'react-ga';
 
 // Import root app
 import App from 'containers/App';
@@ -76,28 +77,25 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname + window.location.search });
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 const render = (messages) => {
+  ReactGA.initialize('UA-42166600-17');
+
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <Router
           history={history}
           routes={rootRoute}
+          onUpdate={logPageView}
           render={
             // Scroll to top when going to a new page, imitating default browser
             // behaviour
-            applyRouterMiddleware(useScroll((prevRouterProps, { routes }) => {
-                                    if (routes.some(route => route.ignoreScrollBehavior)) {
-                                      return false;
-                                    }
-
-                                    // if (routes.some(route => route.name == 'tweets')) {
-                                    //   return 'tweetsCloud';
-                                    // }
-
-
-                                    return true;
-                                  }))
+            applyRouterMiddleware(useScroll())
           }
         />
       </LanguageProvider>

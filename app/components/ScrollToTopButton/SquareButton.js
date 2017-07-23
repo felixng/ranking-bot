@@ -48,7 +48,8 @@ const SquareButton = styled.button`
 	}
 
 	${props => props.hide && css`
-		display: none;
+		opacity: 0;
+		animation: ${FadeOut} 1.2s ease-in-out both;
 	`}
 
 

@@ -230,6 +230,7 @@
     "pg": "^6.4.0",
     "react": "15.4.1",
     "react-dom": "15.4.1",
+    "react-ga": "^2.2.0",
     "react-helmet": "3.2.2",
     "react-intl": "2.1.5",
     "react-masonry-component": "^5.0.7",

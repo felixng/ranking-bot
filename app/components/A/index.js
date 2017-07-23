@@ -5,10 +5,10 @@
 import styled from 'styled-components';
 
 const A = styled.a`
-  color: #e1e1e1;
+  color: rgba(194,68,72, 1);
 
   &:hover {
-    color: #e9e9e9;
+    color: rgba(194,68,72, 0.8);
   }
 `;
 

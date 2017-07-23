@@ -239,6 +239,7 @@
     "react-router-redux": "4.0.6",
     "react-router-scroll": "0.4.1",
     "react-scroll-listener": "^0.6.0",
+    "react-scroll-to-component": "^1.0.1",
     "react-scrollchor": "^4.0.0",
     "react-twitter-widgets": "^1.4.0",
     "redis": "^2.7.1",

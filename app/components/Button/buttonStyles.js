@@ -14,8 +14,8 @@ const buttonStyles = css`
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 16px;
-  border: 2px solid #e5e5e5;
-  color: #e9e9e9;
+  border: 2px solid #ffffff;
+  color: #ffffff;
 
   &:active {
     background: #f39264;

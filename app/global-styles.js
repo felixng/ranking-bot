@@ -18,7 +18,8 @@ injectGlobal`
   #app {
     position: absolute;
     min-height: 100vw;
-    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
     color: #fff;
     background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
   }

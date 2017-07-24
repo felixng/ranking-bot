@@ -22,6 +22,9 @@ import {
   LOAD_TWEETS_SUCCESS,
   ALL_TWEETS_LOADED,
   LOAD_TWEETS_FAILED,
+  LOAD_BOOK_NOW,
+  LOAD_BOOK_NOW_FAILED,
+  BOOK_NOW_LOADED,
 } from './constants';
 
 /**
@@ -71,5 +74,25 @@ export function tweetsLoaded(snapshot) {
 export function tweetsLoadingError(err) {
   return {
     type: LOAD_TWEETS_FAILED,
+  };
+}
+
+
+export function loadBookNowDetails() {
+  return {
+    type: LOAD_BOOK_NOW,
+  };
+}
+
+export function bookNowDetailsLoaded(link) {
+  return {
+    type: BOOK_NOW_LOADED,
+    link
+  };
+}
+
+export function bookNowLoadingError(err) {
+  return {
+    type: LOAD_BOOK_NOW_FAILED,
   };
 }

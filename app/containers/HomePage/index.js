@@ -24,7 +24,7 @@ import Section from './Section';
 import Icon from './Icon';
 import messages from './messages';
 import { loadShows } from '../App/actions';
-import { loadTweets } from '../HomePage/actions';
+import { loadTweets, loadBookNowDetails } from '../HomePage/actions';
 import { changeDate } from './actions';
 import { makeSelectDate } from './selectors';
 import { push } from 'react-router-redux';
@@ -74,6 +74,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (this.props.tweetsLoading && nextProps.tweetsLoading == false) {
       scrollToComponent(this.tweetsCloud, { offset: 0, align: 'top', duration: 800 });
+      this.props.onTweetLoaded();
     }
   }
 
@@ -211,6 +212,9 @@ export function mapDispatchToProps(dispatch, ownProps) {
       if (handle) {
         dispatch(loadTweets(handle))
       }
+    },
+    onTweetLoaded: () => {
+      dispatch(loadBookNowDetails());
     }
   };
 }

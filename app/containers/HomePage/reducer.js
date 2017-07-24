@@ -15,6 +15,8 @@ import {
   CHANGE_DATE,
   LOAD_TWEETS,
   LOAD_TWEETS_SUCCESS,
+  LOAD_BOOK_NOW,
+  BOOK_NOW_LOADED,
   ALL_TWEETS_LOADED
 } from './constants';
 
@@ -33,7 +35,8 @@ const initialState = fromJS({
     retweetCount: -1,
     favouriteCount: -1,
     loading: false,
-    error: false
+    error: false,
+    bookNow: false,
   }
 });
 
@@ -48,7 +51,8 @@ function homeReducer(state = initialState, action) {
         .setIn(['snapshot', 'retweetCount'], -1)
         .setIn(['snapshot', 'favouriteCount'], -1)
         .setIn(['snapshot', 'error'], false)
-        .setIn(['snapshot', 'loading'], false);
+        .setIn(['snapshot', 'loading'], false)
+        .setIn(['snapshot', 'bookNow'], false);
     case LOAD_TWEETS:
       return state
         .setIn(['snapshot', 'handle'], action.handle)
@@ -64,6 +68,9 @@ function homeReducer(state = initialState, action) {
     case ALL_TWEETS_LOADED:
       return state
         .setIn(['snapshot', 'loading'], false);
+    case BOOK_NOW_LOADED:
+      return state
+        .setIn(['snapshot', 'bookNow'], action.link);
     default:
       return state;
   }

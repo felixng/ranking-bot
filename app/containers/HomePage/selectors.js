@@ -16,6 +16,11 @@ const makeSelectHandle = () => createSelector(
   (homeState) => homeState.getIn(['snapshot', 'handle'])
 );
 
+const makeSelectShowName = () => createSelector(
+  selectHome,
+  (homeState) => homeState.getIn(['snapshot', 'name'])
+);
+
 const makeSelectTweets = () => createSelector(
   selectHome,
   (homeState) => homeState.getIn(['snapshot', 'tweets'])

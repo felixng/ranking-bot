@@ -15,3 +15,6 @@ export const LOAD_TWEETS = 'boilerplate/Home/LOAD_TWEETS';
 export const LOAD_TWEETS_SUCCESS = 'boilerplate/Home/LOAD_TWEETS_SUCCESS';
 export const ALL_TWEETS_LOADED = 'boilerplate/Home/ALL_TWEETS_LOADED';
 export const LOAD_TWEETS_FAILED = 'boilerplate/Home/LOAD_TWEETS_FAILED';
+export const LOAD_BOOK_NOW = 'boilerplate/Home/LOAD_BOOK_NOW';
+export const LOAD_BOOK_NOW_FAILED = 'boilerplate/Home/LOAD_BOOK_NOW_FAILED';
+export const BOOK_NOW_LOADED = 'boilerplate/Home/BOOK_NOW_LOADED';

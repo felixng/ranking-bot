@@ -1,5 +1,5 @@
 function TweetCounter(name ,T, redis, tableName) {
-    const ignore = ['E_N_O', 'enballet', 'The_Globe', 'sadlers_wells', 'MenChocFactory', 'OpenAirTheatre', 'youngvictheatre', 'LyricHammer', 'NationalTheatre', ''];
+    const ignore = ['E_N_O', 'enballet', 'The_Globe', 'sadlers_wells', 'MenChocFactory', 'OpenAirTheatre', 'youngvictheatre', 'LyricHammer', 'NationalTheatre', '', null];
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
@@ -72,6 +72,7 @@ function TweetCounter(name ,T, redis, tableName) {
         var result = {
             id: logConfig.id,
             date: keyDateString,
+            name: logConfig.name,
             handle: logConfig.handle,
             tweetTotal: tweetTotal,
             retweetTotal: retweetTotal,
@@ -204,6 +205,7 @@ function TweetCounter(name ,T, redis, tableName) {
         var logConfig = {
             id: production.id,
             handle: handle, 
+            name: production.name
         }
 
         var tally = {

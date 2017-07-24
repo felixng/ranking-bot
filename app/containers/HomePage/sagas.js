@@ -7,11 +7,13 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { LOAD_SHOWS } from 'containers/App/constants';
 import { LOAD_TWEETS } from 'containers/HomePage/constants';
 import { showsLoaded, showsLoadingError } from 'containers/App/actions';
-import { tweetsLoaded, tweetsLoadingError} from 'containers/HomePage/actions';
+import { tweetsLoaded, tweetsLoadingError, bookNowDetailsLoaded, bookNowLoadingError } from 'containers/HomePage/actions';
 
 import request from 'utils/request';
 import toKey from 'utils/date';
-import { makeSelectHandle, makeSelectDate } from 'containers/HomePage/selectors';
+import { makeSelectHandle, makeSelectDate, makeSelectShowName } from 'containers/HomePage/selectors';
+
+const url = process.env.API_URL || 'uat-cms-ensemblr.herokuapp.com';
 
 export function* getTweets() {
   // Select username from store
@@ -38,6 +40,22 @@ export function* getShows() {
     yield put(showsLoaded(shows.splice(0, 5), dateKey));
   } catch (err) {
     yield put(showsLoadingError(err));
+  }
+}
+
+export function* getBookNowDetails() {
+  const name = yield select(makeSelectShowName());
+  const requestURL = `${url}/affiliate/search/${name}`;
+
+  try {
+    const affiliateList = yield call(request, requestURL);
+    if (affiliateList.length > 0){
+      var link = affiliateList[0].item.aw_deep_link;
+
+      yield put(bookNowDetailsLoaded(link));
+    }
+  } catch (err) {
+    yield put(bookNowLoadingError(err));
   }
 }
 

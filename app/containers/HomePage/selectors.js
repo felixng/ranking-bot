@@ -21,6 +21,16 @@ const makeSelectShowName = () => createSelector(
   (homeState) => homeState.getIn(['snapshot', 'name'])
 );
 
+const makeSelectShowPrice = () => createSelector(
+  selectHome,
+  (homeState) => homeState.getIn(['snapshot', 'price'])
+);
+
+const makeSelectBookNowLink = () => createSelector(
+  selectHome,
+  (homeState) => homeState.getIn(['snapshot', 'bookNowLink'])
+);
+
 const makeSelectTweets = () => createSelector(
   selectHome,
   (homeState) => homeState.getIn(['snapshot', 'tweets'])
@@ -45,4 +55,6 @@ export {
   makeSelectTweetsLoading,
   makeSelectTweetsError,
   makeSelectShowName,
+  makeSelectShowPrice,
+  makeSelectBookNowLink
 };

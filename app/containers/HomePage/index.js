@@ -11,7 +11,9 @@ import { connect } from 'react-redux';
 import toKey from 'utils/date';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
-import { makeSelectHandle, makeSelectTweets, makeSelectTweetsLoading, makeSelectTweetsError } from 'containers/HomePage/selectors';
+import { makeSelectBookNowLink, makeSelectShowPrice, makeSelectShowName, 
+         makeSelectHandle, makeSelectTweets, makeSelectTweetsLoading, 
+         makeSelectTweetsError } from 'containers/HomePage/selectors';
 import SubTitle from './SubTitle';
 import ShowsList from 'components/ShowsList';
 import TweetsList from 'components/TweetsList';
@@ -19,6 +21,7 @@ import Button from 'components/Button';
 import OverlayLoading from 'components/OverlayLoading';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ScrollToTopButton from 'components/ScrollToTopButton';
+import BookNowButton from 'components/BookNowButton';
 import CenteredSection from './CenteredSection';
 import Section from './Section';
 import Icon from './Icon';
@@ -109,7 +112,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       title
     };
 
-    const cloudTitle = `What are people saying about @${this.props.handle}`;
+    const cloudTitle = `What people are tweeting about ${this.props.showTitle}`;
+    const bookNowTitle = `Book ${this.props.showTitle} Now from ${this.props.showPrice}`;
     const tweetsListProps = {
       tweetsLoading,
       tweetsError,
@@ -159,6 +163,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <CenteredSection id="tweetsCloud" ref={(section) => { this.tweetsCloud = section; }}>
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
+          <BookNowButton href={this.props.bookNowLink} 
+                         text={bookNowTitle} 
+                         hidden={this.state.scrollHidden} />
           <ScrollToTopButton onClick={this.scrollToTop.bind(this)} hidden={this.state.scrollHidden}/>
         </div>
       </article>
@@ -228,6 +235,9 @@ const mapStateToProps = createStructuredSelector({
   tweetsError: makeSelectTweetsError(),
   tweetsLoading: makeSelectTweetsLoading(),
   handle: makeSelectHandle(),
+  showTitle: makeSelectShowName(),
+  showPrice: makeSelectShowPrice(),
+  bookNowLink: makeSelectBookNowLink(),
 });
 
 // Wrap the component to inject dispatch and state into it

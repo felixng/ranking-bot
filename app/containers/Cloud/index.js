@@ -114,8 +114,8 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
       tweets = <Masonry elementType={'div'} 
                    className={'tweets'}
                    options={masonryOptions}>
-              {content}
-          </Masonry>
+                   {content}
+              </Masonry>
     }
     else {
       tweets = content;

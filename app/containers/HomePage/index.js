@@ -127,7 +127,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (date.toDateString() != yesterdayDate.toDateString()){
       nextButton = (<Button onClick={this.nextDay.bind(this)}> 
-                      Next Day
+                      Day After
                       <Icon className="fa fa-angle-right" aria-hidden="true" left></Icon>
                     </Button>)
     }
@@ -155,7 +155,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <Button 
               onClick={this.previousDay.bind(this)}>
               <Icon className="fa fa-angle-left" aria-hidden="true" right></Icon>
-              Previous Day
+              Day Before
             </Button>
             {nextButton}
             <ShowsList {...showsListProps} />

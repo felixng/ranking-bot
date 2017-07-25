@@ -112,7 +112,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       title
     };
 
-    const cloudTitle = `What people are tweeting about ${this.props.showTitle}`;
+    const cloudTitle = `What are people tweeting about ${this.props.showTitle}?`;
     const bookNowTitle = `Book ${this.props.showTitle} Now from ${this.props.showPrice}`;
     const tweetsListProps = {
       tweetsLoading,

@@ -8,6 +8,7 @@ import Masonry from 'react-masonry-component';
 import MasonryInfiniteScroller from 'react-masonry-infinite';
 import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
+import isMobile from 'utils/common';
 
 const pageSize = 20;
 const scrollOffset = 400;
@@ -30,9 +31,8 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
 
   attachScrollListener () {
     let el = window;
-    el.addEventListener('scroll', this.scrollFunction, true);
     
-    // this.scrollListener();
+    el.addEventListener('scroll', this.scrollFunction, true);  
   }
 
   scrollListener() {
@@ -47,7 +47,9 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
   }
 
   componentWillUnmount () {
-    this.detachScrollListener();
+    if (!isMobile()){
+      this.detachScrollListener();
+    }
   }
 
   detachScrollListener () {
@@ -56,7 +58,9 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
   }
 
   componentDidMount () {
-    this.attachScrollListener();
+    if (!isMobile()){
+      this.attachScrollListener();
+    }
   }
 
   shuffle(array) {
@@ -93,6 +97,7 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
 
   render() {
     const ComponentToRender = this.props.component;
+    let tweets = (<div></div>)
     let content = (<div></div>)
 
     // If we have items, render them
@@ -103,6 +108,17 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     } else {
       // Otherwise render a single component
       return (<ComponentToRender />);
+    }
+
+    if (!isMobile()){
+      tweets = <Masonry elementType={'div'} 
+                   className={'tweets'}
+                   options={masonryOptions}>
+              {content}
+          </Masonry>
+    }
+    else {
+      tweets = content;
     }
 
     return (
@@ -121,11 +137,7 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
                   ))
               }
           </MasonryInfiniteScroller>*/}
-          <Masonry elementType={'div'} 
-                   className={'tweets'}
-                   options={masonryOptions}>
-              {content}
-          </Masonry>
+          {tweets}
         </Wrapper>
     );
   }

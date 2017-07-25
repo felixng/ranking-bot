@@ -21,6 +21,10 @@ const buttonStyles = css`
     background: #f39264;
     color: #fff;
   }
+
+  @media (max-width: 400px) {
+    padding: 0.5em 1em;
+  }
 `;
 
 export default buttonStyles;

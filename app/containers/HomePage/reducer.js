@@ -36,7 +36,8 @@ const initialState = fromJS({
     favouriteCount: -1,
     loading: false,
     error: false,
-    bookNow: false,
+    bookNowLink: false,
+    price: false,
   }
 });
 
@@ -47,20 +48,25 @@ function homeReducer(state = initialState, action) {
       return state
         .set('date', action.date)
         .setIn(['snapshot', 'tweets'], false)
+        .setIn(['snapshot', 'name'], false)
         .setIn(['snapshot', 'tweetsCount'], -1)
         .setIn(['snapshot', 'retweetCount'], -1)
         .setIn(['snapshot', 'favouriteCount'], -1)
         .setIn(['snapshot', 'error'], false)
         .setIn(['snapshot', 'loading'], false)
-        .setIn(['snapshot', 'bookNow'], false);
+        .setIn(['snapshot', 'bookNowLink'], false)
+        .setIn(['snapshot', 'price'], false);
     case LOAD_TWEETS:
       return state
         .setIn(['snapshot', 'handle'], action.handle)
         .setIn(['snapshot', 'loading'], true)
-        .setIn(['snapshot', 'error'], false);
+        .setIn(['snapshot', 'error'], false)
+        .setIn(['snapshot', 'bookNowLink'], false)
+        .setIn(['snapshot', 'price'], false);
     case LOAD_TWEETS_SUCCESS:
       return state
         .setIn(['snapshot', 'tweets'], action.tweets)
+        .setIn(['snapshot', 'name'], action.name)
         .setIn(['snapshot', 'tweetsCount'], action.tweetTotal)
         .setIn(['snapshot', 'retweetCount'], action.retweetTotal)
         .setIn(['snapshot', 'favouriteCount'], action.favouriteTotal)
@@ -70,7 +76,8 @@ function homeReducer(state = initialState, action) {
         .setIn(['snapshot', 'loading'], false);
     case BOOK_NOW_LOADED:
       return state
-        .setIn(['snapshot', 'bookNow'], action.link);
+        .setIn(['snapshot', 'bookNowLink'], action.link)
+        .setIn(['snapshot', 'price'], action.price);
     default:
       return state;
   }

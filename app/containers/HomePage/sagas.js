@@ -5,7 +5,7 @@
 import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { LOAD_SHOWS } from 'containers/App/constants';
-import { LOAD_TWEETS } from 'containers/HomePage/constants';
+import { LOAD_TWEETS, LOAD_BOOK_NOW } from 'containers/HomePage/constants';
 import { showsLoaded, showsLoadingError } from 'containers/App/actions';
 import { tweetsLoaded, tweetsLoadingError, bookNowDetailsLoaded, bookNowLoadingError } from 'containers/HomePage/actions';
 
@@ -45,16 +45,15 @@ export function* getShows() {
 
 export function* getBookNowDetails() {
   const name = yield select(makeSelectShowName());
-  const requestURL = `${url}/affiliate/search/${name}`;
+  const requestURL = `${window.location.protocol}\/\/${url}/api/affiliate/search/${name}`;
 
   try {
+    console.log(requestURL);
     const affiliateList = yield call(request, requestURL);
-    if (affiliateList.length > 0){
-      var link = affiliateList[0].item.aw_deep_link;
-
-      yield put(bookNowDetailsLoaded(link));
-    }
+  
+    yield put(bookNowDetailsLoaded(affiliateList));
   } catch (err) {
+    console.log(err);
     yield put(bookNowLoadingError(err));
   }
 }
@@ -73,8 +72,16 @@ export function* showData() {
   yield cancel(watcher);
 }
 
+export function* bookNowData() {
+  const watcher = yield takeLatest(LOAD_BOOK_NOW, getBookNowDetails);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
 // Bootstrap sagas
 export default [
   showData,
-  tweetsData
+  tweetsData,
+  bookNowData
 ];

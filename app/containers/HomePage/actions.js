@@ -68,6 +68,7 @@ export function tweetsLoaded(snapshot) {
     retweetTotal: snapshot.retweetTotal,
     tweetTotal: snapshot.tweetTotal,
     favouriteTotal: snapshot.favouriteTotal,
+    name: snapshot.name,
   };
 }
 
@@ -84,10 +85,12 @@ export function loadBookNowDetails() {
   };
 }
 
-export function bookNowDetailsLoaded(link) {
+export function bookNowDetailsLoaded(list) {
+  console.log('bookNowDetailsLoaded');
   return {
     type: BOOK_NOW_LOADED,
-    link
+    link: list[0].item.aw_deep_link,
+    price: list[0].item.display_price
   };
 }
 

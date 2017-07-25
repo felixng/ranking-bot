@@ -44,4 +44,5 @@ export {
   makeSelectTweets,
   makeSelectTweetsLoading,
   makeSelectTweetsError,
+  makeSelectShowName,
 };

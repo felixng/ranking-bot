@@ -1,5 +1,5 @@
 function TweetCounter(name ,T, redis, tableName) {
-    const ignore = ['E_N_O', 'enballet', 'The_Globe', 'sadlers_wells', 'MenChocFactory', 'OpenAirTheatre', 'youngvictheatre', 'oldvictheatre', 'LyricHammer', 'NationalTheatre', '', null];
+    const ignore = ['e_n_o', 'enballet', 'the_globe', 'sadlers_wells', 'menchocfactory', 'openairtheatre', 'youngvictheatre', 'oldvictheatre', 'lyrichammer', 'nationaltheatre', '', null];
     var fs = require('fs');
     var http = require("http");
     var sleep = require('sleep');
@@ -242,7 +242,7 @@ function TweetCounter(name ,T, redis, tableName) {
             getProductionsFromAPI(function(productions){
                 // productions = productions.slice(7, 18);                
                 productions.forEach(function(production){
-                    if (!ignore.includes(production.handle) && production.handle != null){
+                    if (!ignore.includes(production.handle.toLowerCase()) && production.handle != null){
                         run(production, dateOptions);
                     }
                     else{

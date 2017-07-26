@@ -242,7 +242,7 @@ function TweetCounter(name ,T, redis, tableName) {
             getProductionsFromAPI(function(productions){
                 // productions = productions.slice(7, 18);                
                 productions.forEach(function(production){
-                    if (!ignore.includes(production.handle.toLowerCase()) && production.handle != null){
+                    if (production.handle && !ignore.includes(production.handle.toLowerCase()) && production.handle != null){
                         run(production, dateOptions);
                     }
                     else{

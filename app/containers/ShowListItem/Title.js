@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const Title = styled.div`
-  min-width: 42%;
+  width: 42%;
+  line-height: 140%;
 `;
 
 export default Title;

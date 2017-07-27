@@ -7,7 +7,8 @@ class ScrollToTopButton extends React.PureComponent {
       return <CentreButton href={this.props.href}
       					   target='_blank'
                            hide={this.props.hidden}>
-                    {this.props.text}
+                    Book {this.props.title} Now
+                    <small>from {this.props.price}</small>
              </CentreButton>;
    }
 } 

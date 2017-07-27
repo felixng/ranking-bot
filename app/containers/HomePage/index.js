@@ -113,7 +113,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     };
 
     const cloudTitle = `What are people tweeting about ${this.props.showTitle}?`;
-    const bookNowTitle = `Book ${this.props.showTitle} Now from ${this.props.showPrice}`;
     const tweetsListProps = {
       tweetsLoading,
       tweetsError,
@@ -164,7 +163,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
           <BookNowButton href={this.props.bookNowLink} 
-                         text={bookNowTitle} 
+                         title={this.props.showTitle}
+                         price={this.props.showPrice}
                          hidden={this.state.scrollHidden} />
           <ScrollToTopButton onClick={this.scrollToTop.bind(this)} hidden={this.state.scrollHidden}/>
         </div>

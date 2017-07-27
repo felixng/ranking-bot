@@ -23,6 +23,7 @@ const FadeOut = keyframes`
 
 const CentreButton = styled.a`
 	opacity: 0.8;
+	font-weight: 500;
 	color: white;
 	background-color: #c24448;
 	// width: 40px;
@@ -33,7 +34,7 @@ const CentreButton = styled.a`
 	min-height: 0.5em;
 	bottom: 30px;
 	padding: 0.5em;
-	font-size: 1.5em;
+	font-size: 1.25em;
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
@@ -43,7 +44,7 @@ const CentreButton = styled.a`
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
     text-decoration: none;
-
+	text-align: center;
     // animation: ${FadeIn} 0.6s ease-in-out both;
 
 	&:hover {
@@ -54,6 +55,16 @@ const CentreButton = styled.a`
 		opacity: 0;
 		animation: ${FadeOut} 0.6s ease-in-out both;
 	`}
+
+	small {
+		font-size: 70%;
+		line-height: 100%;
+		padding-top: 1.5%;
+		font-weight: 400;
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+	}
 
 
 `;

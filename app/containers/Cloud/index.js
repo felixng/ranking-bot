@@ -20,7 +20,7 @@ const masonryOptions = {
 export class Cloud extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.scrollFunction = this.scrollListener.bind(this);
+    // this.scrollFunction = this.scrollListener.bind(this);
 
     this.state = {
       hasMore: true,
@@ -29,39 +29,39 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     };
   }
 
-  attachScrollListener () {
-    let el = window;
+  // attachScrollListener () {
+  //   let el = window;
     
-    el.addEventListener('scroll', this.scrollFunction, true);  
-  }
+  //   el.addEventListener('scroll', this.scrollFunction, true);  
+  // }
 
-  scrollListener() {
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
-    const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight - scrollOffset) {
-        this.loadMore(this.state.page + 1);
-    }
-  }
+  // scrollListener() {
+  //   const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+  //   const body = document.body;
+  //   const html = document.documentElement;
+  //   const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+  //   const windowBottom = windowHeight + window.pageYOffset;
+  //   if (windowBottom >= docHeight - scrollOffset) {
+  //       this.loadMore(this.state.page + 1);
+  //   }
+  // }
 
-  componentWillUnmount () {
-    if (!isMobile()){
-      this.detachScrollListener();
-    }
-  }
+  // componentWillUnmount () {
+  //   if (!isMobile()){
+  //     this.detachScrollListener();
+  //   }
+  // }
 
-  detachScrollListener () {
-    let el = window;
-    el.removeEventListener('scroll', this.scrollFunction, true);
-  }
+  // detachScrollListener () {
+  //   let el = window;
+  //   el.removeEventListener('scroll', this.scrollFunction, true);
+  // }
 
-  componentDidMount () {
-    if (!isMobile()){
-      this.attachScrollListener();
-    }
-  }
+  // componentDidMount () {
+  //   if (!isMobile()){
+  //     this.attachScrollListener();
+  //   }
+  // }
 
   shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -81,13 +81,13 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
   
   getCards = (pageToLoad) => { return this.shuffle(this.props.items).slice(pageToLoad * pageSize, (pageToLoad + 1) * pageSize);}
 
-  loadMore = (pageToLoad) =>  { 
-    this.setState(state => ({
-      hasMore: ((pageToLoad + 1) * pageSize < this.props.items.length),
-      page: pageToLoad + 1,
-      elements: state.elements.concat(this.getCards(pageToLoad)),
-    })); 
-  }
+  // loadMore = (pageToLoad) =>  { 
+  //   this.setState(state => ({
+  //     hasMore: ((pageToLoad + 1) * pageSize < this.props.items.length),
+  //     page: pageToLoad + 1,
+  //     elements: state.elements.concat(this.getCards(pageToLoad)),
+  //   })); 
+  // }
 
   // componentWillReceiveProps(nextProps){
   //   if (this.props.tweetsLoading && nextProps.tweetsLoading == false) {
@@ -124,19 +124,6 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     return (
         <Wrapper>
           <Title>{this.props.title}</Title>
-          {/*<MasonryInfiniteScroller hasMore={this.state.hasMore} 
-                                   loadMore={this.loadMore}
-                                   className='tweets'
-                                   ref={ref => (this.masonry = ref)}
-                                   useWindow={true}
-                                   loader={<LoadingIndicator />}
-                                   threshold={100}>
-              {
-                  this.state.elements.map((item, index) => (
-                    <ComponentToRender key={`item-${index}`} item={item} onLoaded={this.props.onMounted}/>
-                  ))
-              }
-          </MasonryInfiniteScroller>*/}
           {tweets}
         </Wrapper>
     );

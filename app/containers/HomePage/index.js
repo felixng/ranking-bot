@@ -102,6 +102,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render() {
     let nextButton = (<div></div>)
+    let bookNow = (<div></div>)
     let loadingOverlay = (<div></div>)
     const { loading, error, shows, date, tweets, tweetsError, tweetsLoading } = this.props;
     const title = date.toDateString();
@@ -123,6 +124,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     var oneDayTimeStamp = 1000 * 60 * 60 * 24; // Milliseconds in a day
     var diff = todayTimeStamp - oneDayTimeStamp;
     var yesterdayDate = new Date(diff);
+
+    if (this.props.bookNowLink && this.props.showTitle){
+      bookNow = (<BookNowButton href={this.props.bookNowLink} 
+                         title={this.props.showTitle}
+                         price={this.props.showPrice}
+                         hidden={this.state.scrollHidden} />)  
+    }
+    
 
     if (date.toDateString() != yesterdayDate.toDateString()){
       nextButton = (<Button onClick={this.nextDay.bind(this)}> 
@@ -162,10 +171,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <CenteredSection id="tweetsCloud" ref={(section) => { this.tweetsCloud = section; }}>
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
-          <BookNowButton href={this.props.bookNowLink} 
-                         title={this.props.showTitle}
-                         price={this.props.showPrice}
-                         hidden={this.state.scrollHidden} />
+          {bookNow}
           <ScrollToTopButton onClick={this.scrollToTop.bind(this)} hidden={this.state.scrollHidden}/>
         </div>
       </article>

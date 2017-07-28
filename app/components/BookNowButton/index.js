@@ -4,12 +4,16 @@ import scrollToComponent from 'react-scroll-to-component';
 
 class ScrollToTopButton extends React.PureComponent {
   render () {
-      return <CentreButton href={this.props.href}
-      					   target='_blank'
-                           hide={this.props.hidden}>
-                    Book {this.props.title} Now
-                    <small>from {this.props.price}</small>
-             </CentreButton>;
+  	let small = (<div></div>)
+	if (this.props.price) {
+		small = (<small>from {this.props.price}</small>)
+	}
+	return <CentreButton href={this.props.href}
+						   target='_blank'
+	                   hide={this.props.hidden}>
+	            Book {this.props.title} Now
+	            {small}
+		   </CentreButton>;
    }
 } 
 

@@ -45,7 +45,7 @@ const CentreButton = styled.a`
     transform: translateX(-50%);
     text-decoration: none;
 	text-align: center;
-    // animation: ${FadeIn} 0.6s ease-in-out both;
+    animation: ${FadeIn} 0.6s ease-in-out both;
 
 	&:hover {
 		opacity: 1;

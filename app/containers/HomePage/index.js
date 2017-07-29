@@ -150,9 +150,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       <article ref={(section) => { this.top = section; }}>
         {loadingOverlay}
         <Helmet
-          title="Home Page"
+          titleTemplate="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
+          defaultTitle="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
           meta={[
-            { name: 'description', content: "West End League - What's Trending in West End?" },
+            { name: 'description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
+            { name: 'og:description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
+            { name: 'og:title', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
+            { name: 'og:type', content: "website"},
           ]}
         />
         <div>

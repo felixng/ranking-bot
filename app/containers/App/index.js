@@ -30,10 +30,10 @@ export function App(props) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - West End League - What's Trending in West End?"
-        defaultTitle="West End League - What's Trending in West End?"
+        titleTemplate="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
+        defaultTitle="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
         meta={[
-          { name: 'description', content: 'West End League - Top 10 Popular West End Shows base on Tweets.' },
+          { name: 'description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
         ]}
       />
       <Header />

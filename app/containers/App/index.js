@@ -34,6 +34,9 @@ export function App(props) {
         defaultTitle="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
         meta={[
           { name: 'description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
+          { name: 'og:description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
+          { name: 'og:title', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
+          { name: 'og:type', content: "website"},
         ]}
       />
       <Header />

@@ -21,7 +21,7 @@ export function* getTweets() {
   const dateKey = toKey(date);
   const handle = yield select(makeSelectHandle());
   // const requestURL = `${window.location.protocol}\/\/${window.location.host}/snapshot/${handle}/${dateKey}`;
-  const requestURL = `http:\/\/localhost:3000/snapshot/${handle}/${dateKey}`;
+  const requestURL = `/snapshot/${handle}/${dateKey}`;
 
   try {
     const snapshot = yield call(request, requestURL);
@@ -34,7 +34,7 @@ export function* getTweets() {
 export function* getShows() {
   const date = yield select(makeSelectDate());
   const dateKey = toKey(date);
-  const requestURL = `http:\/\/localhost:3000/top/10/${dateKey}`;
+  const requestURL = `/top/10/${dateKey}`;
 
   try {
     const shows = yield call(request, requestURL);

@@ -1,3 +1,4 @@
 export default function toKey(date) {
-  return date.toJSON().slice(0,10).replace(/-/g,'-');
+  var key = new Date(date)
+  return key.toJSON().slice(0,10).replace(/-/g,'-');
 }

@@ -48,7 +48,6 @@ const makeSelectTweetsLoading = () => createSelector(
 
 export {
   selectHome,
-  makeSelectUsername,
   makeSelectDate,
   makeSelectHandle,
   makeSelectTweets,

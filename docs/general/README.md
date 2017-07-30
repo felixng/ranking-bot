@@ -12,6 +12,7 @@ efficient tooling and cleanest project structure.
 - [**CLI Commands**](commands.md)
 - [Tool Configuration](files.md)
 - [Server Configurations](server-configs.md)
+- [Server side rendering](server-side-rendering.md)
 - [Deployment](deployment.md) *(currently Heroku specific)*
 - [FAQ](faq.md)
 - [Gotchas](gotchas.md)
@@ -49,7 +50,7 @@ you can see, play back and change your action history!
 ## Next generation JavaScript
 
 Use ESNext template strings, object destructuring, arrow functions, JSX syntax
-and more, today. This is possible thanks to Babel with the `latest`, `stage-0`
+and more, today. This is possible thanks to Babel with the `env`, `stage-0`
 and `react` presets!
 
 ## Next generation CSS

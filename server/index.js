@@ -1,11 +1,13 @@
 /* eslint consistent-return:0 */
-require('newrelic');
+
 const express = require('express');
 const logger = require('./logger');
 
-const argv = require('minimist')(process.argv.slice(2));
+const argv = require('./argv');
 const setup = require('./middlewares/frontendMiddleware');
 const setupBackend = require('./middlewares/backendMiddleware');
+const port = require('./port');
+
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false;
 const resolve = require('path').resolve;
@@ -27,8 +29,6 @@ const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
-const port = argv.port || process.env.PORT || 3000;
-
 // Start your app.
 app.listen(port, host, (err) => {
   if (err) {
@@ -48,11 +48,3 @@ app.listen(port, host, (err) => {
     logger.appStarted(port, prettyHost);
   }
 });
-
-
-//Bots
-var CronJob = require('cron').CronJob;
-
-new CronJob('00 00 01 * * *', function() {
-  counters.theatreCounter.gatherAll();
-}, null, true, 'Europe/London');

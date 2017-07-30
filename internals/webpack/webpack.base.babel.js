@@ -4,6 +4,28 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const AssetsPlugin = require('assets-webpack-plugin');
+const assetsPluginInstance = new AssetsPlugin({
+  path: path.join(process.cwd(), 'server', 'middlewares'),
+  filename: 'generated.assets.json',
+});
+
+const extractVendorCSSPlugin = new ExtractTextPlugin('vendor.[contenthash].css');
+const imageWebpackQuery = require('./imageWebpackQuery');
+
+const isBuildingDll = Boolean(process.env.BUILDING_DLL);
+
+const vendorCSSLoaders = extractVendorCSSPlugin.extract({
+  fallback: 'style-loader',
+  use: 'css-loader',
+});
+
+// Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
+// 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
+// see https://github.com/webpack/loader-utils/issues/56 parseQuery() will be replaced with getOptions()
+// in the next major version of loader-utils.'
+process.noDeprecation = true;
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -12,50 +34,61 @@ module.exports = (options) => ({
     publicPath: '/',
   }, options.output), // Merge with env dependent settings
   module: {
-    loaders: [{
-      test: /\.js$/, // Transform all .js files required somewhere with Babel
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: options.babelQuery,
-    }, {
-      // Do not transform vendor's CSS with CSS-modules
-      // The point is that they remain in global scope.
-      // Since we require these CSS files in our JS or CSS files,
-      // they will be a part of our compilation either way.
-      // So, no need for ExtractTextPlugin here.
-      test: /\.css$/,
-      include: /node_modules/,
-      loaders: ['style-loader', 'css-loader'],
-    }, {
-      test: /\.(eot|svg|ttf|woff|woff2)$/,
-      loader: 'file-loader',
-    }, {
-      test: /\.(jpg|png|gif)$/,
-      loaders: [
-        'file-loader',
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            progressive: true,
-            optimizationLevel: 7,
-            interlaced: false,
-            pngquant: {
-              quality: '65-90',
-              speed: 4,
-            },
+    rules: [
+      {
+        test: /\.js$/, // Transform all .js files required somewhere with Babel
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: options.babelQuery,
+        },
+      },
+      {
+        // Preprocess our own .css files
+        // This is the place to add your own loaders (e.g. sass/less etc.)
+        // for a list of loaders, see https://webpack.js.org/loaders/#styling
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        // Transform 3rd party css into an external stylesheet (vendor.[contenthash].css)
+        test: /\.css$/,
+        include: /node_modules/,
+        use: vendorCSSLoaders,
+      },
+      {
+        test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
+        use: 'file-loader',
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: imageWebpackQuery,
+          },
+        ],
+      },
+      {
+        test: /\.html$/,
+        use: 'html-loader',
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader',
+      },
+      {
+        test: /\.(mp4|webm)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
           },
         },
-      ],
-    }, {
-      test: /\.html$/,
-      loader: 'html-loader',
-    }, {
-      test: /\.(mp4|webm)$/,
-      loader: 'url-loader',
-      query: {
-        limit: 10000,
       },
-    }],
+    ],
   },
   plugins: options.plugins.concat([
     new webpack.ProvidePlugin({
@@ -72,7 +105,10 @@ module.exports = (options) => ({
       },
     }),
     new webpack.NamedModulesPlugin(),
-  ]),
+    extractVendorCSSPlugin,
+  ]).concat(
+    isBuildingDll ? [] : [assetsPluginInstance]
+  ),
   resolve: {
     modules: ['app', 'node_modules'],
     extensions: [

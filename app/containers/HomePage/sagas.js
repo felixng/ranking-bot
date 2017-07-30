@@ -20,7 +20,8 @@ export function* getTweets() {
   const date = yield select(makeSelectDate());
   const dateKey = toKey(date);
   const handle = yield select(makeSelectHandle());
-  const requestURL = `${window.location.protocol}\/\/${window.location.host}/snapshot/${handle}/${dateKey}`;
+  // const requestURL = `${window.location.protocol}\/\/${window.location.host}/snapshot/${handle}/${dateKey}`;
+  const requestURL = `http:\/\/localhost:3000/snapshot/${handle}/${dateKey}`;
 
   try {
     const snapshot = yield call(request, requestURL);
@@ -33,7 +34,7 @@ export function* getTweets() {
 export function* getShows() {
   const date = yield select(makeSelectDate());
   const dateKey = toKey(date);
-  const requestURL = `${window.location.protocol}\/\/${window.location.host}/top/10/${dateKey}`;
+  const requestURL = `http:\/\/localhost:3000/top/10/${dateKey}`;
 
   try {
     const shows = yield call(request, requestURL);
@@ -45,7 +46,7 @@ export function* getShows() {
 
 export function* getBookNowDetails() {
   const name = yield select(makeSelectShowName());
-  const requestURL = `${window.location.protocol}\/\/${url}/api/affiliate/search/${name}`;
+  const requestURL = `http:\/\/${url}/api/affiliate/search/${name}`;
 
   try {
     console.log(requestURL);

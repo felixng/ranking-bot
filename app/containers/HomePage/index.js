@@ -105,7 +105,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     let bookNow = (<div></div>)
     let loadingOverlay = (<div></div>)
     const { loading, error, shows, date, tweets, tweetsError, tweetsLoading } = this.props;
-    const title = date.toDateString();
+    const currentDate = new Date(date)
+    const title = currentDate.toDateString();
     const showsListProps = {
       loading,
       error,
@@ -133,7 +134,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
     
 
-    if (date.toDateString() != yesterdayDate.toDateString()){
+    if (currentDate.toDateString() != yesterdayDate.toDateString()){
       nextButton = (<Button onClick={this.nextDay.bind(this)}> 
                       Day After
                       <Icon className="fa fa-angle-right" aria-hidden="true" left></Icon>

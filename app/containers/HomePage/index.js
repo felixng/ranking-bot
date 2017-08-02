@@ -32,6 +32,7 @@ import { changeDate } from './actions';
 import { makeSelectDate } from './selectors';
 import { push } from 'react-router-redux';
 import scrollToComponent from 'react-scroll-to-component';
+import { Mention, Follow } from 'react-twitter-widgets';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props){
@@ -61,7 +62,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   hideScroll(){
     console.log()
     // let { scrollHidden } = this.state;
-    if (window.scrollY > 800){
+    if (window.scrollY > 650){
       this.setState({ scrollHidden:false })
     }
     else {
@@ -101,9 +102,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render() {
-    let nextButton = (<div></div>)
-    let bookNow = (<div></div>)
-    let loadingOverlay = (<div></div>)
+    let nextButton = (<div></div>);
+    let bookNow = (<div></div>);
+    let loadingOverlay = (<div></div>);
+    let buttons = (<div></div>);
     const { loading, error, shows, date, tweets, tweetsError, tweetsLoading } = this.props;
     const currentDate = new Date(date)
     const title = currentDate.toDateString();
@@ -130,7 +132,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       bookNow = (<BookNowButton href={this.props.bookNowLink} 
                          title={this.props.showTitle}
                          price={this.props.showPrice}
-                         hidden={this.state.scrollHidden} />)  
+                         hidden={this.state.scrollHidden} />)
+    }
+
+    if (this.props.tweets){
+      buttons = (<CenteredSection>
+                  <Mention username={this.props.handle} options={{size: 'large'}}/>
+                 </CenteredSection>)
     }
     
 
@@ -146,18 +154,21 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                           <OverlayLoading loaded={tweetsLoading}/>
                         </CenteredSection>)
     }
+    
+    var defaultTile = "Top 5 West End Musicals | Best West End Shows Based on Tweets | Theatre Chatter";
+    var defaultDesc = "Find out what people are saying about the best West End shows base on tweets by theatre-goers like you and I!";
 
     return (
       <article ref={(section) => { this.top = section; }}>
         {loadingOverlay}
         <Helmet
-          titleTemplate="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
-          defaultTitle="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
+          titleTemplate={defaultTile}
+          defaultTitle={defaultTile}
           meta={[
-            { name: 'description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
-            { name: 'og:description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
-            { name: 'og:title', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
-            { name: 'og:type', content: "website"},
+            { name: 'description', content: {defaultDesc}},
+            { name: 'og:description', content: {defaultDesc}},
+            { name: 'og:title', content: {defaultTile}},
+            { name: 'og:type', content: {defaultTile}},
           ]}
         />
         <div>
@@ -176,6 +187,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <CenteredSection id="tweetsCloud" ref={(section) => { this.tweetsCloud = section; }}>
             <TweetsList title={cloudTitle} {...tweetsListProps} />
           </CenteredSection>
+          {buttons}
           {bookNow}
           <ScrollToTopButton onClick={this.scrollToTop.bind(this)} hidden={this.state.scrollHidden}/>
         </div>

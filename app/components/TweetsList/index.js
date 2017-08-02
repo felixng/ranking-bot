@@ -15,7 +15,7 @@ function TweetsList({ title, loading, error, tweets }) {
   }
 
   if (tweets !== false && tweets.length != 0) {
-    return <Cloud title={title} items={tweets} component={TweetItem} n/>;
+    return <Cloud title={title} items={tweets} component={TweetItem} />;
   } 
 
   return null;

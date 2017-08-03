@@ -45,12 +45,13 @@ export function* getShows() {
 }
 
 export function* getBookNowDetails() {
-  const name = yield select(makeSelectShowName());
-  var protocol = 'http';
+  var name = yield select(makeSelectShowName());
+  name = encodeURIComponent(name);
+  var protocol = 'http:';
   if (window){
     protocol = window.location.protocol;
   }
-  const requestURL = `${protocol}:\/\/${url}/api/affiliate/search/${name}`;
+  const requestURL = `${protocol}\/\/${url}/api/affiliate/search/${name}`;
 
   try {
     console.log(requestURL);

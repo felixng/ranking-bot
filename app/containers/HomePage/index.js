@@ -128,7 +128,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     var diff = todayTimeStamp - oneDayTimeStamp;
     var yesterdayDate = new Date(diff);
 
-    if (this.props.bookNowLink && this.props.showTitle){
+    if (this.props.bookNowLink && this.props.showTitle && !this.state.scrollHidden){
       bookNow = (<BookNowButton href={this.props.bookNowLink} 
                          title={this.props.showTitle}
                          price={this.props.showPrice}

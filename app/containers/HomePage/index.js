@@ -135,11 +135,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                          hidden={this.state.scrollHidden} />)
     }
 
-    if (this.props.tweets){
+    
       buttons = (<CenteredSection>
                   <Mention username={this.props.handle} options={{size: 'large'}}/>
                  </CenteredSection>)
-    }
+    
     
 
     if (currentDate.toDateString() != yesterdayDate.toDateString()){

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
 	display: inline-block;
 	vertical-align: top;
-	padding: 0.5em;
+	padding: 0 0.5em;
 
 	-webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);

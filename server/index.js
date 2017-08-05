@@ -48,3 +48,11 @@ app.listen(port, host, (err) => {
     logger.appStarted(port, prettyHost);
   }
 });
+
+
+//Bots
+var CronJob = require('cron').CronJob;
+
+new CronJob('00 00 01 * * *', function() {
+  counters.theatreCounter.gatherAll();
+}, null, true, 'Europe/London');

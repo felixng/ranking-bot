@@ -29,16 +29,6 @@ const AppWrapper = styled.div`
 export function App(props) {
   return (
     <AppWrapper>
-      <Helmet
-        titleTemplate="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
-        defaultTitle="What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"
-        meta={[
-          { name: 'description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
-          { name: 'og:description', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
-          { name: 'og:title', content: "What's trending in the West End? - Theatre Reviews from Tweets | Theatre Chatter"},
-          { name: 'og:type', content: "website"},
-        ]}
-      />
       <Header />
       {React.Children.toArray(props.children)}
       <Footer />

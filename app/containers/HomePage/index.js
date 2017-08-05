@@ -158,6 +158,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     var defaultTile = "Top 5 West End Musicals | Best West End Shows Based on Tweets | Theatre Chatter";
     var defaultDesc = "Find out what people are saying about the best West End shows base on tweets by theatre-goers like you and I!";
 
+    if (this.window){
+      var currentUrl = this.window.location.href;  
+    }
+
     return (
       <article ref={(section) => { this.top = section; }}>
         {loadingOverlay}
@@ -165,10 +169,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           titleTemplate={defaultTile}
           defaultTitle={defaultTile}
           meta={[
-            { name: 'description', content: {defaultDesc}},
-            { name: 'og:description', content: {defaultDesc}},
-            { name: 'og:title', content: {defaultTile}},
-            { name: 'og:type', content: {defaultTile}},
+            { name: 'description', content: defaultDesc},
+            { name: 'og:description', content: defaultDesc},
+            { name: 'og:title', content: defaultTile},
+            { name: 'og:type', content: 'website'},
           ]}
         />
         <div>

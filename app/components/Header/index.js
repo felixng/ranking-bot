@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
-
+import { Link } from 'react-router';
 import A from './A';
 import Img from './Img';
 import H1 from '../../components/H1';
@@ -17,7 +17,11 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
   render() {
     return (
       <HeaderWrapper>
-        <H1>The Most Tweeted Shows in London</H1>
+        <H1>
+        	<Link to='/'>
+        	The Most Tweeted Shows in London
+        	</Link>
+        </H1>
       </HeaderWrapper >
     );
   }

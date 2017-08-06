@@ -6,6 +6,11 @@ const H1 = styled.h1`
   width: 100%;
   text-align: center;
   margin-bottom: 0.25em;
+
+  a {
+  	text-decoration: none;
+  	color: inherit;
+  }
 `;
 
 export default H1;

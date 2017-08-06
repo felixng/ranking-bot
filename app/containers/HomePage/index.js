@@ -176,6 +176,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { name: 'og:description', content: defaultDesc},
             { name: 'og:title', content: defaultTile},
             { name: 'og:type', content: 'website'},
+            { name: 'og:image', content: '/theatrechatter.png'},
           ]}
         />
         <div>
@@ -213,7 +214,6 @@ HomePage.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  date: React.PropTypes.instanceOf(Date),
   onChangeDate: React.PropTypes.func,
 };
 

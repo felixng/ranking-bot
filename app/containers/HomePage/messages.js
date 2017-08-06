@@ -12,7 +12,7 @@ export default defineMessages({
   },
   startProjectMessage: {
     id: 'boilerplate.containers.HomePage.start_project.message',
-    defaultMessage: 'Top 10 Trending Shows in the theatres right now!',
+    defaultMessage: 'Top 5 Trending West End Musicals in the theatre right now - Best West End Shows Based on your tweets!',
   },
   trymeHeader: {
     id: 'boilerplate.containers.HomePage.tryme.header',

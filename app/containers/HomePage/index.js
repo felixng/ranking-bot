@@ -161,8 +161,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                         </CenteredSection>)
     }
 
-    if (this.window){
-      var currentUrl = this.window.location.href;  
+    if (typeof window === 'undefined'){
+      var currentUrl = ''
+    }
+    else
+    {
+      var currentUrl = window.location.href;  
     }
 
     return (
@@ -176,7 +180,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { property: 'og:description', content: defaultDesc},
             { property: 'og:title', content: defaultTile},
             { property: 'og:type', content: 'website'},
-            { property: 'og:image', content: '/theatrechatter.png'},
+            { property: 'og:image', content: currentUrl + 'theatrechatter.png'},
           ]}
         />
         <div>

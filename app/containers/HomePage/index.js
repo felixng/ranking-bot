@@ -173,10 +173,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           defaultTitle={defaultTile}
           meta={[
             { name: 'description', content: defaultDesc},
-            { name: 'og:description', content: defaultDesc},
-            { name: 'og:title', content: defaultTile},
-            { name: 'og:type', content: 'website'},
-            { name: 'og:image', content: '/theatrechatter.png'},
+            { property: 'og:description', content: defaultDesc},
+            { property: 'og:title', content: defaultTile},
+            { property: 'og:type', content: 'website'},
+            { property: 'og:image', content: '/theatrechatter.png'},
           ]}
         />
         <div>

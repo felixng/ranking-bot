@@ -15,14 +15,24 @@ import Number from './Number';
 import Icon from './Icon';
 import Title from './Title';
 import { push } from 'react-router-redux';
-import { makeSelectDate } from 'containers/HomePage/selectors'
+import { makeSelectDate, makeSelectHandle } from 'containers/HomePage/selectors'
 import toKey from 'utils/date';
+import scrollToComponent from 'react-scroll-to-component';
 
 export class ShowListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   handleClick(){
     const handle = this.props.item.handle;
     const date = toKey(this.props.date);
-    this.props.onItemClick(date, handle);
+
+    if (handle != this.props.currentHandle){
+      this.props.onItemClick(date, handle);  
+    }
+
+    scrollToComponent(this.tweetsCloud, { offset: 0, align: 'top', duration: 800 });
+  }
+
+  active(currentHandle, handle){
+    return (handle == currentHandle)
   }
 
   render() {
@@ -39,9 +49,10 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
         <Number>{item.favouriteTotal}</Number>
       </Wrapper>
     );
-
+    console.log('this.active(this.props.currentHandle, item.handle): ', this.active(this.props.currentHandle, item.handle));
     return (
-      <ListItem onClick={this.handleClick.bind(this)} 
+      <ListItem onClick={this.handleClick.bind(this)}
+                active={this.active(this.props.currentHandle, item.handle)} 
                 key={`show-list-item-${item.key}`} 
                 item={content}/>
     );
@@ -63,6 +74,7 @@ export function mapDispatchToProps(dispatch, ownProps) {
 
 const mapStateToProps = createStructuredSelector({
   date: makeSelectDate(),
+  currentHandle: makeSelectHandle()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowListItem)

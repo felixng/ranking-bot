@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 
 const Wrapper = styled.li`
   position: relative;
@@ -11,6 +12,10 @@ const Wrapper = styled.li`
   cursor: pointer;
   backface-visibility: hidden;
   transform: translateZ(0) scale(1.0, 1.0);
+
+  ${props => props.active && css`
+    cursor: auto;
+  `}
 
   &::before {
     content: counter(leaderboard);
@@ -152,6 +157,23 @@ const Wrapper = styled.li`
   &:last-child {
     border-radius: 0 0 10px 10px;
   }
+
+  ${props => props.active && css`
+    z-index: 2;
+    overflow: visible;
+
+    &::after {
+      opacity: 1;
+      transform: scaleX(1.06) scaleY(1.03);
+    }
+
+    & mark {
+      &::before, &::after {
+        opacity: 1;
+        transition: all .2s ease-in-out;
+      }
+    }
+  `}
 
   &:hover {
     z-index: 2;

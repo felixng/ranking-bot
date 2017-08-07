@@ -5,7 +5,7 @@ import Wrapper from './Wrapper';
 
 function ListItem(props) {
   return (
-    <Wrapper onClick={props.onClick}>
+    <Wrapper onClick={props.onClick} active={props.active}>
       <Item>
         {props.item}
       </Item>

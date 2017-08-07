@@ -4,6 +4,7 @@ const Wrapper = styled.div`
 	display: inline-block;
 	vertical-align: top;
 	padding: 0 0.5em;
+	min-width: 300px;
 
 	-webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);

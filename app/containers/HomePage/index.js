@@ -183,9 +183,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           meta={[
             { name: 'description', content: defaultDesc},
             { property: 'og:description', content: defaultDesc},
+            { property: 'twitter:description', content: defaultDesc},
             { property: 'og:title', content: defaultTile},
+            { property: 'twitter:title', content: defaultTile},
             { property: 'og:type', content: 'website'},
             { property: 'og:image', content: host + '/theatrechatter.png'},
+            { property: 'twitter:image', content: host + '/theatrechatter.png'},
+            { property: 'twitter:card', content: "summary_large_image"},
+            
           ]}
         />
         <div>

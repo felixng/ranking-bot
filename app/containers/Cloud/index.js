@@ -136,7 +136,9 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
             meta={[
               { name: 'description', content: defaultDesc},
               { property: 'og:description', content: defaultDesc},
+              { property: 'twitter:description', content: defaultDesc},
               { property: 'og:title', content: defaultTile},
+              { property: 'twitter:title', content: defaultTile},
             ]}
           />
           <Title>{this.props.title}</Title>

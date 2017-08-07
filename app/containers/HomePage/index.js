@@ -171,7 +171,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     else
     {
       var currentUrl = window.location.href;  
-      var host = window.location.host;  
+      var host = window.location.protocol + '//' + window.location.host;  
     }
 
     return (
@@ -189,6 +189,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { property: 'og:type', content: 'website'},
             { property: 'og:image', content: host + '/theatrechatter.png'},
             { property: 'twitter:image', content: host + '/theatrechatter.png'},
+            { property: 'og:url', content: currentUrl},
             { property: 'twitter:card', content: "summary_large_image"},
             
           ]}

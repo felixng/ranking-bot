@@ -2,11 +2,12 @@ import React from 'react';
 import Wrapper from './Wrapper';
 import Title from './Title';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { allTweetsLoaded } from '../HomePage/actions';
 import Masonry from 'react-masonry-component';
 import MasonryInfiniteScroller from 'react-masonry-infinite';
-import { makeSelectTweetsLoading } from 'containers/HomePage/selectors';
+import { makeSelectTweetsLoading, makeSelectShowName } from 'containers/HomePage/selectors';
 import LoadingIndicator from 'components/LoadingIndicator';
 import isMobile from 'utils/common';
 
@@ -99,23 +100,29 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
     const ComponentToRender = this.props.component;
     let tweets = (<div></div>)
     let content = (<div></div>)
+    var defaultTile = '';
+    var defaultDesc = '';
 
     // If we have items, render them
     if (this.state.elements) {
       content = this.state.elements.map((item, index) => (
         <ComponentToRender key={`item-${index}`} item={item} onLoaded={this.props.onMounted}/>
       ));
+
+      defaultTile = this.props.showTitle + " West End Reviews | Best West End Shows Based on Tweets | Theatre Chatter";
+      defaultDesc = "Find out what people are saying about " + this.props.showTitle + " based on tweets by theatre-goers like you and me!";
     } else {
       // Otherwise render a single component
       return (<ComponentToRender />);
     }
 
     if (!isMobile()){
+      console.log('not mobile');
       tweets = <Masonry elementType={'div'} 
                    className={'tweets'}
                    options={masonryOptions}>
                    {content}
-              </Masonry>
+               </Masonry>
     }
     else {
       tweets = content;
@@ -123,6 +130,15 @@ export class Cloud extends React.PureComponent { // eslint-disable-line react/pr
 
     return (
         <Wrapper>
+          <Helmet
+            titleTemplate={defaultTile}
+            defaultTitle={defaultTile}
+            meta={[
+              { name: 'description', content: defaultDesc},
+              { property: 'og:description', content: defaultDesc},
+              { property: 'og:title', content: defaultTile},
+            ]}
+          />
           <Title>{this.props.title}</Title>
           {tweets}
         </Wrapper>
@@ -145,6 +161,7 @@ export function mapDispatchToProps(dispatch, ownProps) {
 
 const mapStateToProps = createStructuredSelector({
   tweetsLoading: makeSelectTweetsLoading(),
+  showTitle: makeSelectShowName(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cloud);

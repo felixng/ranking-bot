@@ -12,10 +12,7 @@ function ShowsList({ loading, error, shows, title }) {
   }
 
   if (error !== false) {
-    const ErrorComponent = () => (
-      <ShowListItem item={'Something went wrong, please try again!'} />
-    );
-    return <List component={ErrorComponent} />;
+    return (<ErrorMessage>Hmmm.. Try the day before by clicking on the button above.</ErrorMessage>)
   }
 
   if (shows !== false && shows.length != 0) {

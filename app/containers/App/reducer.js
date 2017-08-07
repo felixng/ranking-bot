@@ -39,6 +39,7 @@ function appReducer(state = initialState, action) {
       return state
         .setIn(['trendingData', 'shows'], action.shows)
         .set('loading', false)
+        .set('error', false)
         .set('currentDate', action.date);
     case LOAD_SHOWS_ERROR:
       return state

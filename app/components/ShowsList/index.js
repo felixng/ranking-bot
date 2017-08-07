@@ -11,7 +11,7 @@ function ShowsList({ loading, error, shows, title }) {
     return <List component={LoadingIndicator} />;
   }
 
-  if (error !== false) {
+  if (error === true) {
     return (<ErrorMessage>Hmmm.. Try the day before by clicking on the button above.</ErrorMessage>)
   }
 

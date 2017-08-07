@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import toKey from 'utils/date';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectShows, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
+import { makeSelectShows, makeSelectLoading, makeSelectError, makeSelectLocationState } from 'containers/App/selectors';
 import { makeSelectBookNowLink, makeSelectShowPrice, makeSelectShowName, 
          makeSelectHandle, makeSelectTweets, makeSelectTweetsLoading, 
          makeSelectTweetsError } from 'containers/HomePage/selectors';
@@ -60,7 +60,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   hideScroll(){
-    console.log()
     // let { scrollHidden } = this.state;
     if (window.scrollY > 650){
       this.setState({ scrollHidden:false })
@@ -86,6 +85,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     if (propsDate){
       var date = new Date(propsDate);
       this.props.setDate(date);
+    }
+
+    if (this.props.location.locationBeforeTransitions.pathname == '/'){
+      this.props.setDate(new Date());
     }
     
     this.props.onLoad(propsHandle);
@@ -147,8 +150,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       defaultDesc = "Find out what people are saying about " + this.props.showTitle + " based on tweets by theatre-goers like you and me!";
     }
     
-
-    if (currentDate.toDateString() != yesterdayDate.toDateString()){
+    if (currentDate <= yesterdayDate){
       nextButton = (<Button onClick={this.nextDay.bind(this)}> 
                       Day After
                       <Icon className="fa fa-angle-right" aria-hidden="true" left></Icon>
@@ -183,7 +185,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { property: 'og:title', content: defaultTile},
             { property: 'og:type', content: 'website'},
             { property: 'og:image', content: host + '/theatrechatter.png'},
-            { property: 'og:url', content: currentUrl},
           ]}
         />
         <div>
@@ -275,6 +276,7 @@ const mapStateToProps = createStructuredSelector({
   showTitle: makeSelectShowName(),
   showPrice: makeSelectShowPrice(),
   bookNowLink: makeSelectBookNowLink(),
+  location: makeSelectLocationState(),
 });
 
 // Wrap the component to inject dispatch and state into it

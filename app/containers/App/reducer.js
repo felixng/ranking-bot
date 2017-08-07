@@ -44,7 +44,6 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
-
     default:
       return state;
   }

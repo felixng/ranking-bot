@@ -56,7 +56,6 @@ export function mapDispatchToProps(dispatch, ownProps) {
   return {
     onItemClick: (date, handle) => {
       dispatch(loadTweets(handle));
-      console.log(`/${date}/${handle}`);
       dispatch(push(`/${date}/${handle}`));
     },
   };

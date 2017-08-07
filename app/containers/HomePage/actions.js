@@ -86,7 +86,6 @@ export function loadBookNowDetails() {
 }
 
 export function bookNowDetailsLoaded(list) {
-  console.log('bookNowDetailsLoaded');
   return {
     type: BOOK_NOW_LOADED,
     link: list[0].item.aw_deep_link,

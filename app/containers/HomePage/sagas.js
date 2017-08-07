@@ -54,7 +54,6 @@ export function* getBookNowDetails() {
   const requestURL = `${protocol}\/\/${url}/api/affiliate/search/${name}`;
 
   try {
-    console.log(requestURL);
     const affiliateList = yield call(request, requestURL);
   
     yield put(bookNowDetailsLoaded(affiliateList));

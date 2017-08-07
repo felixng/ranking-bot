@@ -88,7 +88,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     if (this.props.location.locationBeforeTransitions.pathname == '/'){
-      this.props.setDate(new Date());
+      var today = new Date()
+      this.props.setDate(today.setDate(today.getDate() - 1));
     }
     
     this.props.onLoad(propsHandle);

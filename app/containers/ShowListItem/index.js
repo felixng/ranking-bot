@@ -49,7 +49,7 @@ export class ShowListItem extends React.PureComponent { // eslint-disable-line r
         <Number>{item.favouriteTotal}</Number>
       </Wrapper>
     );
-    console.log('this.active(this.props.currentHandle, item.handle): ', this.active(this.props.currentHandle, item.handle));
+    
     return (
       <ListItem onClick={this.handleClick.bind(this)}
                 active={this.active(this.props.currentHandle, item.handle)} 

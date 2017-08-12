@@ -82,13 +82,6 @@ function createChildRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/features',
-      getComponent(nextState, cb) {
-        import('containers/FeaturePage')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      },
-    }, {
       path: '*',
       getComponent(nextState, cb) {
         import('containers/NotFoundPage')

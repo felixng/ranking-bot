@@ -7,7 +7,9 @@
 
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
-import browserHistory from 'react-router/lib/browserHistory';
+import { createHistory } from 'history'
+import { applyRouterMiddleware, Router, useRouterHistory } from 'react-router';
+// import browserHistory from 'react-router/lib/browserHistory';
 
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-webpack-loader-syntax */
@@ -52,6 +54,9 @@ const initialState = window.APP_STATE || {};
 // this uses the singleton browserHistory provided by react-router
 // Optionally, this could be changed to leverage a created history
 // e.g. `const browserHistory = useRouterHistory(createBrowserHistory)();`
+const browserHistory = useRouterHistory(createHistory)({
+    basename: '/WestEnd',
+});
 const store = configureStore(initialState, browserHistory);
 
 const routes = createRoutes(store);

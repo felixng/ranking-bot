@@ -116,6 +116,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const { loading, error, shows, date, tweets, tweetsError, tweetsLoading } = this.props;
     const currentDate = new Date(date)
     const title = currentDate.toDateString();
+
     const showsListProps = {
       loading,
       error,
@@ -150,8 +151,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       defaultTile = this.props.showTitle + " West End Reviews | Best West End Shows Based on Tweets | Theatre Chatter";
       defaultDesc = "Find out what people are saying about " + this.props.showTitle + " based on tweets by theatre-goers like you and me!";
     }
-    
-    if (currentDate <= yesterdayDate){
+
+    if (currentDate.setHours(0,0,0,0) < yesterdayDate.setHours(0,0,0,0)){
       nextButton = (<Button onClick={this.nextDay.bind(this)}> 
                       Day After
                       <Icon className="fa fa-angle-right" aria-hidden="true" left></Icon>
